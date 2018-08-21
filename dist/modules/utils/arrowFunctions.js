@@ -1,5 +1,10 @@
 "use strict";
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.doSafe = undefined;
+
 var _SystemError = require("../errors/SystemError");
 
 var _SystemError2 = _interopRequireDefault(_SystemError);
@@ -14,3 +19,5 @@ var doSafe = function doSafe(observable, func) {
     observable.onCompleted();
   }
 };
+
+exports.doSafe = doSafe;

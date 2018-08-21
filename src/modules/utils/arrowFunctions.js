@@ -8,3 +8,7 @@ const doSafe = (observable, func) => {
     observable.onCompleted();
   }
 };
+
+export {
+  doSafe
+}
