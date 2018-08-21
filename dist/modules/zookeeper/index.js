@@ -1,19 +1,13 @@
-"use strict";
+'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = zk;
+exports.init = exports.zk = undefined;
 
-var _nodeZookeeperClient = require("node-zookeeper-client");
+var _nodeZookeeperClient = require('node-zookeeper-client');
 
-var _conf = require("../../conf");
-
-var _conf2 = _interopRequireDefault(_conf);
-
-var _logger = require("../log/logger");
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var _logger = require('../log/logger');
 
 var zkClient = null;
 var connected = false;
@@ -29,11 +23,8 @@ function zk(func) {
     cachedFunctions.push(func);
   }
 }
-init();
-console.info('connecting...');
-zkClient.connect();
 
-function init() {
+function init(conf) {
   if (zkClient) {
     try {
       zkClient.close();
@@ -41,8 +32,8 @@ function init() {
       // do nothing
     }
   }
-  console.info(_conf2.default.zkUrls[0]);
-  zkClient = (0, _nodeZookeeperClient.createClient)(_conf2.default.zkUrls[0]);
+  console.info(conf.zkUrls[0]);
+  zkClient = (0, _nodeZookeeperClient.createClient)(conf.zkUrls[0]);
   connected = false;
   cachedFunctions = [];
   zkClient.once('connected', function () {
@@ -56,4 +47,9 @@ function init() {
   zkClient.on('disconnected', function (e) {
     return (0, _logger.logError)('disconnect', e);
   });
+  console.info('connecting...');
+  zkClient.connect();
 }
+
+exports.zk = zk;
+exports.init = init;
