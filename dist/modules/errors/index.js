@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+  value: true
 });
 exports.ForwardError = exports.InvalidFieldValueError = exports.InvalidIdSecretError = exports.InvalidParameterError = exports.ObjectNotFoundError = exports.SystemError = exports.UriNotFound = exports.GeneralError = exports.FieldRequiredError = undefined;
 
@@ -9,46 +9,44 @@ var _FieldRequiredError = require("./FieldRequiredError");
 
 var _FieldRequiredError2 = _interopRequireDefault(_FieldRequiredError);
 
-var _GeneralErrorFrom = require("./GeneralError from");
+var _GeneralError = require("./GeneralError");
 
-var _GeneralErrorFrom2 = _interopRequireDefault(_GeneralErrorFrom);
+var _GeneralError2 = _interopRequireDefault(_GeneralError);
 
-var _UriNotFoundFrom = require("./UriNotFound from");
+var _UriNotFound = require("./UriNotFound");
 
-var _UriNotFoundFrom2 = _interopRequireDefault(_UriNotFoundFrom);
+var _UriNotFound2 = _interopRequireDefault(_UriNotFound);
 
-var _SystemErrorFrom = require("./SystemError from");
+var _SystemError = require("./SystemError");
 
-var _SystemErrorFrom2 = _interopRequireDefault(_SystemErrorFrom);
+var _SystemError2 = _interopRequireDefault(_SystemError);
 
-var _ObjectNotFoundErrorFrom = require("./ObjectNotFoundError from");
+var _ObjectNotFoundError = require("./ObjectNotFoundError");
 
-var _ObjectNotFoundErrorFrom2 = _interopRequireDefault(_ObjectNotFoundErrorFrom);
+var _ObjectNotFoundError2 = _interopRequireDefault(_ObjectNotFoundError);
 
-var _InvalidParameterErrorFrom = require("./InvalidParameterError from");
+var _InvalidParameterError = require("./InvalidParameterError");
 
-var _InvalidParameterErrorFrom2 = _interopRequireDefault(_InvalidParameterErrorFrom);
+var _InvalidParameterError2 = _interopRequireDefault(_InvalidParameterError);
 
-var _InvalidIdSecretErrorFrom = require("./InvalidIdSecretError from");
+var _InvalidIdSecretError = require("./InvalidIdSecretError");
 
-var _InvalidIdSecretErrorFrom2 = _interopRequireDefault(_InvalidIdSecretErrorFrom);
+var _InvalidIdSecretError2 = _interopRequireDefault(_InvalidIdSecretError);
 
-var _InvalidFieldValueErrorFrom = require("./InvalidFieldValueError from");
+var _InvalidFieldValueError = require("./InvalidFieldValueError");
 
-var _InvalidFieldValueErrorFrom2 = _interopRequireDefault(_InvalidFieldValueErrorFrom);
+var _InvalidFieldValueError2 = _interopRequireDefault(_InvalidFieldValueError);
 
-var _ForwardErrorFrom = require("./ForwardError from");
-
-var _ForwardErrorFrom2 = _interopRequireDefault(_ForwardErrorFrom);
+var _ForwardError = require("./ForwardError");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.FieldRequiredError = _FieldRequiredError2.default;
-exports.GeneralError = _GeneralErrorFrom2.default;
-exports.UriNotFound = _UriNotFoundFrom2.default;
-exports.SystemError = _SystemErrorFrom2.default;
-exports.ObjectNotFoundError = _ObjectNotFoundErrorFrom2.default;
-exports.InvalidParameterError = _InvalidParameterErrorFrom2.default;
-exports.InvalidIdSecretError = _InvalidIdSecretErrorFrom2.default;
-exports.InvalidFieldValueError = _InvalidFieldValueErrorFrom2.default;
-exports.ForwardError = _ForwardErrorFrom2.default;
+exports.GeneralError = _GeneralError2.default;
+exports.UriNotFound = _UriNotFound2.default;
+exports.SystemError = _SystemError2.default;
+exports.ObjectNotFoundError = _ObjectNotFoundError2.default;
+exports.InvalidParameterError = _InvalidParameterError2.default;
+exports.InvalidIdSecretError = _InvalidIdSecretError2.default;
+exports.InvalidFieldValueError = _InvalidFieldValueError2.default;
+exports.ForwardError = _ForwardError.ForwardError;

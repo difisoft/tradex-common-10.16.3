@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+  value: true
 });
 
 var _GeneralError2 = require("./GeneralError");
@@ -17,17 +17,17 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var UriNotFound = function (_GeneralError) {
-    _inherits(UriNotFound, _GeneralError);
+  _inherits(UriNotFound, _GeneralError);
 
-    function UriNotFound() {
-        var source = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : undefined;
+  function UriNotFound() {
+    var source = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : undefined;
 
-        _classCallCheck(this, UriNotFound);
+    _classCallCheck(this, UriNotFound);
 
-        return _possibleConstructorReturn(this, (UriNotFound.__proto__ || Object.getPrototypeOf(UriNotFound)).call(this, 'URI_NOT_FOUND', undefined, source));
-    }
+    return _possibleConstructorReturn(this, (UriNotFound.__proto__ || Object.getPrototypeOf(UriNotFound)).call(this, 'URI_NOT_FOUND', undefined, source));
+  }
 
-    return UriNotFound;
+  return UriNotFound;
 }(_GeneralError3.default);
 
 exports.default = UriNotFound;

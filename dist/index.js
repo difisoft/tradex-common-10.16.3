@@ -1,7 +1,7 @@
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+  value: true
 });
 exports.Errors = exports.Kafka = exports.Logger = exports.Utils = exports.Zookeeper = undefined;
 

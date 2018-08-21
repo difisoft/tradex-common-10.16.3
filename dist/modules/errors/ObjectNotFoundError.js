@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+  value: true
 });
 exports.OBJECT_NOT_FOUND_ERROR_CODE = undefined;
 
@@ -20,17 +20,17 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var OBJECT_NOT_FOUND_ERROR_CODE = exports.OBJECT_NOT_FOUND_ERROR_CODE = 'OBJECT_NOT_FOUND';
 
 var ObjectNotFoundError = function (_GeneralError) {
-    _inherits(ObjectNotFoundError, _GeneralError);
+  _inherits(ObjectNotFoundError, _GeneralError);
 
-    function ObjectNotFoundError() {
-        var source = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : undefined;
+  function ObjectNotFoundError() {
+    var source = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : undefined;
 
-        _classCallCheck(this, ObjectNotFoundError);
+    _classCallCheck(this, ObjectNotFoundError);
 
-        return _possibleConstructorReturn(this, (ObjectNotFoundError.__proto__ || Object.getPrototypeOf(ObjectNotFoundError)).call(this, OBJECT_NOT_FOUND_ERROR_CODE, undefined, source));
-    }
+    return _possibleConstructorReturn(this, (ObjectNotFoundError.__proto__ || Object.getPrototypeOf(ObjectNotFoundError)).call(this, OBJECT_NOT_FOUND_ERROR_CODE, undefined, source));
+  }
 
-    return ObjectNotFoundError;
+  return ObjectNotFoundError;
 }(_GeneralError3.default);
 
 exports.default = ObjectNotFoundError;

@@ -1,28 +1,18 @@
 import FieldRequiredError from "../errors/FieldRequiredError";
 
 export class Validate {
-  constructor(fieldValue, fieldName) {
-    this.fieldName = fieldName;
-    this.fieldValue = fieldValue;
-    this.isRequired = false;
-    this.checks = [];
-  }
-
   require = () => {
     this.isRequired = true;
     return this;
   };
-
   add = (func) => {
     this.checks.push(func);
     return this;
   };
-
   adds = (funcs) => {
     this.checks = this.checks.concat(funcs);
     return this;
   };
-
   throwValid = (invalidParameterError = undefined) => {
     const result = this.valid();
     if (result) {
@@ -33,7 +23,6 @@ export class Validate {
       }
     }
   };
-
   valid = () => {
     if (this.isRequired) {
       if (isEmpty(this.fieldValue)) {
@@ -52,6 +41,13 @@ export class Validate {
     }
     return null;
   };
+
+  constructor(fieldValue, fieldName) {
+    this.fieldName = fieldName;
+    this.fieldValue = fieldValue;
+    this.isRequired = false;
+    this.checks = [];
+  }
 }
 
 const validate = (fieldValue, fieldName) => new Validate(fieldValue, fieldName);

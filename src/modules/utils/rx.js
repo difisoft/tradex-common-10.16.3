@@ -9,6 +9,7 @@ function onNext(observable, data) {
   observable.onNext(data);
   observable.onCompleted();
 }
+
 export {
   Rx,
   onNext,

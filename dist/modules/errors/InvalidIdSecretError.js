@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+  value: true
 });
 
 var _GeneralError2 = require("./GeneralError");
@@ -17,15 +17,15 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var InvalidIdSecretError = function (_GeneralError) {
-    _inherits(InvalidIdSecretError, _GeneralError);
+  _inherits(InvalidIdSecretError, _GeneralError);
 
-    function InvalidIdSecretError(source) {
-        _classCallCheck(this, InvalidIdSecretError);
+  function InvalidIdSecretError(source) {
+    _classCallCheck(this, InvalidIdSecretError);
 
-        return _possibleConstructorReturn(this, (InvalidIdSecretError.__proto__ || Object.getPrototypeOf(InvalidIdSecretError)).call(this, 'INVALID_ID_SECRET', undefined, source));
-    }
+    return _possibleConstructorReturn(this, (InvalidIdSecretError.__proto__ || Object.getPrototypeOf(InvalidIdSecretError)).call(this, 'INVALID_ID_SECRET', undefined, source));
+  }
 
-    return InvalidIdSecretError;
+  return InvalidIdSecretError;
 }(_GeneralError3.default);
 
 exports.default = InvalidIdSecretError;

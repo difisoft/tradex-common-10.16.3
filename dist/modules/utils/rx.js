@@ -20,6 +20,7 @@ function onNext(observable, data) {
   observable.onNext(data);
   observable.onCompleted();
 }
+
 exports.Rx = _rx2.default;
 exports.onNext = onNext;
 exports.onError = onError;

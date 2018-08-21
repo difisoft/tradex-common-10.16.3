@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+  value: true
 });
 
 var _GeneralError2 = require("./GeneralError");
@@ -17,17 +17,17 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var SystemError = function (_GeneralError) {
-    _inherits(SystemError, _GeneralError);
+  _inherits(SystemError, _GeneralError);
 
-    function SystemError() {
-        var source = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : undefined;
+  function SystemError() {
+    var source = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : undefined;
 
-        _classCallCheck(this, SystemError);
+    _classCallCheck(this, SystemError);
 
-        return _possibleConstructorReturn(this, (SystemError.__proto__ || Object.getPrototypeOf(SystemError)).call(this, 'INTERNAL_SERVER_ERROR', undefined, source));
-    }
+    return _possibleConstructorReturn(this, (SystemError.__proto__ || Object.getPrototypeOf(SystemError)).call(this, 'INTERNAL_SERVER_ERROR', undefined, source));
+  }
 
-    return SystemError;
+  return SystemError;
 }(_GeneralError3.default);
 
 exports.default = SystemError;

@@ -1,5 +1,5 @@
 import StreamHandler from "./streamHandler";
 
-export  {
-    StreamHandler,
+export {
+  StreamHandler,
 };
