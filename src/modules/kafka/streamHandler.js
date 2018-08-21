@@ -1,9 +1,8 @@
-import conf from '../conf';
 import Kafka from 'node-rdkafka';
-import {logError, logger} from './../modules/log/logger';
+import {logError} from './../log/logger';
 
 class StreamHandler {
-  constructor(options, topics, dataHandler) {
+  constructor(conf, options, topics, dataHandler) {
     let ops = Object.assign({
       'group.id': conf.clusterId,
       'metadata.broker.list': conf.kafkaUrls.join(),

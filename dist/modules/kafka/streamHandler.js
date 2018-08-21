@@ -4,28 +4,24 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _conf = require('../conf');
-
-var _conf2 = _interopRequireDefault(_conf);
-
 var _nodeRdkafka = require('node-rdkafka');
 
 var _nodeRdkafka2 = _interopRequireDefault(_nodeRdkafka);
 
-var _logger = require('./../modules/log/logger');
+var _logger = require('./../log/logger');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var StreamHandler = function StreamHandler(options, topics, dataHandler) {
+var StreamHandler = function StreamHandler(conf, options, topics, dataHandler) {
   var _this = this;
 
   _classCallCheck(this, StreamHandler);
 
   var ops = Object.assign({
-    'group.id': _conf2.default.clusterId,
-    'metadata.broker.list': _conf2.default.kafkaUrls.join()
+    'group.id': conf.clusterId,
+    'metadata.broker.list': conf.kafkaUrls.join()
   }, options);
   this.hasError = false;
   this.stream = _nodeRdkafka2.default.KafkaConsumer.createReadStream(ops, {}, {
