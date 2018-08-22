@@ -4,4 +4,4 @@ common for nodejs that includes:
  2. kafka consumer
  3. send and receive request
  4. log
- 5. zookeeper for leader election
+ 5. zookeeper connection
