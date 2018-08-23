@@ -1,37 +1,37 @@
-import winston from 'winston';
+import { format, transports, createLogger as createLoggerW } from 'winston';
 
 const LOG_FORMAT = {
-  JSON: (conf: any) => winston.format.combine(
-    winston.format.label({service: conf.serviceName}),
-    winston.format.timestamp(),
-    winston.format.splat(),
-    winston.format.json(),
+  JSON: (conf: any) => format.combine(
+    format.label({service: conf.serviceName}),
+    format.timestamp(),
+    format.splat(),
+    format.json(),
   ),
-  FLAT: (conf: any) => winston.format.combine(
-    winston.format.label({service: conf.serviceName}),
-    winston.format.timestamp(),
-    winston.format.splat(),
-    winston.format.simple(),
+  FLAT: (conf: any) => format.combine(
+    format.label({service: conf.serviceName}),
+    format.timestamp(),
+    format.splat(),
+    format.simple(),
   ),
 };
 
 const createTransports = (conf: any) => {
   if (!conf.transports || conf.transports.length === 0) {
-    return [new winston.transports.Console({level: 'info'})];
+    return [new transports.Console({level: 'info'})];
   }
   const transport = [];
   for (let i = 0; i < conf.transports.length; i++) {
     if (conf.transports.type === 'console') {
-      transport.push(new winston.transports.Console(conf.transports[i].data));
+      transport.push(new transports.Console(conf.transports[i].data));
     } else if (conf.transports.type === 'file') {
-      transport.push(new winston.transports.File(conf.transports[i].data));
+      transport.push(new transports.File(conf.transports[i].data));
     }
   }
   return transport;
 };
 
 const createLogger = (conf: any) => {
-  return winston.createLogger({
+  return createLoggerW({
     level: conf.level,
     format: LOG_FORMAT[conf.format](conf),
     transports: createTransports(conf)
@@ -39,6 +39,7 @@ const createLogger = (conf: any) => {
 };
 
 let logger;
+
 const create = (conf: any) => {
   if (!logger) {
     logger = createLogger(conf);

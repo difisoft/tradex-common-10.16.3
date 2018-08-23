@@ -2,26 +2,26 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const winston_1 = require("winston");
 const LOG_FORMAT = {
-    JSON: (conf) => winston_1.default.format.combine(winston_1.default.format.label({ service: conf.serviceName }), winston_1.default.format.timestamp(), winston_1.default.format.splat(), winston_1.default.format.json()),
-    FLAT: (conf) => winston_1.default.format.combine(winston_1.default.format.label({ service: conf.serviceName }), winston_1.default.format.timestamp(), winston_1.default.format.splat(), winston_1.default.format.simple()),
+    JSON: (conf) => winston_1.format.combine(winston_1.format.label({ service: conf.serviceName }), winston_1.format.timestamp(), winston_1.format.splat(), winston_1.format.json()),
+    FLAT: (conf) => winston_1.format.combine(winston_1.format.label({ service: conf.serviceName }), winston_1.format.timestamp(), winston_1.format.splat(), winston_1.format.simple()),
 };
 const createTransports = (conf) => {
     if (!conf.transports || conf.transports.length === 0) {
-        return [new winston_1.default.transports.Console({ level: 'info' })];
+        return [new winston_1.transports.Console({ level: 'info' })];
     }
     const transport = [];
     for (let i = 0; i < conf.transports.length; i++) {
         if (conf.transports.type === 'console') {
-            transport.push(new winston_1.default.transports.Console(conf.transports[i].data));
+            transport.push(new winston_1.transports.Console(conf.transports[i].data));
         }
         else if (conf.transports.type === 'file') {
-            transport.push(new winston_1.default.transports.File(conf.transports[i].data));
+            transport.push(new winston_1.transports.File(conf.transports[i].data));
         }
     }
     return transport;
 };
 const createLogger = (conf) => {
-    return winston_1.default.createLogger({
+    return winston_1.createLogger({
         level: conf.level,
         format: LOG_FORMAT[conf.format](conf),
         transports: createTransports(conf)
