@@ -1,5 +1,5 @@
 import { createReadStream, ConsumerStream } from 'node-rdkafka';
-import { logError } from '../log';
+import { logger } from '../log';
 
 class StreamHandler {
   private hasError: boolean;
@@ -19,11 +19,11 @@ class StreamHandler {
     });
 
     this.stream.on('error', (err: any) => {
-      logError('error on kafka', err);
+      logger.logError('error on kafka', err);
       this.hasError = true;
       setTimeout(() => {
         if (this.hasError) {
-          logError('error flag still on. preparing to exit in 2 seconds', topics);
+          logger.logError('error flag still on. preparing to exit in 2 seconds', topics);
           setTimeout(() => process.exit(1), 2000);
         }
       }, 15000)

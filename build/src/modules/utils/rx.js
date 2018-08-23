@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const rx_1 = require("rx");
-exports.Rx = rx_1.default;
+const Rx = require("rx");
+exports.Rx = Rx;
 function onError(observable, err) {
     observable.onError(err);
     observable.onCompleted();

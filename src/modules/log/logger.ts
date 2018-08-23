@@ -1,4 +1,4 @@
-import { format, transports, createLogger as createLoggerW } from 'winston';
+import { format, transports, createLogger as createLoggerW, Logger as LoggerW } from 'winston';
 
 const LOG_FORMAT = {
   JSON: (conf: any) => format.combine(
@@ -38,47 +38,58 @@ const createLogger = (conf: any) => {
   });
 };
 
-let logger;
+class Logger {
+  public logger: LoggerW;
 
-const create = (conf: any) => {
-  if (!logger) {
-    logger = createLogger(conf);
+  public info(...args: any[]) {
+    this.logger.info.apply(this.logger, ...args);
   }
-  return logger;
-};
 
-const logError = (message: any, err: any) => {
-  if (!err) {  
-    logger.error({
-      message: message.message,
-      stackTrace: getStackTrace(message),
-    });
-  } else {
-    logger.error({
-      message: message,
-      stackTrace: getStackTrace(err),
-    });
+  public warn(...args: any[]) {
+    this.logger.warn.apply(this.logger, ...args);
   }
-};
 
-/**
- * get first 3 lines
- * then get the
- * @type {{for: Error}}
- */
-const getStackTrace = (err: any) => {
-  if (!err.stack) {
-    return '';
+  public error(...args: any[]) {
+    this.logger.error.apply(this.logger, ...args);
   }
-  let result = '';
-  for (let i = 0; i < 10 || i < err.stack.length; i++) {
-    result += err.stack[i];
-  }
-  return result;
-};
 
-export {
-  create,
-  logger,
-  logError
+  public create = (conf: any) => {
+    if (this.logger == null) {
+      this.logger = createLogger(conf);
+    }
+  };
+  
+  public logError = (message: any, err: any) => {
+    if (!err) {  
+      this.logger.error({
+        message: message.message,
+        stackTrace: this.getStackTrace(message),
+      });
+    } else {
+      this.logger.error({
+        message: message,
+        stackTrace: this.getStackTrace(err),
+      });
+    }
+  };
+  
+  /**
+   * get first 3 lines
+   * then get the
+   * @type {{for: Error}}
+   */
+  public getStackTrace = (err: any) => {
+    if (!err.stack) {
+      return '';
+    }
+    let result = '';
+    for (let i = 0; i < 10 || i < err.stack.length; i++) {
+      result += err.stack[i];
+    }
+    return result;
+  };
 }
+
+const logger: Logger = new Logger();
+
+export { logger };

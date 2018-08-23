@@ -1,5 +1,5 @@
 import { createClient } from 'node-zookeeper-client';
-import { logError, logger } from "../log/logger";
+import { logger } from "../log/logger";
 
 let zkClient = null;
 let connected = false;
@@ -34,7 +34,7 @@ function init(conf: any) {
     cachedFunctions.forEach((func: any) => func(zkClient));
     cachedFunctions = [];
   });
-  zkClient.on('disconnected', (e: any) => logError('disconnect', e));
+  zkClient.on('disconnected', (e: any) => logger.logError('disconnect', e));
   logger.info('connecting...');
   zkClient.connect();
 }

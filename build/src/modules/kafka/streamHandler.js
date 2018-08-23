@@ -13,11 +13,11 @@ class StreamHandler {
             topics: topics
         });
         this.stream.on('error', (err) => {
-            log_1.logError('error on kafka', err);
+            log_1.logger.logError('error on kafka', err);
             this.hasError = true;
             setTimeout(() => {
                 if (this.hasError) {
-                    log_1.logError('error flag still on. preparing to exit in 2 seconds', topics);
+                    log_1.logger.logError('error flag still on. preparing to exit in 2 seconds', topics);
                     setTimeout(() => process.exit(1), 2000);
                 }
             }, 15000);

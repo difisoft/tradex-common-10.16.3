@@ -1,2 +1,2 @@
-import { create, logError, logger } from './logger';
-export { create, logger, logError };
+import { logger } from './logger';
+export { logger };

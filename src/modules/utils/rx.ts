@@ -1,11 +1,11 @@
-import Rx, { Observer } from 'rx';
+import * as Rx from 'rx';
 
-function onError(observable: Observer<any>, err: any) {
+function onError(observable: Rx.Observer<any>, err: any) {
   observable.onError(err);
   observable.onCompleted();
 }
 
-function onNext(observable: Observer<any>, data: any) {
+function onNext(observable: Rx.Observer<any>, data: any) {
   observable.onNext(data);
   observable.onCompleted();
 }

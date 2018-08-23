@@ -27,38 +27,48 @@ const createLogger = (conf) => {
         transports: createTransports(conf)
     });
 };
-let logger;
+class Logger {
+    constructor() {
+        this.create = (conf) => {
+            if (this.logger == null) {
+                this.logger = createLogger(conf);
+            }
+        };
+        this.logError = (message, err) => {
+            if (!err) {
+                this.logger.error({
+                    message: message.message,
+                    stackTrace: this.getStackTrace(message),
+                });
+            }
+            else {
+                this.logger.error({
+                    message: message,
+                    stackTrace: this.getStackTrace(err),
+                });
+            }
+        };
+        this.getStackTrace = (err) => {
+            if (!err.stack) {
+                return '';
+            }
+            let result = '';
+            for (let i = 0; i < 10 || i < err.stack.length; i++) {
+                result += err.stack[i];
+            }
+            return result;
+        };
+    }
+    info(...args) {
+        this.logger.info.apply(this.logger, ...args);
+    }
+    warn(...args) {
+        this.logger.warn.apply(this.logger, ...args);
+    }
+    error(...args) {
+        this.logger.error.apply(this.logger, ...args);
+    }
+}
+const logger = new Logger();
 exports.logger = logger;
-const create = (conf) => {
-    if (!logger) {
-        exports.logger = logger = createLogger(conf);
-    }
-    return logger;
-};
-exports.create = create;
-const logError = (message, err) => {
-    if (!err) {
-        logger.error({
-            message: message.message,
-            stackTrace: getStackTrace(message),
-        });
-    }
-    else {
-        logger.error({
-            message: message,
-            stackTrace: getStackTrace(err),
-        });
-    }
-};
-exports.logError = logError;
-const getStackTrace = (err) => {
-    if (!err.stack) {
-        return '';
-    }
-    let result = '';
-    for (let i = 0; i < 10 || i < err.stack.length; i++) {
-        result += err.stack[i];
-    }
-    return result;
-};
 //# sourceMappingURL=logger.js.map

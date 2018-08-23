@@ -31,7 +31,7 @@ function init(conf) {
         cachedFunctions.forEach((func) => func(zkClient));
         cachedFunctions = [];
     });
-    zkClient.on('disconnected', (e) => logger_1.logError('disconnect', e));
+    zkClient.on('disconnected', (e) => logger_1.logger.logError('disconnect', e));
     logger_1.logger.info('connecting...');
     zkClient.connect();
 }
