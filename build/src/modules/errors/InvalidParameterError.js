@@ -1,0 +1,22 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const GeneralError_1 = require("./GeneralError");
+class InvalidParameterError extends GeneralError_1.default {
+    constructor(params = []) {
+        super('INVALID_PARAMETER', params);
+        this.add = (code, fieldName, messageParams) => {
+            this.params.push({
+                code,
+                fieldName,
+                messageParams,
+            });
+            return this;
+        };
+        this.adds = (params) => {
+            this.params = this.params.concat(params);
+            return this;
+        };
+    }
+}
+exports.default = InvalidParameterError;
+//# sourceMappingURL=InvalidParameterError.js.map
