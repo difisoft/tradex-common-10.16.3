@@ -1,5 +1,5 @@
 import { createClient } from 'node-zookeeper-client';
-import { logger } from "../log/logger";
+import { logger } from "../log";
 
 let zkClient = null;
 let connected = false;

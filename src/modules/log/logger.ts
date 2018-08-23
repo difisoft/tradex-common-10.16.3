@@ -39,34 +39,45 @@ const createLogger = (conf: any) => {
 };
 
 class Logger {
-  public logger: LoggerW;
+  public log: LoggerW;
+  public logger: Logger;
 
-  public info(...args: any[]) {
-    this.logger.info.apply(this.logger, ...args);
+  constructor() {
+    this.logger = this;
   }
 
-  public warn(...args: any[]) {
-    this.logger.warn.apply(this.logger, ...args);
+  public info(message, ...args: any[]) {
+    if (this.log) {
+      this.log.info(message, ...args);
+    }
   }
 
-  public error(...args: any[]) {
-    this.logger.error.apply(this.logger, ...args);
+  public warn(message, ...args: any[]) {
+    if (this.log) {
+      this.log.warn(message, ...args);
+    }
+  }
+
+  public error(message, ...args: any[]) {
+    if (this.log) {
+      this.log.error(message, ...args);
+    }
   }
 
   public create = (conf: any) => {
-    if (this.logger == null) {
-      this.logger = createLogger(conf);
+    if (this.log == null) {
+      this.log = createLogger(conf);
     }
   };
   
   public logError = (message: any, err: any) => {
     if (!err) {  
-      this.logger.error({
+      this.log.error({
         message: message.message,
         stackTrace: this.getStackTrace(message),
       });
     } else {
-      this.logger.error({
+      this.log.error({
         message: message,
         stackTrace: this.getStackTrace(err),
       });

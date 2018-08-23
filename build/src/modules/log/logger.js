@@ -30,19 +30,19 @@ const createLogger = (conf) => {
 class Logger {
     constructor() {
         this.create = (conf) => {
-            if (this.logger == null) {
-                this.logger = createLogger(conf);
+            if (this.log == null) {
+                this.log = createLogger(conf);
             }
         };
         this.logError = (message, err) => {
             if (!err) {
-                this.logger.error({
+                this.log.error({
                     message: message.message,
                     stackTrace: this.getStackTrace(message),
                 });
             }
             else {
-                this.logger.error({
+                this.log.error({
                     message: message,
                     stackTrace: this.getStackTrace(err),
                 });
@@ -58,15 +58,22 @@ class Logger {
             }
             return result;
         };
+        this.logger = this;
     }
-    info(...args) {
-        this.logger.info.apply(this.logger, ...args);
+    info(message, ...args) {
+        if (this.log) {
+            this.log.info(message, ...args);
+        }
     }
-    warn(...args) {
-        this.logger.warn.apply(this.logger, ...args);
+    warn(message, ...args) {
+        if (this.log) {
+            this.log.warn(message, ...args);
+        }
     }
-    error(...args) {
-        this.logger.error.apply(this.logger, ...args);
+    error(message, ...args) {
+        if (this.log) {
+            this.log.error(message, ...args);
+        }
     }
 }
 const logger = new Logger();
