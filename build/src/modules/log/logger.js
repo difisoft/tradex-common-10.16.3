@@ -60,13 +60,13 @@ class Logger {
         };
     }
     info(...args) {
-        this.logger.info.apply(this.logger, ...args);
+        this.logger.info.call(this.logger, ...args);
     }
     warn(...args) {
-        this.logger.warn.apply(this.logger, ...args);
+        this.logger.warn.call(this.logger, ...args);
     }
     error(...args) {
-        this.logger.error.apply(this.logger, ...args);
+        this.logger.error.call(this.logger, ...args);
     }
 }
 const logger = new Logger();

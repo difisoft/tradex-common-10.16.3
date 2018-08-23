@@ -42,15 +42,15 @@ class Logger {
   public logger: LoggerW;
 
   public info(...args: any[]) {
-    this.logger.info.apply(this.logger, ...args);
+    this.logger.info.call(this.logger, ...args);
   }
 
   public warn(...args: any[]) {
-    this.logger.warn.apply(this.logger, ...args);
+    this.logger.warn.call(this.logger, ...args);
   }
 
   public error(...args: any[]) {
-    this.logger.error.apply(this.logger, ...args);
+    this.logger.error.call(this.logger, ...args);
   }
 
   public create = (conf: any) => {
