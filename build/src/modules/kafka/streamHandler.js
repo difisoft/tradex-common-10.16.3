@@ -29,4 +29,4 @@ class StreamHandler {
     }
 }
 exports.default = StreamHandler;
-//# sourceMappingURL=streamHandler.js.map
+//# sourceMappingURL=StreamHandler.js.map

@@ -1,6 +1,7 @@
+import { IConf } from "./types";
 declare class StreamHandler {
     private hasError;
     private stream;
-    constructor(conf: any, options: any, topics: any, dataHandler: any);
+    constructor(conf: IConf, options: any, topics: string[], dataHandler: (data: any, handler: StreamHandler) => void);
 }
 export default StreamHandler;

@@ -1,18 +1,19 @@
-import { createReadStream, ConsumerStream } from 'node-rdkafka';
-import { logger } from '../log';
+import {ConsumerStream, createReadStream} from 'node-rdkafka';
+import {logger} from '../log';
+import {IConf} from "./types";
 
 class StreamHandler {
   private hasError: boolean;
   private stream: ConsumerStream;
 
-  constructor(conf: any, options: any, topics: any, dataHandler: any) {
+  constructor(conf: IConf, options: any, topics: string[], dataHandler: (data: any, handler: StreamHandler) => void) {
     const ops = {
       ...{
         'group.id': conf.clusterId,
         'metadata.broker.list': conf.kafkaUrls.join(),
       }, ...options
     };
-    
+
     this.hasError = false;
     this.stream = createReadStream(ops, {}, {
       topics: topics
