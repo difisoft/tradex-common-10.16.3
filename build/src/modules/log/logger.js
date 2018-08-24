@@ -60,19 +60,19 @@ class Logger {
         };
         this.logger = this;
     }
-    info(message, ...args) {
-        if (this.log) {
-            this.log.info(message, ...args);
+    info(...args) {
+        if (this.log != null) {
+            this.log.info.call(this.log, ...args);
         }
     }
-    warn(message, ...args) {
-        if (this.log) {
-            this.log.warn(message, ...args);
+    warn(...args) {
+        if (this.log != null) {
+            this.log.warn.call(this.log, ...args);
         }
     }
-    error(message, ...args) {
-        if (this.log) {
-            this.log.error(message, ...args);
+    error(...args) {
+        if (this.log != null) {
+            this.log.error.call(this.log, ...args);
         }
     }
 }

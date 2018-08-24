@@ -46,21 +46,21 @@ class Logger {
     this.logger = this;
   }
 
-  public info(message, ...args: any[]) {
-    if (this.log) {
-      this.log.info(message, ...args);
+  public info(...args: any[]) {
+    if (this.log != null) {
+      this.log.info.call(this.log, ...args);
     }
   }
 
-  public warn(message, ...args: any[]) {
-    if (this.log) {
-      this.log.warn(message, ...args);
+  public warn(...args: any[]) {
+    if (this.log != null) {
+      this.log.warn.call(this.log, ...args);
     }
   }
 
-  public error(message, ...args: any[]) {
-    if (this.log) {
-      this.log.error(message, ...args);
+  public error(...args: any[]) {
+    if (this.log != null) {
+      this.log.error.call(this.log, ...args);
     }
   }
 

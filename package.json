@@ -6,7 +6,7 @@
   "types": "build/src/index.d.ts",
   "scripts": {
     "clean": "rimraf coverage build tmp",
-    "build": "tsc -p tsconfig.json",
+    "build": "npm run lint && tsc -p tsconfig.json",
     "watch": "tsc -w -p tsconfig.json",
     "lint": "tslint -t stylish --project \"tsconfig.json\"",
     "pretest": "npm run lint"
