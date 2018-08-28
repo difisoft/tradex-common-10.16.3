@@ -3,4 +3,5 @@ import Kafka, { IConf, IMessage, IResponseDestination, ISendMessage } from './mo
 import { logger as Logger } from './modules/log';
 import Utils from './modules/utils';
 import Zookeeper from './modules/zookeeper';
-export { Zookeeper, Utils, Logger, Kafka, Errors, ISendMessage, IResponseDestination, IConf, IMessage };
+import * as AWS from './modules/aws';
+export { Zookeeper, Utils, Logger, Kafka, Errors, ISendMessage, IResponseDestination, IConf, IMessage, AWS };

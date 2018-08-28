@@ -16,6 +16,7 @@
   "dependencies": {
     "@types/node-zookeeper-client": "^0.2.6",
     "@types/rx": "^4.1.1",
+    "aws-sdk": "^2.302.0",
     "log4js": "^3.0.5",
     "node-rdkafka": "^2.4.1",
     "node-zookeeper-client": "^0.2.2",

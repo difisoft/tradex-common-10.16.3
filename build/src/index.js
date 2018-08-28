@@ -10,4 +10,6 @@ const utils_1 = require("./modules/utils");
 exports.Utils = utils_1.default;
 const zookeeper_1 = require("./modules/zookeeper");
 exports.Zookeeper = zookeeper_1.default;
+const AWS = require("./modules/aws");
+exports.AWS = AWS;
 //# sourceMappingURL=index.js.map
