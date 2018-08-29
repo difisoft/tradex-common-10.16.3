@@ -29,7 +29,7 @@ const createLogger = (conf) => {
     });
 };
 const createLogger4JS = (conf) => {
-    log4js_1.configure(conf.logger.config);
+    log4js_1.configure(conf);
     return log4js_1.getLogger('application');
 };
 class Logger {

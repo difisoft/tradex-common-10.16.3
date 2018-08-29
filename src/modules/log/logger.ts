@@ -40,7 +40,7 @@ const createLogger = (conf: any) => {
 };
 
 const createLogger4JS = (conf: any) => {
-  configure(conf.logger.config);
+  configure(conf);
   return getLogger('application');
 }
 
