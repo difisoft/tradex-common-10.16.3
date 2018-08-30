@@ -1,5 +1,5 @@
 import {doSafe} from './arrowFunctions';
-import {onError, onNext, Rx} from './rx';
+import {onError, onNext, transform, transformAsync, Rx} from './rx';
 import {validate} from './validation';
 
 export default {
@@ -7,5 +7,7 @@ export default {
   doSafe,
   onError,
   onNext,
+  transform,
+  transformAsync,
   Rx
 }

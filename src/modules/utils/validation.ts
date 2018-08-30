@@ -1,14 +1,13 @@
 import FieldRequiredError from "../errors/FieldRequiredError";
+import InvalidParameterError from "../errors/InvalidParameterError";
+
+declare type CheckFunc = (value: any, name: string) => any;
 
 export class Validate {
   private isRequired: boolean;
-  private checks: any;
-  private fieldValue: any;
-  private fieldName: any;
+  private checks: CheckFunc[];
 
-  constructor(fieldValue: any, fieldName: any) {
-    this.fieldName = fieldName;
-    this.fieldValue = fieldValue;
+  constructor(private readonly fieldValue: any, private readonly fieldName: string) {
     this.isRequired = false;
     this.checks = [];
   }
@@ -18,17 +17,17 @@ export class Validate {
     return this;
   };
 
-  public add = (func: any) => {
+  public add = (func: CheckFunc) => {
     this.checks.push(func);
     return this;
   };
 
-  public adds = (funcs: any) => {
+  public adds = (funcs: CheckFunc[]) => {
     this.checks = this.checks.concat(funcs);
     return this;
   };
 
-  public throwValid = (invalidParameterError?: any) => {
+  public throwValid = (invalidParameterError?: InvalidParameterError) => {
     const result = this.valid();
     if (result) {
       if (invalidParameterError) {
@@ -59,7 +58,7 @@ export class Validate {
   };
 }
 
-const validate = (fieldValue: any, fieldName: any) => new Validate(fieldValue, fieldName);
+const validate = (fieldValue: any, fieldName: string) => new Validate(fieldValue, fieldName);
 
 const isEmpty = (fieldValue: any) => fieldValue === undefined || fieldValue === null || fieldValue === '';
 

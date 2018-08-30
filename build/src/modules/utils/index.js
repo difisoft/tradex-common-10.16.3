@@ -8,6 +8,8 @@ exports.default = {
     doSafe: arrowFunctions_1.doSafe,
     onError: rx_1.onError,
     onNext: rx_1.onNext,
+    transform: rx_1.transform,
+    transformAsync: rx_1.transformAsync,
     Rx: rx_1.Rx
 };
 //# sourceMappingURL=index.js.map

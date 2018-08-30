@@ -1,14 +1,16 @@
+import InvalidParameterError from "../errors/InvalidParameterError";
+declare type CheckFunc = (value: any, name: string) => any;
 export declare class Validate {
+    private readonly fieldValue;
+    private readonly fieldName;
     private isRequired;
     private checks;
-    private fieldValue;
-    private fieldName;
-    constructor(fieldValue: any, fieldName: any);
+    constructor(fieldValue: any, fieldName: string);
     setRequire: () => this;
-    add: (func: any) => this;
-    adds: (funcs: any) => this;
-    throwValid: (invalidParameterError?: any) => void;
+    add: (func: CheckFunc) => this;
+    adds: (funcs: CheckFunc[]) => this;
+    throwValid: (invalidParameterError?: InvalidParameterError) => void;
     valid: () => any;
 }
-declare const validate: (fieldValue: any, fieldName: any) => Validate;
+declare const validate: (fieldValue: any, fieldName: string) => Validate;
 export { validate };

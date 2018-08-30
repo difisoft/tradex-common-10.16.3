@@ -3,6 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const FieldRequiredError_1 = require("../errors/FieldRequiredError");
 class Validate {
     constructor(fieldValue, fieldName) {
+        this.fieldValue = fieldValue;
+        this.fieldName = fieldName;
         this.setRequire = () => {
             this.isRequired = true;
             return this;
@@ -44,8 +46,6 @@ class Validate {
             }
             return null;
         };
-        this.fieldName = fieldName;
-        this.fieldValue = fieldValue;
         this.isRequired = false;
         this.checks = [];
     }
