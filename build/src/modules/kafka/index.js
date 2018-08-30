@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const StreamHandler_1 = require("./StreamHandler");
+const MessageHandler_1 = require("./MessageHandler");
 const SendRequest_1 = require("./SendRequest");
 const types_1 = require("./types");
 exports.default = {
@@ -10,5 +11,6 @@ exports.default = {
     create: SendRequest_1.create,
     getInstance: SendRequest_1.getInstance,
     MessageType: types_1.MessageType,
+    MessageHandler: MessageHandler_1.MessageHandler,
 };
 //# sourceMappingURL=index.js.map
