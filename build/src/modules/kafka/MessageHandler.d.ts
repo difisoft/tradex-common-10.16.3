@@ -12,7 +12,8 @@ import { IMessage } from "./types";
 declare type HandleResult = Observable<any> | boolean;
 declare type Handle = (msg: IMessage) => HandleResult;
 declare class MessageHandler {
-    handle(message: any, func: Handle): void;
-    getErrorMessage(error: Error): any;
+    constructor();
+    public handle(message: any, func: Handle): void;
+    public getErrorMessage(error: Error): any;
 }
 export { MessageHandler, HandleResult, Handle, };

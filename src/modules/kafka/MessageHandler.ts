@@ -9,6 +9,10 @@ declare type HandleResult = Observable<any> | boolean;
 declare type Handle = (msg: IMessage) => HandleResult;
 
 class MessageHandler {
+  constructor() {
+    // nothing to do
+  }
+
   public handle(message: any, func: Handle): void {
     try {
       logger.info('Got message');
@@ -79,7 +83,7 @@ class MessageHandler {
 }
 
 export {
-  MessageHandler,
   HandleResult,
   Handle,
+  MessageHandler,
 }

@@ -4,6 +4,8 @@ const log_1 = require("../log");
 const SendRequest_1 = require("./SendRequest");
 const UriNotFound_1 = require("../errors/UriNotFound");
 class MessageHandler {
+    constructor() {
+    }
     handle(message, func) {
         try {
             log_1.logger.info('Got message');
