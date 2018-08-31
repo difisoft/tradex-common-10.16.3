@@ -28,5 +28,5 @@ class StreamHandler {
         });
     }
 }
-exports.default = StreamHandler;
+exports.StreamHandler = StreamHandler;
 //# sourceMappingURL=StreamHandler.js.map

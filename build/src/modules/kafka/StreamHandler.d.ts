@@ -4,4 +4,4 @@ declare class StreamHandler {
     private stream;
     constructor(conf: IConf, options: any, topics: string[], dataHandler: (data: any, handler: StreamHandler) => void);
 }
-export default StreamHandler;
+export { StreamHandler };
