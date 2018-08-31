@@ -10,6 +10,6 @@ exports.default = {
     onNext: rx_1.onNext,
     transform: rx_1.transform,
     transformAsync: rx_1.transformAsync,
-    Rx: rx_1.Rx
+    transformPromise: rx_1.transformPromise,
 };
 //# sourceMappingURL=index.js.map

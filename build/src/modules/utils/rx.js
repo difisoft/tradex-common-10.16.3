@@ -1,7 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const Rx = require("rx");
-exports.Rx = Rx;
 function onError(observer, err) {
     observer.onError(err);
     observer.onCompleted();
@@ -23,6 +21,16 @@ function transform(observer, observable, func, errorHanler) {
     }, (err) => errorHanler ? errorHanler(err) : observer.onError(err), () => observer.onCompleted());
 }
 exports.transform = transform;
+function transformPromise(observer, promise, func, errorHandler) {
+    promise.then((f) => {
+        observer.onNext(func(f));
+        observer.onCompleted();
+    }).catch((err) => {
+        observer.onError(err);
+        observer.onCompleted();
+    });
+}
+exports.transformPromise = transformPromise;
 function transformAsync(observer, observable, func, errorHanler) {
     observable.subscribe((data) => {
         try {

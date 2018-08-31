@@ -1,16 +1,16 @@
-import * as Rx from 'rx';
+import {Observer, Observable} from 'rx';
 
-function onError(observer: Rx.Observer<any>, err: any) {
+function onError(observer: Observer<any>, err: any) {
   observer.onError(err);
   observer.onCompleted();
 }
 
-function onNext<T>(observer: Rx.Observer<T>, data: T) {
+function onNext<T>(observer: Observer<T>, data: T) {
   observer.onNext(data);
   observer.onCompleted();
 }
 
-function transform<T, F>(observer: Rx.Observer<T>, observable: Rx.Observable<F>
+function transform<T, F>(observer: Observer<T>, observable: Observable<F>
                          , func: (f: F) => T, errorHanler?: (err: Error) => void): void {
   observable.subscribe(
     (data: F) => {
@@ -24,8 +24,19 @@ function transform<T, F>(observer: Rx.Observer<T>, observable: Rx.Observable<F>
   );
 }
 
-function transformAsync<T, F>(observer: Rx.Observer<T>, observable: Rx.Observable<F>
-                         , func: (f: F, observer: Rx.Observer<T>) => void, errorHanler?: (err: Error) => void): void {
+function transformPromise<T, F>(observer: Observer<T>, promise: Promise<F>
+                         , func: (f: F) => T, errorHandler?: (err: Error) => void): void {
+  promise.then((f: F) => {
+    observer.onNext(func(f));
+    observer.onCompleted();
+  }). catch((err: Error) => {
+    observer.onError(err);
+    observer.onCompleted();
+  });
+}
+
+function transformAsync<T, F>(observer: Observer<T>, observable: Observable<F>
+                         , func: (f: F, observer: Observer<T>) => void, errorHanler?: (err: Error) => void): void {
   observable.subscribe(
     (data: F) => {
       try {
@@ -39,9 +50,9 @@ function transformAsync<T, F>(observer: Rx.Observer<T>, observable: Rx.Observabl
 }
 
 export {
-  Rx,
   onNext,
   onError,
   transform,
   transformAsync,
+  transformPromise,
 }

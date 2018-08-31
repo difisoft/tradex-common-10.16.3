@@ -13,7 +13,7 @@ declare type HandleResult = Observable<any> | boolean;
 declare type Handle = (msg: IMessage) => HandleResult;
 declare class MessageHandler {
     constructor();
-    public handle(message: any, func: Handle): void;
-    public getErrorMessage(error: Error): any;
+    handle(message: any, func: Handle): void;
+    getErrorMessage(error: Error): any;
 }
-export { MessageHandler, HandleResult, Handle, };
+export { HandleResult, Handle, MessageHandler, };
