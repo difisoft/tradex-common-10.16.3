@@ -7,8 +7,8 @@
 /// <reference types="rx-lite-experimental" />
 /// <reference types="rx-lite-joinpatterns" />
 /// <reference types="rx-lite-time" />
-import Rx = require("rx");
 import { IConf, IMessage, ISendMessage, MessageType } from './types';
+import Rx = require("rx");
 declare class SendRequestCommon {
     protected conf: IConf;
     protected messageId: number;

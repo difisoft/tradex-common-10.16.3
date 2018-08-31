@@ -1,7 +1,7 @@
-import StreamHandler from './StreamHandler';
+import {StreamHandler} from './StreamHandler';
 import {logger} from '../log';
-import Rx = require("rx");
 import {IConf, IMessage, ISendMessage, MessageType,} from './types';
+import Rx = require("rx");
 import Kafka = require('node-rdkafka');
 
 class SendRequestCommon {
@@ -107,7 +107,7 @@ class SendRequestCommon {
 }
 
 class SendRequest extends SendRequestCommon {
-  private requestedMessages: Map<string | number, ISendMessage> = new Map<string|number, ISendMessage>();
+  private requestedMessages: Map<string | number, ISendMessage> = new Map<string | number, ISendMessage>();
 
   constructor(
     conf: IConf,

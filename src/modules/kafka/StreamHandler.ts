@@ -37,4 +37,6 @@ class StreamHandler {
   }
 }
 
-export default StreamHandler;
+export {
+  StreamHandler
+};

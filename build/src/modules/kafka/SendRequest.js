@@ -2,8 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const StreamHandler_1 = require("./StreamHandler");
 const log_1 = require("../log");
-const Rx = require("rx");
 const types_1 = require("./types");
+const Rx = require("rx");
 const Kafka = require("node-rdkafka");
 class SendRequestCommon {
     constructor(conf) {
@@ -105,7 +105,7 @@ class SendRequest extends SendRequestCommon {
     constructor(conf, consumerOptions) {
         super(conf);
         this.requestedMessages = new Map();
-        new StreamHandler_1.default(this.conf, consumerOptions, [this.responseTopic], (data) => this.handlerResponse(data));
+        new StreamHandler_1.StreamHandler(this.conf, consumerOptions, [this.responseTopic], (data) => this.handlerResponse(data));
     }
     sendRequest(transactionId, topic, uri, data) {
         const subject = new Rx.Subject();
