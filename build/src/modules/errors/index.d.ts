@@ -7,4 +7,5 @@ import InvalidParameterError from "./InvalidParameterError";
 import InvalidIdSecretError from "./InvalidIdSecretError";
 import InvalidFieldValueError from "./InvalidFieldValueError";
 import { ForwardError } from "./ForwardError";
-export { FieldRequiredError, GeneralError, UriNotFound, SystemError, ObjectNotFoundError, InvalidParameterError, InvalidIdSecretError, InvalidFieldValueError, ForwardError, };
+import TokenExpiredError from "./TokenExpiredError";
+export { FieldRequiredError, GeneralError, UriNotFound, SystemError, ObjectNotFoundError, InvalidParameterError, InvalidIdSecretError, InvalidFieldValueError, ForwardError, TokenExpiredError, };

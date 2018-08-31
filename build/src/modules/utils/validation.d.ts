@@ -6,11 +6,11 @@ export declare class Validate {
     private isRequired;
     private checks;
     constructor(fieldValue: any, fieldName: string);
-    setRequire: () => this;
-    add: (func: CheckFunc) => this;
-    adds: (funcs: CheckFunc[]) => this;
-    throwValid: (invalidParameterError?: InvalidParameterError) => void;
-    valid: () => any;
+    setRequire(): Validate;
+    add(func: CheckFunc): Validate;
+    adds(funcs: CheckFunc[]): Validate;
+    throwValid(invalidParameterError?: InvalidParameterError): void;
+    valid(): any;
 }
-declare const validate: (fieldValue: any, fieldName: string) => Validate;
+declare function validate(fieldValue: any, fieldName: string): Validate;
 export { validate };

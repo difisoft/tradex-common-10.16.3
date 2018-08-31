@@ -26,11 +26,11 @@ declare class SendRequestCommon {
 }
 declare class SendRequest extends SendRequestCommon {
     private requestedMessages;
-    constructor(conf: IConf, consumerOptions: any);
+    constructor(conf: IConf, consumerOptions: any, initListener?: boolean);
     sendRequest(transactionId: string, topic: string, uri: string, data: any): Rx.Observable<IMessage>;
     protected reallySendMessage(message: ISendMessage): void;
     private handlerResponse;
 }
-declare function create(conf: IConf, consumerOptions: any): void;
+declare function create(conf: IConf, consumerOptions: any, initResponseListener?: boolean): void;
 declare function getInstance(): SendRequest;
 export { SendRequest, SendRequestCommon, create, getInstance, };

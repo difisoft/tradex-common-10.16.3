@@ -102,10 +102,12 @@ class SendRequestCommon {
 }
 exports.SendRequestCommon = SendRequestCommon;
 class SendRequest extends SendRequestCommon {
-    constructor(conf, consumerOptions) {
+    constructor(conf, consumerOptions, initListener = true) {
         super(conf);
         this.requestedMessages = new Map();
-        new StreamHandler_1.StreamHandler(this.conf, consumerOptions, [this.responseTopic], (data) => this.handlerResponse(data));
+        if (initListener) {
+            new StreamHandler_1.StreamHandler(this.conf, consumerOptions, [this.responseTopic], (data) => this.handlerResponse(data));
+        }
     }
     sendRequest(transactionId, topic, uri, data) {
         const subject = new Rx.Subject();
@@ -141,8 +143,8 @@ class SendRequest extends SendRequestCommon {
 }
 exports.SendRequest = SendRequest;
 let instance = null;
-function create(conf, consumerOptions) {
-    instance = new SendRequest(conf, consumerOptions);
+function create(conf, consumerOptions, initResponseListener = true) {
+    instance = new SendRequest(conf, consumerOptions, initResponseListener);
 }
 exports.create = create;
 function getInstance() {

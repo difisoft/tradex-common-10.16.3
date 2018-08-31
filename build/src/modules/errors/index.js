@@ -18,4 +18,6 @@ const InvalidFieldValueError_1 = require("./InvalidFieldValueError");
 exports.InvalidFieldValueError = InvalidFieldValueError_1.default;
 const ForwardError_1 = require("./ForwardError");
 exports.ForwardError = ForwardError_1.ForwardError;
+const TokenExpiredError_1 = require("./TokenExpiredError");
+exports.TokenExpiredError = TokenExpiredError_1.default;
 //# sourceMappingURL=index.js.map

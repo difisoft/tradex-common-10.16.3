@@ -112,10 +112,13 @@ class SendRequest extends SendRequestCommon {
   constructor(
     conf: IConf,
     consumerOptions: any,
+    initListener: boolean = true,
   ) {
     super(conf);
-    new StreamHandler(this.conf, consumerOptions, [this.responseTopic]
-      , (data: any) => this.handlerResponse(data));
+    if (initListener) {
+      new StreamHandler(this.conf, consumerOptions, [this.responseTopic]
+        , (data: any) => this.handlerResponse(data));
+    }
   }
 
 
@@ -156,8 +159,8 @@ class SendRequest extends SendRequestCommon {
 
 let instance: SendRequest = null;
 
-function create(conf: IConf, consumerOptions: any): void {
-  instance = new SendRequest(conf, consumerOptions);
+function create(conf: IConf, consumerOptions: any, initResponseListener: boolean = true): void {
+  instance = new SendRequest(conf, consumerOptions, initResponseListener);
 }
 
 function getInstance(): SendRequest {

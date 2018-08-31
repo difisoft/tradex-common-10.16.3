@@ -10,7 +10,7 @@ function onNext(observer, data) {
     observer.onCompleted();
 }
 exports.onNext = onNext;
-function transform(observer, observable, func, errorHanler) {
+function transform(observer, observable, func, errorHandler) {
     observable.subscribe((data) => {
         try {
             observer.onNext(func(data));
@@ -18,20 +18,51 @@ function transform(observer, observable, func, errorHanler) {
         catch (e) {
             onError(observer, e);
         }
-    }, (err) => errorHanler ? errorHanler(err) : observer.onError(err), () => observer.onCompleted());
+    }, (err) => errorHandler ? errorHandler(err) : observer.onError(err), () => observer.onCompleted());
 }
 exports.transform = transform;
+function transformSingle(observer, observable, errorHandler) {
+    observable.subscribe((data) => {
+        try {
+            observer.onNext(data);
+        }
+        catch (e) {
+            onError(observer, e);
+        }
+    }, (err) => errorHandler ? errorHandler(err) : observer.onError(err), () => observer.onCompleted());
+}
+exports.transformSingle = transformSingle;
 function transformPromise(observer, promise, func, errorHandler) {
     promise.then((f) => {
         observer.onNext(func(f));
         observer.onCompleted();
     }).catch((err) => {
-        observer.onError(err);
-        observer.onCompleted();
+        if (errorHandler) {
+            errorHandler(err);
+        }
+        else {
+            observer.onError(err);
+            observer.onCompleted();
+        }
     });
 }
 exports.transformPromise = transformPromise;
-function transformAsync(observer, observable, func, errorHanler) {
+function transformSinglePromise(observer, promise, errorHandler) {
+    promise.then((data) => {
+        observer.onNext(data);
+        observer.onCompleted();
+    }).catch((err) => {
+        if (errorHandler) {
+            errorHandler(err);
+        }
+        else {
+            observer.onError(err);
+            observer.onCompleted();
+        }
+    });
+}
+exports.transformSinglePromise = transformSinglePromise;
+function transformAsync(observer, observable, func, errorHandler) {
     observable.subscribe((data) => {
         try {
             func(data, observer);
@@ -39,7 +70,18 @@ function transformAsync(observer, observable, func, errorHanler) {
         catch (e) {
             onError(observer, e);
         }
-    }, (err) => errorHanler ? errorHanler(err) : observer.onError(err), () => observer.onCompleted());
+    }, (err) => errorHandler ? errorHandler(err) : observer.onError(err), () => observer.onCompleted());
 }
 exports.transformAsync = transformAsync;
+function transformSingleAsync(observer, observable, errorHandler) {
+    observable.subscribe((data) => {
+        try {
+            observer.onNext(data);
+        }
+        catch (e) {
+            onError(observer, e);
+        }
+    }, (err) => errorHandler ? errorHandler(err) : observer.onError(err), () => observer.onCompleted());
+}
+exports.transformSingleAsync = transformSingleAsync;
 //# sourceMappingURL=rx.js.map

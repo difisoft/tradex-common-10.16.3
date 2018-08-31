@@ -7,6 +7,7 @@ import InvalidParameterError from "./InvalidParameterError";
 import InvalidIdSecretError from "./InvalidIdSecretError";
 import InvalidFieldValueError from "./InvalidFieldValueError";
 import {ForwardError} from "./ForwardError";
+import TokenExpiredError from "./TokenExpiredError";
 
 export {
   FieldRequiredError,
@@ -18,4 +19,5 @@ export {
   InvalidIdSecretError,
   InvalidFieldValueError,
   ForwardError,
+  TokenExpiredError,
 }
