@@ -1,4 +1,4 @@
-import {doSafe} from './arrowFunctions';
+import { doSafe } from './arrowFunctions';
 import {
   onError,
   onNext,
@@ -9,8 +9,9 @@ import {
   transformSingleAsync,
   transformSinglePromise,
 } from './rx';
-import {validate} from './validation';
-import {singleton} from './Singleton';
+import { validate } from './validation';
+import { singleton } from './Singleton';
+import { formatDateToDisplay } from './date';
 
 export default {
   validate,
@@ -24,4 +25,5 @@ export default {
   transformSingle,
   transformSingleAsync,
   transformSinglePromise,
+  formatDateToDisplay
 }

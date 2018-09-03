@@ -4,6 +4,7 @@ const arrowFunctions_1 = require("./arrowFunctions");
 const rx_1 = require("./rx");
 const validation_1 = require("./validation");
 const Singleton_1 = require("./Singleton");
+const date_1 = require("./date");
 exports.default = {
     validate: validation_1.validate,
     doSafe: arrowFunctions_1.doSafe,
@@ -16,5 +17,6 @@ exports.default = {
     transformSingle: rx_1.transformSingle,
     transformSingleAsync: rx_1.transformSingleAsync,
     transformSinglePromise: rx_1.transformSinglePromise,
+    formatDateToDisplay: date_1.formatDateToDisplay
 };
 //# sourceMappingURL=index.js.map

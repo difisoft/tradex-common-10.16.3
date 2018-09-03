@@ -14,5 +14,6 @@ declare const _default: {
     transformSingle: typeof transformSingle;
     transformSingleAsync: typeof transformSingleAsync;
     transformSinglePromise: typeof transformSinglePromise;
+    formatDateToDisplay: (date: Date) => string;
 };
 export default _default;
