@@ -4,8 +4,10 @@ const arrowFunctions_1 = require("./arrowFunctions");
 const rx_1 = require("./rx");
 const validation_1 = require("./validation");
 const Singleton_1 = require("./Singleton");
+const date_1 = require("./date");
 exports.default = {
     validate: validation_1.validate,
+    validateEmail: validation_1.validateEmail,
     doSafe: arrowFunctions_1.doSafe,
     onError: rx_1.onError,
     onNext: rx_1.onNext,
@@ -19,6 +21,8 @@ exports.default = {
     createFailFromError: validation_1.createFailFromError,
     createFailValidation: validation_1.createFailValidation,
     createSuccessValidation: validation_1.createSuccessValidation,
-    Validate: validation_1.Validate
+    Validate: validation_1.Validate,
+    formatDateToDisplay: date_1.formatDateToDisplay,
+    convertStringToDate: date_1.convertStringToDate
 };
 //# sourceMappingURL=index.js.map

@@ -1,9 +1,10 @@
 /// <reference types="rx-core" />
 /// <reference types="rx-lite" />
 import { onError, onNext, transform, transformAsync, transformPromise, transformSingle, transformSingleAsync, transformSinglePromise } from './rx';
-import { validate, createFailFromError, createFailValidation, createSuccessValidation, Validate } from './validation';
+import { validate, validateEmail, createFailFromError, createFailValidation, createSuccessValidation, Validate } from './validation';
 declare const _default: {
     validate: typeof validate;
+    validateEmail: typeof validateEmail;
     doSafe: (observable: Rx.Observer<any>, func: any) => void;
     onError: typeof onError;
     onNext: typeof onNext;
@@ -18,5 +19,7 @@ declare const _default: {
     createFailValidation: typeof createFailValidation;
     createSuccessValidation: typeof createSuccessValidation;
     Validate: typeof Validate;
+    formatDateToDisplay: (date: Date, format?: string) => string;
+    convertStringToDate: (data: string, format?: string) => Date;
 };
 export default _default;

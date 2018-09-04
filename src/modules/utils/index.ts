@@ -9,12 +9,13 @@ import {
   transformSingleAsync,
   transformSinglePromise,
 } from './rx';
-import {validate, createFailFromError, createFailValidation, createSuccessValidation, Validate} from './validation';
+import {validate, validateEmail, createFailFromError, createFailValidation, createSuccessValidation, Validate} from './validation';
 import {singleton} from './Singleton';
-import { formatDateToDisplay } from './date';
+import { formatDateToDisplay, convertStringToDate } from './date';
 
 export default {
   validate,
+  validateEmail,
   doSafe,
   onError,
   onNext,
@@ -29,5 +30,6 @@ export default {
   createFailValidation,
   createSuccessValidation,
   Validate,
-  formatDateToDisplay
+  formatDateToDisplay,
+  convertStringToDate
 }

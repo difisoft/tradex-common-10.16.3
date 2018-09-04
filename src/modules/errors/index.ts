@@ -9,6 +9,7 @@ import InvalidFieldValueError from "./InvalidFieldValueError";
 import {ForwardError} from "./ForwardError";
 import TokenExpiredError from "./TokenExpiredError";
 
+export const EMAIL_VALIDATION = 'ERROR_EMAIL_VALIDATION';
 export {
   FieldRequiredError,
   GeneralError,

@@ -22,4 +22,5 @@ export declare class Validate {
     valid(): IValidationResult;
 }
 declare function validate(fieldValue: any, fieldName: string): Validate;
-export { validate, createFailValidation, createFailFromError, createSuccessValidation, };
+declare function validateEmail(fieldValue: string, paramName?: string): IValidationResult;
+export { validate, validateEmail, createFailValidation, createFailFromError, createSuccessValidation, };

@@ -1,6 +1,7 @@
 import FieldRequiredError from "../errors/FieldRequiredError";
 import InvalidParameterError from "../errors/InvalidParameterError";
 import IParamError from "../models/IParamError";
+import { EMAIL_VALIDATION } from '../errors';
 
 declare type CheckFunc = (value: any, name: string) => IValidationResult;
 
@@ -97,8 +98,18 @@ function isEmpty(fieldValue: any): boolean {
   return fieldValue === undefined || fieldValue === null || fieldValue === '';
 }
 
+function validateEmail(fieldValue: string, paramName: string = 'email'): IValidationResult {
+  const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  if (regex.test(fieldValue.toLowerCase())) {
+    return createSuccessValidation(fieldValue);
+  } else {
+    return createFailValidation(EMAIL_VALIDATION, null, paramName);
+  }
+}
+
 export {
   validate,
+  validateEmail,
   createFailValidation,
   createFailFromError,
   createSuccessValidation,

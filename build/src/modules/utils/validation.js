@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const FieldRequiredError_1 = require("../errors/FieldRequiredError");
+const errors_1 = require("../errors");
 function createFailValidation(code, messageParams, paramName) {
     return {
         success: false,
@@ -89,4 +90,14 @@ exports.validate = validate;
 function isEmpty(fieldValue) {
     return fieldValue === undefined || fieldValue === null || fieldValue === '';
 }
+function validateEmail(fieldValue, paramName = 'email') {
+    const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if (regex.test(fieldValue.toLowerCase())) {
+        return createSuccessValidation(fieldValue);
+    }
+    else {
+        return createFailValidation(errors_1.EMAIL_VALIDATION, null, paramName);
+    }
+}
+exports.validateEmail = validateEmail;
 //# sourceMappingURL=validation.js.map

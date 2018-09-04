@@ -8,4 +8,5 @@ import InvalidIdSecretError from "./InvalidIdSecretError";
 import InvalidFieldValueError from "./InvalidFieldValueError";
 import { ForwardError } from "./ForwardError";
 import TokenExpiredError from "./TokenExpiredError";
+export declare const EMAIL_VALIDATION = "ERROR_EMAIL_VALIDATION";
 export { FieldRequiredError, GeneralError, UriNotFound, SystemError, ObjectNotFoundError, InvalidParameterError, InvalidIdSecretError, InvalidFieldValueError, ForwardError, TokenExpiredError, };
