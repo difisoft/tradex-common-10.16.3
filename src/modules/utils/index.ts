@@ -1,4 +1,4 @@
-import {doSafe} from './arrowFunctions';
+import { doSafe } from './arrowFunctions';
 import {
   onError,
   onNext,
@@ -11,6 +11,7 @@ import {
 } from './rx';
 import {validate, createFailFromError, createFailValidation, createSuccessValidation, Validate} from './validation';
 import {singleton} from './Singleton';
+import { formatDateToDisplay } from './date';
 
 export default {
   validate,
@@ -27,5 +28,6 @@ export default {
   createFailFromError,
   createFailValidation,
   createSuccessValidation,
-  Validate
+  Validate,
+  formatDateToDisplay
 }

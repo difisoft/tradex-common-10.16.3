@@ -18,6 +18,7 @@
     "@types/rx": "^4.1.1",
     "aws-sdk": "^2.302.0",
     "log4js": "^3.0.5",
+    "moment": "^2.22.2",
     "node-rdkafka": "^2.4.1",
     "node-zookeeper-client": "^0.2.2",
     "path": "^0.12.7",
