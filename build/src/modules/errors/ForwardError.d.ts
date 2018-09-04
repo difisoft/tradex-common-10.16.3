@@ -1,5 +1,6 @@
+import IStatus from "../models/IStatus";
 export declare class ForwardError extends Error {
-    status: any;
+    status: IStatus;
     isForwardError: boolean;
-    constructor(status: any);
+    constructor(status: IStatus);
 }

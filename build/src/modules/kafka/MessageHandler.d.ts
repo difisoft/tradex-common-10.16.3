@@ -9,11 +9,12 @@
 /// <reference types="rx-lite-time" />
 import { Observable } from "rx";
 import { IMessage } from "./types";
+import IResponse from "../models/IResponse";
 declare type HandleResult = Observable<any> | boolean;
 declare type Handle = (msg: IMessage) => HandleResult;
 declare class MessageHandler {
     constructor();
     handle(message: any, func: Handle): void;
-    getErrorMessage(error: Error): any;
+    getErrorMessage(error: Error): IResponse;
 }
 export { HandleResult, Handle, MessageHandler, };

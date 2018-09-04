@@ -4,6 +4,8 @@ import {logger} from "../log";
 import {getInstance} from "./SendRequest";
 import GeneralError from "../errors/GeneralError";
 import UriNotFound from "../errors/UriNotFound";
+import IResponse, {createFailResponse} from "../models/IResponse";
+import {ForwardError} from "../errors";
 
 declare type HandleResult = Observable<any> | boolean;
 declare type Handle = (msg: IMessage) => HandleResult;
@@ -53,31 +55,20 @@ class MessageHandler {
   }
 
 
-  public getErrorMessage(error: Error): any {
+  public getErrorMessage(error: Error): IResponse {
     if (error['isSystemError']) {// tslint:disable-line
       if (error['source']) {// tslint:disable-line
         logger.logError('error', error['source']);// tslint:disable-line
       } else {
         logger.logError('error', error);
       }
-      return {
-        status: {
-          code: (<GeneralError>error).code,
-          message: (<GeneralError>error).message,
-          messageParams: (<GeneralError>error).messageParams,
-          params: ((<GeneralError>error).params && (<GeneralError>error).params.length > 0) ? (<GeneralError>error).params : undefined,
-        }
-      };
+      return createFailResponse((<GeneralError>error).code, (<GeneralError>error).messageParams,
+        ((<GeneralError>error).params && (<GeneralError>error).params.length > 0) ? (<GeneralError>error).params : undefined);
     } else if (error['isForwardError']) {// tslint:disable-line
-      return {status: error['status']};// tslint:disable-line
+      return {status: (<ForwardError>error).status};
     } else {
       logger.logError('error', error);
-      return {
-        status: {
-          code: 'INTERNAL_SERVER_ERROR',
-          message: 'an error has occurred',
-        }
-      };
+      return createFailResponse('INTERNAL_SERVER_ERROR');
     }
   };
 }

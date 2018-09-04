@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const log_1 = require("../log");
 const SendRequest_1 = require("./SendRequest");
 const UriNotFound_1 = require("../errors/UriNotFound");
+const IResponse_1 = require("../models/IResponse");
 class MessageHandler {
     constructor() {
     }
@@ -37,26 +38,14 @@ class MessageHandler {
             else {
                 log_1.logger.logError('error', error);
             }
-            return {
-                status: {
-                    code: error.code,
-                    message: error.message,
-                    messageParams: error.messageParams,
-                    params: (error.params && error.params.length > 0) ? error.params : undefined,
-                }
-            };
+            return IResponse_1.createFailResponse(error.code, error.messageParams, (error.params && error.params.length > 0) ? error.params : undefined);
         }
         else if (error['isForwardError']) {
-            return { status: error['status'] };
+            return { status: error.status };
         }
         else {
             log_1.logger.logError('error', error);
-            return {
-                status: {
-                    code: 'INTERNAL_SERVER_ERROR',
-                    message: 'an error has occurred',
-                }
-            };
+            return IResponse_1.createFailResponse('INTERNAL_SERVER_ERROR');
         }
     }
     ;

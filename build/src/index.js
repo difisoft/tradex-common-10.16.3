@@ -12,4 +12,6 @@ const zookeeper_1 = require("./modules/zookeeper");
 exports.Zookeeper = zookeeper_1.default;
 const AWS = require("./modules/aws");
 exports.AWS = AWS;
+const Models = require("./modules/models");
+exports.Models = Models;
 //# sourceMappingURL=index.js.map

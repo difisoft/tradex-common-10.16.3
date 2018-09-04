@@ -1,6 +1,31 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const FieldRequiredError_1 = require("../errors/FieldRequiredError");
+function createFailValidaton(code, messageParams, paramName) {
+    return {
+        success: false,
+        params: [{
+                code: code,
+                messageParams: messageParams,
+                param: paramName,
+            }],
+    };
+}
+exports.createFailValidaton = createFailValidaton;
+function createFailFromError(error) {
+    return {
+        success: false,
+        params: error.params,
+    };
+}
+exports.createFailFromError = createFailFromError;
+function createSuccessValidation(data) {
+    return {
+        success: true,
+        data: data,
+    };
+}
+exports.createSuccessValidation = createSuccessValidation;
 class Validate {
     constructor(fieldValue, fieldName) {
         this.fieldValue = fieldValue;
@@ -36,22 +61,23 @@ class Validate {
     }
     ;
     valid() {
+        let result = createSuccessValidation(this.fieldValue);
         if (this.isRequired) {
             if (isEmpty(this.fieldValue)) {
-                return new FieldRequiredError_1.default(this.fieldName);
+                return createFailFromError(new FieldRequiredError_1.default(this.fieldName));
             }
         }
         if (this.checks.length > 0) {
             if (!this.isRequired && (isEmpty(this.fieldValue))) {
                 for (let i = 0; i < this.checks.length; i++) {
-                    const result = this.checks[i](this.fieldValue, this.fieldName);
-                    if (result) {
+                    result = this.checks[i](this.fieldValue, this.fieldName);
+                    if (result && !result.success) {
                         return result;
                     }
                 }
             }
         }
-        return null;
+        return result;
     }
     ;
 }

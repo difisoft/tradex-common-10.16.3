@@ -4,4 +4,5 @@ import { logger as Logger } from './modules/log';
 import Utils from './modules/utils';
 import Zookeeper from './modules/zookeeper';
 import * as AWS from './modules/aws';
-export { Zookeeper, Utils, Logger, Kafka, Errors, AWS };
+import * as Models from './modules/models';
+export { Zookeeper, Utils, Logger, Kafka, Errors, AWS, Models, };
