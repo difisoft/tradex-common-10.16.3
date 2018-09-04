@@ -10,7 +10,7 @@ declare interface IValidationResult {
   params?: IParamError[],
 }
 
-function createFailValidaton(code: string, messageParams: string[], paramName: string): IValidationResult {
+function createFailValidation(code: string, messageParams: string[], paramName: string): IValidationResult {
   return {
     success: false,
     params: [{
@@ -99,7 +99,7 @@ function isEmpty(fieldValue: any): boolean {
 
 export {
   validate,
-  createFailValidaton,
+  createFailValidation,
   createFailFromError,
   createSuccessValidation,
 };

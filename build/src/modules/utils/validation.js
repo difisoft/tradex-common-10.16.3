@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const FieldRequiredError_1 = require("../errors/FieldRequiredError");
-function createFailValidaton(code, messageParams, paramName) {
+function createFailValidation(code, messageParams, paramName) {
     return {
         success: false,
         params: [{
@@ -11,7 +11,7 @@ function createFailValidaton(code, messageParams, paramName) {
             }],
     };
 }
-exports.createFailValidaton = createFailValidaton;
+exports.createFailValidation = createFailValidation;
 function createFailFromError(error) {
     return {
         success: false,

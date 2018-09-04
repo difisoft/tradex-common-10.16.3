@@ -16,5 +16,9 @@ exports.default = {
     transformSingle: rx_1.transformSingle,
     transformSingleAsync: rx_1.transformSingleAsync,
     transformSinglePromise: rx_1.transformSinglePromise,
+    createFailFromError: validation_1.createFailFromError,
+    createFailValidation: validation_1.createFailValidation,
+    createSuccessValidation: validation_1.createSuccessValidation,
+    Validate: validation_1.Validate
 };
 //# sourceMappingURL=index.js.map

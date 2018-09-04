@@ -9,7 +9,7 @@ import {
   transformSingleAsync,
   transformSinglePromise,
 } from './rx';
-import {validate} from './validation';
+import {validate, createFailFromError, createFailValidation, createSuccessValidation, Validate} from './validation';
 import {singleton} from './Singleton';
 
 export default {
@@ -24,4 +24,8 @@ export default {
   transformSingle,
   transformSingleAsync,
   transformSinglePromise,
+  createFailFromError,
+  createFailValidation,
+  createSuccessValidation,
+  Validate
 }

@@ -1,7 +1,7 @@
 /// <reference types="rx-core" />
 /// <reference types="rx-lite" />
 import { onError, onNext, transform, transformAsync, transformPromise, transformSingle, transformSingleAsync, transformSinglePromise } from './rx';
-import { validate } from './validation';
+import { validate, createFailFromError, createFailValidation, createSuccessValidation, Validate } from './validation';
 declare const _default: {
     validate: typeof validate;
     doSafe: (observable: Rx.Observer<any>, func: any) => void;
@@ -14,5 +14,9 @@ declare const _default: {
     transformSingle: typeof transformSingle;
     transformSingleAsync: typeof transformSingleAsync;
     transformSinglePromise: typeof transformSinglePromise;
+    createFailFromError: typeof createFailFromError;
+    createFailValidation: typeof createFailValidation;
+    createSuccessValidation: typeof createSuccessValidation;
+    Validate: typeof Validate;
 };
 export default _default;

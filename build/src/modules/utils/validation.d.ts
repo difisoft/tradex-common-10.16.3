@@ -6,7 +6,7 @@ declare interface IValidationResult {
     data?: any;
     params?: IParamError[];
 }
-declare function createFailValidaton(code: string, messageParams: string[], paramName: string): IValidationResult;
+declare function createFailValidation(code: string, messageParams: string[], paramName: string): IValidationResult;
 declare function createFailFromError(error: InvalidParameterError): IValidationResult;
 declare function createSuccessValidation(data: any): IValidationResult;
 export declare class Validate {
@@ -22,4 +22,4 @@ export declare class Validate {
     valid(): IValidationResult;
 }
 declare function validate(fieldValue: any, fieldName: string): Validate;
-export { validate, createFailValidaton, createFailFromError, createSuccessValidation, };
+export { validate, createFailValidation, createFailFromError, createSuccessValidation, };
