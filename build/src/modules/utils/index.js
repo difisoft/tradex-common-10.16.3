@@ -5,9 +5,11 @@ const rx_1 = require("./rx");
 const validation_1 = require("./validation");
 const Singleton_1 = require("./Singleton");
 const date_1 = require("./date");
+const token_1 = require("./token");
 exports.default = {
     validate: validation_1.validate,
     validateEmail: validation_1.validateEmail,
+    validatePassword: validation_1.validatePassword,
     doSafe: arrowFunctions_1.doSafe,
     onError: rx_1.onError,
     onNext: rx_1.onNext,
@@ -24,6 +26,6 @@ exports.default = {
     Validate: validation_1.Validate,
     formatDateToDisplay: date_1.formatDateToDisplay,
     convertStringToDate: date_1.convertStringToDate,
-    validatePassword: validation_1.validatePassword,
+    generateToken: token_1.generateToken
 };
 //# sourceMappingURL=index.js.map

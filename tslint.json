@@ -25,6 +25,7 @@
     "no-single-line-block-comment": false,
     "no-unused-expression": false,
     "prefer-for-of": false,
+    "insecure-random": false,
     "typedef": [
       true,
       "parameter",

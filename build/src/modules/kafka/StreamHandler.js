@@ -27,6 +27,9 @@ class StreamHandler {
             dataHandler(data, this);
         });
     }
+    close() {
+        this.stream.close();
+    }
 }
 exports.StreamHandler = StreamHandler;
 //# sourceMappingURL=StreamHandler.js.map

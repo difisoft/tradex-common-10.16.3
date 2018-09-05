@@ -107,7 +107,7 @@ function validateEmail(fieldValue: string, paramName: string = 'email'): IValida
   }
 }
 
-function validatePassword(fieldValue: string, paramName: string = 'password'): IValidationResult {
+function validatePassword(fieldValue: string, paramName: string = 'password', regex: string = ''): IValidationResult {
   return createSuccessValidation(fieldValue);
 }
 

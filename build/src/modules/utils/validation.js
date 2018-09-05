@@ -100,7 +100,7 @@ function validateEmail(fieldValue, paramName = 'email') {
     }
 }
 exports.validateEmail = validateEmail;
-function validatePassword(fieldValue, paramName = 'password') {
+function validatePassword(fieldValue, paramName = 'password', regex = '') {
     return createSuccessValidation(fieldValue);
 }
 exports.validatePassword = validatePassword;

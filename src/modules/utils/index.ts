@@ -20,10 +20,12 @@ import {
 } from './validation';
 import { singleton } from './Singleton';
 import { convertStringToDate, formatDateToDisplay } from './date';
+import { generateToken } from './token';
 
 export default {
   validate,
   validateEmail,
+  validatePassword,
   doSafe,
   onError,
   onNext,
@@ -40,5 +42,5 @@ export default {
   Validate,
   formatDateToDisplay,
   convertStringToDate,
-  validatePassword,
+  generateToken
 }

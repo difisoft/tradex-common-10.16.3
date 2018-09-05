@@ -5,6 +5,7 @@ import { createFailFromError, createFailValidation, createSuccessValidation, val
 declare const _default: {
     validate: typeof validate;
     validateEmail: typeof validateEmail;
+    validatePassword: typeof validatePassword;
     doSafe: (observable: Rx.Observer<any>, func: any) => void;
     onError: typeof onError;
     onNext: typeof onNext;
@@ -21,6 +22,6 @@ declare const _default: {
     Validate: typeof Validate;
     formatDateToDisplay: (date: Date, format?: string) => string;
     convertStringToDate: (data: string, format?: string) => Date;
-    validatePassword: typeof validatePassword;
+    generateToken: (length?: number, onlyDigit?: boolean) => string;
 };
 export default _default;
