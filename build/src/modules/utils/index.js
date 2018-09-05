@@ -23,6 +23,7 @@ exports.default = {
     createSuccessValidation: validation_1.createSuccessValidation,
     Validate: validation_1.Validate,
     formatDateToDisplay: date_1.formatDateToDisplay,
-    convertStringToDate: date_1.convertStringToDate
+    convertStringToDate: date_1.convertStringToDate,
+    validatePassword: validation_1.validatePassword,
 };
 //# sourceMappingURL=index.js.map

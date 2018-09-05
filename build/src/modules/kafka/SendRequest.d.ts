@@ -17,10 +17,12 @@ declare class SendRequestCommon {
     protected bufferedMessages: ISendMessage[];
     protected isReady: boolean;
     constructor(conf: IConf);
+    getResponseTopic(): string;
     sendMessage(transactionId: string, topic: string, uri: string, data: any): void;
     sendForwardMessage(originMessage: any, newTopic: string, newUri: string): void;
     sendResponse(transactionId: string | number, messageId: string | number, topic: string, uri: string, data: any): void;
-    protected reallySendMessage(message: ISendMessage): void;
+    protected doReallySendMessage(message: ISendMessage): void;
+    protected reallySendMessage: (message: ISendMessage) => void;
     protected getMessageId(): number;
     protected createMessage(transactionId: string | number, topic: string, uri: string, data: any, messageType?: MessageType, responseTopic?: string, responseUri?: string, messageId?: string | number): ISendMessage;
 }
@@ -28,7 +30,7 @@ declare class SendRequest extends SendRequestCommon {
     private requestedMessages;
     constructor(conf: IConf, consumerOptions: any, initListener?: boolean);
     sendRequest(transactionId: string, topic: string, uri: string, data: any): Rx.Observable<IMessage>;
-    protected reallySendMessage(message: ISendMessage): void;
+    protected reallySendAMessage: (message: ISendMessage) => void;
     private handlerResponse;
 }
 declare function create(conf: IConf, consumerOptions: any, initResponseListener?: boolean): void;

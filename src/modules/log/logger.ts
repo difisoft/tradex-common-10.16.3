@@ -1,4 +1,4 @@
-import { format, transports, createLogger as createLoggerW, Logger as LoggerW } from 'winston';
+import { createLogger as createLoggerW, format, Logger as LoggerW, transports } from 'winston';
 import { configure, getLogger, Logger as Logger4JS } from 'log4js';
 
 const LOG_FORMAT = {
@@ -32,11 +32,11 @@ const createTransports = (conf: any) => {
 };
 
 const createLogger = (conf: any) => {
-    return createLoggerW({
-      level: conf.level,
-      format: LOG_FORMAT[conf.format](conf),
-      transports: createTransports(conf)
-    });
+  return createLoggerW({
+    level: conf.level,
+    format: LOG_FORMAT[conf.format](conf),
+    transports: createTransports(conf)
+  });
 };
 
 const createLogger4JS = (conf: any) => {
@@ -102,10 +102,10 @@ class Logger {
       }
     }
   };
-  
+
   public logError = (message: any, err: any) => {
     if (!this.log4JS) {
-      if (!err) {  
+      if (!err) {
         this.log.error({
           message: message.message,
           stackTrace: this.getStackTrace(message),
@@ -117,7 +117,7 @@ class Logger {
         });
       }
     } else {
-      if (!err) {  
+      if (!err) {
         this.logger4js.error({
           message: message.message,
           stackTrace: this.getStackTrace(message),
@@ -130,7 +130,7 @@ class Logger {
       }
     }
   };
-  
+
   /**
    * get first 3 lines
    * then get the

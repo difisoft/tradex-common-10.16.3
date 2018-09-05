@@ -1,6 +1,6 @@
-import {StreamHandler} from './StreamHandler';
-import {logger} from '../log';
-import {IConf, IMessage, ISendMessage, MessageType,} from './types';
+import { StreamHandler } from './StreamHandler';
+import { logger } from '../log';
+import { IConf, IMessage, ISendMessage, MessageType, } from './types';
 import Rx = require("rx");
 import Kafka = require('node-rdkafka');
 
@@ -33,6 +33,10 @@ class SendRequestCommon {
     this.producer.on('event.error', (err: Error) => {
       logger.logError('producer error', err);
     });
+  }
+
+  public getResponseTopic(): string {
+    return this.responseTopic;
   }
 
   public sendMessage(transactionId: string, topic: string, uri: string, data: any): void {
@@ -68,7 +72,7 @@ class SendRequestCommon {
   };
 
 
-  protected reallySendMessage(message: ISendMessage) {
+  protected doReallySendMessage(message: ISendMessage): void {
     try {
       const msgContent = JSON.stringify(message.message);
       logger.info('send message {} to topic', msgContent, message.topic);
@@ -77,6 +81,10 @@ class SendRequestCommon {
       logger.logError('error while sending the message', e);
     }
   }
+
+  protected reallySendMessage: (message: ISendMessage) => void = (message: ISendMessage) => {
+    this.doReallySendMessage(message);
+  };
 
   protected getMessageId(): number {
     this.messageId++;
@@ -130,17 +138,17 @@ class SendRequest extends SendRequestCommon {
     if (!this.isReady) {
       this.bufferedMessages.push(message);
     } else {
-      this.reallySendMessage(message);
+      this.reallySendAMessage(message);
     }
     return subject;
   };
 
-  protected reallySendMessage(message: ISendMessage) {
+  protected reallySendAMessage: (message: ISendMessage) => void = (message: ISendMessage) => {
     if (message.subject) {
       this.requestedMessages[message.message.messageId] = message.subject;
     }
-    super.reallySendMessage(message);
-  }
+    super.doReallySendMessage(message);
+  };
 
 
   private handlerResponse(message: any) {

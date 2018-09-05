@@ -51,7 +51,7 @@ class Validate {
     ;
     throwValid(invalidParameterError) {
         const result = this.valid();
-        if (result) {
+        if (result && !result.success) {
             if (invalidParameterError) {
                 invalidParameterError.adds(result.params);
             }
@@ -100,4 +100,8 @@ function validateEmail(fieldValue, paramName = 'email') {
     }
 }
 exports.validateEmail = validateEmail;
+function validatePassword(fieldValue, paramName = 'password') {
+    return createSuccessValidation(fieldValue);
+}
+exports.validatePassword = validatePassword;
 //# sourceMappingURL=validation.js.map

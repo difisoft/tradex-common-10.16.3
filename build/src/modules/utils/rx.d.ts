@@ -7,7 +7,7 @@
 /// <reference types="rx-lite-experimental" />
 /// <reference types="rx-lite-joinpatterns" />
 /// <reference types="rx-lite-time" />
-import { Observer, Observable } from 'rx';
+import { Observable, Observer } from 'rx';
 import Subject = Rx.Subject;
 declare type ObserverSubject<T> = Observer<T> | Subject<T>;
 declare type ObservableSubject<T> = Observable<T> | Subject<T>;

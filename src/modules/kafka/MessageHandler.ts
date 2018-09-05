@@ -1,11 +1,11 @@
-import {Observable} from "rx";
-import {IMessage} from "./types";
-import {logger} from "../log";
-import {getInstance} from "./SendRequest";
+import { Observable } from "rx";
+import { IMessage } from "./types";
+import { logger } from "../log";
+import { getInstance } from "./SendRequest";
 import GeneralError from "../errors/GeneralError";
 import UriNotFound from "../errors/UriNotFound";
-import IResponse, {createFailResponse} from "../models/IResponse";
-import {ForwardError} from "../errors";
+import IResponse, { createFailResponse } from "../models/IResponse";
+import { ForwardError } from "../errors";
 
 declare type HandleResult = Observable<any> | boolean;
 declare type Handle = (msg: IMessage) => HandleResult;

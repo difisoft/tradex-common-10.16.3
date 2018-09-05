@@ -13,7 +13,7 @@ const getTempCredentials = (conf: any): Promise<AWS.STS.Credentials> => {
     sts.assumeRole(conf, (err: AWS.AWSError, data: AWS.STS.AssumeRoleResponse) => {
       if (err == null) {
         const tempCredentials = data.Credentials;
-  
+
         resolve(tempCredentials);
       } else {
         reject(err);

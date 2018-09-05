@@ -60,7 +60,7 @@ export class Validate {
 
   public throwValid(invalidParameterError?: InvalidParameterError): void {
     const result = this.valid();
-    if (result) {
+    if (result && !result.success) {
       if (invalidParameterError) {
         invalidParameterError.adds(result.params);
       } else {
@@ -107,10 +107,15 @@ function validateEmail(fieldValue: string, paramName: string = 'email'): IValida
   }
 }
 
+function validatePassword(fieldValue: string, paramName: string = 'password'): IValidationResult {
+  return createSuccessValidation(fieldValue);
+}
+
 export {
   validate,
   validateEmail,
   createFailValidation,
   createFailFromError,
   createSuccessValidation,
+  validatePassword,
 };

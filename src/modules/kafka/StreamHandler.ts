@@ -1,6 +1,6 @@
-import {ConsumerStream, createReadStream} from 'node-rdkafka';
-import {logger} from '../log';
-import {IConf} from "./types";
+import { ConsumerStream, createReadStream } from 'node-rdkafka';
+import { logger } from '../log';
+import { IConf } from "./types";
 
 class StreamHandler {
   private hasError: boolean;
@@ -34,6 +34,10 @@ class StreamHandler {
       this.hasError = false;
       dataHandler(data, this);
     });
+  }
+
+  public close() {
+    this.stream.close();
   }
 }
 

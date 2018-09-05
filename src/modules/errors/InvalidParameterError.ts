@@ -1,7 +1,7 @@
 import GeneralError from "./GeneralError";
 
 export default class InvalidParameterError extends GeneralError {
-  constructor(params:any = []) {
+  constructor(params: any = []) {
     super('INVALID_PARAMETER', params);
   }
 

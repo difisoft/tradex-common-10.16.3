@@ -1,7 +1,7 @@
 /// <reference types="rx-core" />
 /// <reference types="rx-lite" />
 import { onError, onNext, transform, transformAsync, transformPromise, transformSingle, transformSingleAsync, transformSinglePromise } from './rx';
-import { validate, validateEmail, createFailFromError, createFailValidation, createSuccessValidation, Validate } from './validation';
+import { createFailFromError, createFailValidation, createSuccessValidation, validate, Validate, validateEmail, validatePassword } from './validation';
 declare const _default: {
     validate: typeof validate;
     validateEmail: typeof validateEmail;
@@ -21,5 +21,6 @@ declare const _default: {
     Validate: typeof Validate;
     formatDateToDisplay: (date: Date, format?: string) => string;
     convertStringToDate: (data: string, format?: string) => Date;
+    validatePassword: typeof validatePassword;
 };
 export default _default;

@@ -1,7 +1,8 @@
-import {Observer, Observable} from 'rx';
+import { Observable, Observer } from 'rx';
 import Subject = Rx.Subject;
-type ObserverSubject<T> = Observer<T>|Subject<T>;
-type ObservableSubject<T> = Observable<T>|Subject<T>;
+
+type ObserverSubject<T> = Observer<T> | Subject<T>;
+type ObservableSubject<T> = Observable<T> | Subject<T>;
 type TransformAsync<T, F> = (f: F, observer?: ObserverSubject<T>) => void;
 
 function onError(observer: ObserverSubject<any>, err: any) {
@@ -15,39 +16,41 @@ function onNext<T>(observer: ObserverSubject<T>, data: T) {
 }
 
 function transform<T, F>(observer: ObserverSubject<T>, observable: ObservableSubject<F>
-                         , func: (f: F) => T, errorHandler?: (err: Error) => void): void {
+  , func: (f: F) => T, errorHandler?: (err: Error) => void): void {
   observable.subscribe(
     (data: F) => {
       try {
         observer.onNext(func(data));
       } catch (e) {
         onError(observer, e);
-      }},
+      }
+    },
     (err: Error) => errorHandler ? errorHandler(err) : observer.onError(err),
     () => observer.onCompleted()
   );
 }
 
 function transformSingle<T>(observer: ObserverSubject<T>, observable: ObservableSubject<T>
-                         , errorHandler?: (err: Error) => void): void {
+  , errorHandler?: (err: Error) => void): void {
   observable.subscribe(
     (data: T) => {
       try {
         observer.onNext(data);
       } catch (e) {
         onError(observer, e);
-      }},
+      }
+    },
     (err: Error) => errorHandler ? errorHandler(err) : observer.onError(err),
     () => observer.onCompleted()
   );
 }
 
 function transformPromise<T, F>(observer: ObserverSubject<T>, promise: Promise<F>
-                         , func: (f: F) => T, errorHandler?: (err: Error) => void): void {
+  , func: (f: F) => T, errorHandler?: (err: Error) => void): void {
   promise.then((f: F) => {
     observer.onNext(func(f));
     observer.onCompleted();
-  }). catch((err: Error) => {
+  }).catch((err: Error) => {
     if (errorHandler) {
       errorHandler(err);
     } else {
@@ -58,11 +61,11 @@ function transformPromise<T, F>(observer: ObserverSubject<T>, promise: Promise<F
 }
 
 function transformSinglePromise<T>(observer: ObserverSubject<T>, promise: Promise<T>
-                         , errorHandler?: (err: Error) => void): void {
+  , errorHandler?: (err: Error) => void): void {
   promise.then((data: T) => {
     observer.onNext(data);
     observer.onCompleted();
-  }). catch((err: Error) => {
+  }).catch((err: Error) => {
     if (errorHandler) {
       errorHandler(err);
     } else {
@@ -74,30 +77,32 @@ function transformSinglePromise<T>(observer: ObserverSubject<T>, promise: Promis
 
 
 function transformAsync<T, F>(observer: ObserverSubject<T>, observable: ObservableSubject<F>
-                         , func: TransformAsync<T, F>
-                        , errorHandler?: (err: Error) => void): void {
+  , func: TransformAsync<T, F>
+  , errorHandler?: (err: Error) => void): void {
   observable.subscribe(
     (data: F) => {
       try {
         func(data, observer);
       } catch (e) {
         onError(observer, e);
-      }},
+      }
+    },
     (err: Error) => errorHandler ? errorHandler(err) : observer.onError(err),
     () => observer.onCompleted()
   );
 }
 
 function transformSingleAsync<T>(observer: ObserverSubject<T>
-                                 , observable: ObservableSubject<T>
-                        , errorHandler?: (err: Error) => void): void {
+  , observable: ObservableSubject<T>
+  , errorHandler?: (err: Error) => void): void {
   observable.subscribe(
     (data: T) => {
       try {
         observer.onNext(data);
       } catch (e) {
         onError(observer, e);
-      }},
+      }
+    },
     (err: Error) => errorHandler ? errorHandler(err) : observer.onError(err),
     () => observer.onCompleted()
   );

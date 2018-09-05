@@ -7,9 +7,9 @@ interface IConf {
 }
 
 enum MessageType {
-  MESSAGE='MESSAGE',
-  REQUEST='REQUEST',
-  RESPONSE='RESPONSE',
+  MESSAGE = 'MESSAGE',
+  REQUEST = 'REQUEST',
+  RESPONSE = 'RESPONSE',
 }
 
 declare interface ISendMessage {

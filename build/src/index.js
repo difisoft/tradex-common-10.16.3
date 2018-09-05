@@ -14,4 +14,6 @@ const AWS = require("./modules/aws");
 exports.AWS = AWS;
 const Models = require("./modules/models");
 exports.Models = Models;
+const Tests = require("./tests");
+exports.Tests = Tests;
 //# sourceMappingURL=index.js.map

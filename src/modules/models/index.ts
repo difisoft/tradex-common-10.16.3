@@ -1,4 +1,4 @@
-import IResponse, {createFailResponse, createSuccessResponse} from './IResponse';
+import IResponse, { createFailResponse, createSuccessResponse } from './IResponse';
 import IStatus from './IStatus';
 import IParamError from './IParamError';
 

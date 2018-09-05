@@ -5,4 +5,5 @@ import Utils from './modules/utils';
 import Zookeeper from './modules/zookeeper';
 import * as AWS from './modules/aws';
 import * as Models from './modules/models';
-export { Zookeeper, Utils, Logger, Kafka, Errors, AWS, Models, };
+import * as Tests from './tests';
+export { Zookeeper, Utils, Logger, Kafka, Errors, AWS, Models, Tests, };

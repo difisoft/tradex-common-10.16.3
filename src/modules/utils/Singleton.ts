@@ -12,4 +12,4 @@ export class Singleton {
 
 const singleton: Singleton = new Singleton();
 
-export {singleton}
+export { singleton }

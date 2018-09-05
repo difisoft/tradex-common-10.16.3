@@ -6,7 +6,7 @@ import ObjectNotFoundError from "./ObjectNotFoundError";
 import InvalidParameterError from "./InvalidParameterError";
 import InvalidIdSecretError from "./InvalidIdSecretError";
 import InvalidFieldValueError from "./InvalidFieldValueError";
-import {ForwardError} from "./ForwardError";
+import { ForwardError } from "./ForwardError";
 import TokenExpiredError from "./TokenExpiredError";
 
 export const EMAIL_VALIDATION = 'ERROR_EMAIL_VALIDATION';

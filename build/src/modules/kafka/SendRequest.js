@@ -11,6 +11,9 @@ class SendRequestCommon {
         this.messageId = 0;
         this.bufferedMessages = [];
         this.isReady = false;
+        this.reallySendMessage = (message) => {
+            this.doReallySendMessage(message);
+        };
         this.responseTopic = `${this.conf.clusterId}.response.${this.conf.clientId}`;
         this.producer = new Kafka.Producer({
             'client.id': conf.clientId,
@@ -30,6 +33,9 @@ class SendRequestCommon {
         this.producer.on('event.error', (err) => {
             log_1.logger.logError('producer error', err);
         });
+    }
+    getResponseTopic() {
+        return this.responseTopic;
     }
     sendMessage(transactionId, topic, uri, data) {
         const message = this.createMessage(transactionId, topic, uri, data);
@@ -65,7 +71,7 @@ class SendRequestCommon {
         }
     }
     ;
-    reallySendMessage(message) {
+    doReallySendMessage(message) {
         try {
             const msgContent = JSON.stringify(message.message);
             log_1.logger.info('send message {} to topic', msgContent, message.topic);
@@ -105,6 +111,12 @@ class SendRequest extends SendRequestCommon {
     constructor(conf, consumerOptions, initListener = true) {
         super(conf);
         this.requestedMessages = new Map();
+        this.reallySendAMessage = (message) => {
+            if (message.subject) {
+                this.requestedMessages[message.message.messageId] = message.subject;
+            }
+            super.doReallySendMessage(message);
+        };
         if (initListener) {
             new StreamHandler_1.StreamHandler(this.conf, consumerOptions, [this.responseTopic], (data) => this.handlerResponse(data));
         }
@@ -117,17 +129,11 @@ class SendRequest extends SendRequestCommon {
             this.bufferedMessages.push(message);
         }
         else {
-            this.reallySendMessage(message);
+            this.reallySendAMessage(message);
         }
         return subject;
     }
     ;
-    reallySendMessage(message) {
-        if (message.subject) {
-            this.requestedMessages[message.message.messageId] = message.subject;
-        }
-        super.reallySendMessage(message);
-    }
     handlerResponse(message) {
         const msgStr = message.value.toString();
         const msg = JSON.parse(msgStr);
