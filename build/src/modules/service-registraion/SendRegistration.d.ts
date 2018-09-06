@@ -1,9 +1,11 @@
 import { SendRequestCommon } from "../kafka";
 import IConf from "./IConf";
+export declare const defaultInterval: number;
+export declare const defaultTopic: string;
 export default class SendRegistration {
     private send;
-    private conf;
     private serviceRegistration;
+    private topic;
     constructor(send: SendRequestCommon, conf: IConf);
     private doRegister;
 }

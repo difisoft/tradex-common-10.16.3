@@ -2,19 +2,22 @@ import { SendRequestCommon } from "../kafka";
 import IConf from "./IConf";
 import ServiceRegistration from "./ServiceRegistration";
 
-const defaultInterval: number = 5000;
+export const defaultInterval: number = 5000;
+export const defaultTopic: string = 'service.register';
 
 export default class SendRegistration {
   private serviceRegistration: ServiceRegistration;
-  constructor(private send: SendRequestCommon, private conf: IConf) {
+  private topic: string;
+  constructor(private send: SendRequestCommon, conf: IConf) {
     const interval: number = conf.interval ? conf.interval : defaultInterval;
+    this.topic = conf.listeningTopic ? conf.listeningTopic : defaultTopic;
     this.serviceRegistration = new ServiceRegistration(conf.serviceName, conf.nodeId, 0);
     setInterval(() => this.doRegister(), interval);
   }
 
   private doRegister(): void {
     this.serviceRegistration.currentTime = new Date().getUTCMilliseconds();
-    this.send.sendMessage('', this.conf.listeningTopic, '', this.serviceRegistration);
+    this.send.sendMessage('', this.topic, '', this.serviceRegistration);
   }
 }
 let instance: SendRegistration = null;

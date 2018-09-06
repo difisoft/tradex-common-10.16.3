@@ -1,5 +1,5 @@
 import IConf from './IConf';
-import SendRegistration, {create, getInstance} from './SendRegistration';
+import SendRegistration, {create, getInstance, defaultTopic, defaultInterval} from './SendRegistration';
 import ServiceRegistration from './ServiceRegistration';
 
 export {
@@ -8,4 +8,6 @@ export {
   create,
   getInstance,
   ServiceRegistration,
+  defaultTopic,
+  defaultInterval,
 }
