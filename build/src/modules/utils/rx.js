@@ -70,7 +70,7 @@ function transformAsync(observer, observable, func, errorHandler) {
         catch (e) {
             onError(observer, e);
         }
-    }, (err) => errorHandler ? errorHandler(err) : observer.onError(err), () => observer.onCompleted());
+    }, (err) => errorHandler ? errorHandler(err) : observer.onError(err));
 }
 exports.transformAsync = transformAsync;
 function transformSingleAsync(observer, observable, errorHandler) {
@@ -81,7 +81,7 @@ function transformSingleAsync(observer, observable, errorHandler) {
         catch (e) {
             onError(observer, e);
         }
-    }, (err) => errorHandler ? errorHandler(err) : observer.onError(err), () => observer.onCompleted());
+    }, (err) => errorHandler ? errorHandler(err) : observer.onError(err));
 }
 exports.transformSingleAsync = transformSingleAsync;
 //# sourceMappingURL=rx.js.map

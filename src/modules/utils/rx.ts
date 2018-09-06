@@ -87,8 +87,7 @@ function transformAsync<T, F>(observer: ObserverSubject<T>, observable: Observab
         onError(observer, e);
       }
     },
-    (err: Error) => errorHandler ? errorHandler(err) : observer.onError(err),
-    () => observer.onCompleted()
+    (err: Error) => errorHandler ? errorHandler(err) : observer.onError(err)
   );
 }
 
@@ -103,8 +102,7 @@ function transformSingleAsync<T>(observer: ObserverSubject<T>
         onError(observer, e);
       }
     },
-    (err: Error) => errorHandler ? errorHandler(err) : observer.onError(err),
-    () => observer.onCompleted()
+    (err: Error) => errorHandler ? errorHandler(err) : observer.onError(err)
   );
 }
 

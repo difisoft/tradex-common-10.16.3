@@ -6,7 +6,9 @@ class StreamHandler {
   private hasError: boolean;
   private stream: ConsumerStream;
 
-  constructor(conf: IConf, options: any, topics: string[], dataHandler: (data: any, handler: StreamHandler) => void) {
+  constructor(conf: IConf, options: any, topics: string[]
+              , dataHandler: (data: any, handler: StreamHandler) => void
+  ) {
     const ops = {
       ...{
         'group.id': conf.clusterId,

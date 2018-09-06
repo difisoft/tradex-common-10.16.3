@@ -11,7 +11,7 @@ const LOG_FORMAT = {
   FLAT: (conf: any) => format.combine(
     format.label({service: conf.serviceName}),
     format.timestamp(),
-    format.splat(),
+    // format.splat(),
     format.simple(),
   ),
 };
@@ -57,7 +57,7 @@ class Logger {
   public info(...args: any[]) {
     if (!this.log4JS) {
       if (this.log != null) {
-        this.log.info.call(this.log, ...args);
+        this.log.info.call(this.log, args.map((arg: any) => arg ? (typeof arg === 'string' ? arg : JSON.stringify(arg)) : 'null' ).join(','));
       }
     } else {
       if (this.logger4js != null) {

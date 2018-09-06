@@ -9,10 +9,27 @@ declare interface IExpectedResult {
   subject?: Subject<IExpectedResult>,
 }
 
+declare type TestFunc = (name: string, txId: string) => Subject<ITestResult>;
+
 interface ITestResult {
   testName: string
   success: boolean,
-  reason: string,
+  reason?: string,
+}
+
+function createSuccessResult(name: string): ITestResult {
+  return {
+    testName: name,
+    success: true,
+  };
+}
+
+function createFailResult(name: string, reason: string): ITestResult {
+  return {
+    testName: name,
+    success: false,
+    reason: reason,
+  };
 }
 
 export const results: ITestResult[] = [];
@@ -30,7 +47,8 @@ class ListenTopic {
     this.callbacks.push(callback);
   }
 
-  public handler(data: any, streamHandler: Kafka.StreamHandler): void {
+  public handler: (data: any, streamHandler: Kafka.StreamHandler) => void
+    = (data: any, streamHandler: Kafka.StreamHandler) => {
     this.streamHandler = streamHandler;
     const msg: string = data.value.toString();
     const message: Kafka.IMessage = JSON.parse(msg);
@@ -39,7 +57,7 @@ class ListenTopic {
         this.callbacks[i](message);
       }
     }
-  }
+  };
 
   public close() {
     this.streamHandler.close();
@@ -51,6 +69,7 @@ abstract class CommonTest {
   protected request: Kafka.SendRequest;
   protected expectedResults: Map<string, IExpectedResult> = new Map<string, IExpectedResult>();
   protected currentTransactionId: number = 0;
+  protected baseNumber: number = new Date().getMilliseconds();
 
   protected constructor(conf: Kafka.IConf) {
     this.testConfiguration = {
@@ -61,7 +80,7 @@ abstract class CommonTest {
     this.request = new Kafka.SendRequest(this.testConfiguration, {}, false);
   }
 
-  protected listenTopic(topic: string): ListenTopic {
+  protected listenTopic(topic?: string): ListenTopic {
     const listeningTopic: string = topic ? topic : this.request.getResponseTopic();
     const listenTopic: ListenTopic = new ListenTopic();
     new Kafka.StreamHandler(this.testConfiguration, {}, [listeningTopic], listenTopic.handler);
@@ -86,11 +105,30 @@ abstract class CommonTest {
     return txId;
   }
 
-  protected abstract run(): void;
+  protected abstract run(): Subject<ITestResult>;
 
-  protected runTest(instance: any
-    , func: (name: string, txId: string) => Subject<ITestResult>
-    , timeOut: number
+  protected runTests(instance: any, funcs: TestFunc[], timeOut: number = 40000): Subject<ITestResult> {
+    const length: number = funcs.length;
+    let finishTotal: number = 0;
+    const subject: Subject<ITestResult> = new Subject();
+    funcs.forEach((func: TestFunc) => this.runTest(instance, func, timeOut).subscribe(
+      (data: ITestResult) => {
+        subject.onNext(data);
+        finishTotal++;
+        if (finishTotal === length) {
+          subject.onCompleted();
+        }
+      }, (err: Error) => {
+        subject.onNext(createFailResult(name, `encounter error ${JSON.stringify(err)}`));
+        finishTotal++;
+        if (finishTotal === length) {
+          subject.onCompleted();
+        }
+      }));
+    return subject
+  }
+
+  protected runTest(instance: any, func: TestFunc, timeOut: number = 20000
   ): Subject<ITestResult> {
     const subject: Subject<ITestResult> = new Subject();
     const txId: string = this.getNewTxId();
@@ -102,15 +140,32 @@ abstract class CommonTest {
           success: false,
           reason: `timeout`,
         });
+        delete this.expectedResults[txId];
       }
     }, timeOut);
-    Utils.transformSingleAsync(subject, func(name, txId));
+    this.expectedResults[txId] = {
+      txId: txId,
+    };
+    func(name, txId).subscribe(
+      (data: ITestResult) => {
+        if (this.expectedResults[txId]) {
+          Utils.onNext(subject, data);
+          delete this.expectedResults[txId];
+        }
+      },
+      (err: Error) => {
+        if (this.expectedResults[txId]) {
+          Utils.onNext(subject, createFailResult(name, `encounter error ${JSON.stringify(err)}`));
+          delete this.expectedResults[txId];
+        }
+      },
+    );
     return subject;
   }
 
   protected getNewTxId(): string {
     this.currentTransactionId++;
-    return `${this.currentTransactionId}`;
+    return `${this.baseNumber + this.currentTransactionId}`;
   }
 
   protected createResult(name: string, expectedResult: IExpectedResult
@@ -132,13 +187,22 @@ abstract class CommonTest {
       && expectedResult.data && result.data) {
       const reason: string = compare(expectedResult.data, result.data);
       if (!reason) {
-        res.reason = `expected has data ${expectedResult.data} but got null`;
+        res.reason = `expected has data ${JSON.stringify(expectedResult.data)} but got null`;
       }
     } else {
       res.success = true;
     }
     results.push(res);
     return res;
+  }
+
+  protected callbackResult(name: string, subj: Subject<ITestResult>, data: Kafka.IMessage, func: (data?: Kafka.IMessage) => string) {
+    const reason: string = func(data);
+    if (!reason || reason === '') {
+      Utils.onNext(subj, createSuccessResult(name));
+    } else {
+      Utils.onNext(subj, createFailResult(name, reason));
+    }
   }
 }
 
@@ -149,4 +213,7 @@ export {
   Condition,
   ITestResult,
   IExpectedResult,
+  createFailResult,
+  createSuccessResult,
+  TestFunc,
 }

@@ -25,7 +25,7 @@ class SendRequestCommon {
             topic: '',
             allTopics: true,
             timeout: 30000,
-        }, (...args) => log_1.logger.info('producer connect', args));
+        }, () => log_1.logger.info('producer connect'));
         this.producer.on('ready', () => {
             this.isReady = true;
             this.bufferedMessages.forEach(this.reallySendMessage);
@@ -74,7 +74,7 @@ class SendRequestCommon {
     doReallySendMessage(message) {
         try {
             const msgContent = JSON.stringify(message.message);
-            log_1.logger.info('send message {} to topic', msgContent, message.topic);
+            log_1.logger.info(`send message ${msgContent} to topic ${message.topic}`);
             this.producer.produce(message.topic, null, new Buffer(msgContent), this.conf.clientId, Date.now());
         }
         catch (e) {
@@ -118,6 +118,7 @@ class SendRequest extends SendRequestCommon {
             super.doReallySendMessage(message);
         };
         if (initListener) {
+            log_1.logger.info(`init response listener ${this.responseTopic}`);
             new StreamHandler_1.StreamHandler(this.conf, consumerOptions, [this.responseTopic], (data) => this.handlerResponse(data));
         }
     }

@@ -4,7 +4,7 @@ const winston_1 = require("winston");
 const log4js_1 = require("log4js");
 const LOG_FORMAT = {
     JSON: (conf) => winston_1.format.combine(winston_1.format.label({ service: conf.serviceName }), winston_1.format.timestamp(), winston_1.format.splat(), winston_1.format.json()),
-    FLAT: (conf) => winston_1.format.combine(winston_1.format.label({ service: conf.serviceName }), winston_1.format.timestamp(), winston_1.format.splat(), winston_1.format.simple()),
+    FLAT: (conf) => winston_1.format.combine(winston_1.format.label({ service: conf.serviceName }), winston_1.format.timestamp(), winston_1.format.simple()),
 };
 const createTransports = (conf) => {
     if (!conf.transports || conf.transports.length === 0) {
@@ -93,7 +93,7 @@ class Logger {
     info(...args) {
         if (!this.log4JS) {
             if (this.log != null) {
-                this.log.info.call(this.log, ...args);
+                this.log.info.call(this.log, args.map((arg) => arg ? (typeof arg === 'string' ? arg : JSON.stringify(arg)) : 'null').join(','));
             }
         }
         else {

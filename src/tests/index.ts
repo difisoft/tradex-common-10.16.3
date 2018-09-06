@@ -1,5 +1,25 @@
-import { Callback, CommonTest, Condition, IExpectedResult, ITestResult, ListenTopic, results } from "./CommonTest";
+import {
+  Callback,
+  CommonTest,
+  Condition,
+  createFailResult,
+  createSuccessResult,
+  IExpectedResult,
+  ITestResult,
+  ListenTopic,
+  results,
+  TestFunc,
+} from "./CommonTest";
 
 export {
-  CommonTest, IExpectedResult, ITestResult, Condition, Callback, ListenTopic, results
+  CommonTest
+  , IExpectedResult
+  , ITestResult
+  , Condition
+  , Callback
+  , ListenTopic
+  , results
+  , createFailResult
+  , createSuccessResult
+  , TestFunc
 }

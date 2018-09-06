@@ -3,25 +3,40 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const Kafka = require("./../modules/kafka");
 const utils_1 = require("./../modules/utils");
 const rx_1 = require("rx");
+function createSuccessResult(name) {
+    return {
+        testName: name,
+        success: true,
+    };
+}
+exports.createSuccessResult = createSuccessResult;
+function createFailResult(name, reason) {
+    return {
+        testName: name,
+        success: false,
+        reason: reason,
+    };
+}
+exports.createFailResult = createFailResult;
 exports.results = [];
 class ListenTopic {
     constructor() {
         this.conditions = [];
         this.callbacks = [];
+        this.handler = (data, streamHandler) => {
+            this.streamHandler = streamHandler;
+            const msg = data.value.toString();
+            const message = JSON.parse(msg);
+            for (let i = 0; i < this.conditions.length; i++) {
+                if (this.conditions[i](message)) {
+                    this.callbacks[i](message);
+                }
+            }
+        };
     }
     when(condition, callback) {
         this.conditions.push(condition);
         this.callbacks.push(callback);
-    }
-    handler(data, streamHandler) {
-        this.streamHandler = streamHandler;
-        const msg = data.value.toString();
-        const message = JSON.parse(msg);
-        for (let i = 0; i < this.conditions.length; i++) {
-            if (this.conditions[i](message)) {
-                this.callbacks[i](message);
-            }
-        }
     }
     close() {
         this.streamHandler.close();
@@ -32,6 +47,7 @@ class CommonTest {
     constructor(conf) {
         this.expectedResults = new Map();
         this.currentTransactionId = 0;
+        this.baseNumber = new Date().getMilliseconds();
         this.testConfiguration = {
             clientId: 'testingClientId',
             clusterId: conf.clusterId,
@@ -60,7 +76,26 @@ class CommonTest {
         this.request.sendResponse(txId, msgId, topic, uri, data);
         return txId;
     }
-    runTest(instance, func, timeOut) {
+    runTests(instance, funcs, timeOut = 40000) {
+        const length = funcs.length;
+        let finishTotal = 0;
+        const subject = new rx_1.Subject();
+        funcs.forEach((func) => this.runTest(instance, func, timeOut).subscribe((data) => {
+            subject.onNext(data);
+            finishTotal++;
+            if (finishTotal === length) {
+                subject.onCompleted();
+            }
+        }, (err) => {
+            subject.onNext(createFailResult(name, `encounter error ${JSON.stringify(err)}`));
+            finishTotal++;
+            if (finishTotal === length) {
+                subject.onCompleted();
+            }
+        }));
+        return subject;
+    }
+    runTest(instance, func, timeOut = 20000) {
         const subject = new rx_1.Subject();
         const txId = this.getNewTxId();
         const name = `${typeof instance}.${func.name}`;
@@ -71,14 +106,28 @@ class CommonTest {
                     success: false,
                     reason: `timeout`,
                 });
+                delete this.expectedResults[txId];
             }
         }, timeOut);
-        utils_1.default.transformSingleAsync(subject, func(name, txId));
+        this.expectedResults[txId] = {
+            txId: txId,
+        };
+        func(name, txId).subscribe((data) => {
+            if (this.expectedResults[txId]) {
+                utils_1.default.onNext(subject, data);
+                delete this.expectedResults[txId];
+            }
+        }, (err) => {
+            if (this.expectedResults[txId]) {
+                utils_1.default.onNext(subject, createFailResult(name, `encounter error ${JSON.stringify(err)}`));
+                delete this.expectedResults[txId];
+            }
+        });
         return subject;
     }
     getNewTxId() {
         this.currentTransactionId++;
-        return `${this.currentTransactionId}`;
+        return `${this.baseNumber + this.currentTransactionId}`;
     }
     createResult(name, expectedResult, result, compare) {
         const res = {
@@ -100,7 +149,7 @@ class CommonTest {
             && expectedResult.data && result.data) {
             const reason = compare(expectedResult.data, result.data);
             if (!reason) {
-                res.reason = `expected has data ${expectedResult.data} but got null`;
+                res.reason = `expected has data ${JSON.stringify(expectedResult.data)} but got null`;
             }
         }
         else {
@@ -108,6 +157,15 @@ class CommonTest {
         }
         exports.results.push(res);
         return res;
+    }
+    callbackResult(name, subj, data, func) {
+        const reason = func(data);
+        if (!reason || reason === '') {
+            utils_1.default.onNext(subj, createSuccessResult(name));
+        }
+        else {
+            utils_1.default.onNext(subj, createFailResult(name, reason));
+        }
     }
 }
 exports.CommonTest = CommonTest;
