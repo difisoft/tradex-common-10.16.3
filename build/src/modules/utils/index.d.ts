@@ -23,5 +23,6 @@ declare const _default: {
     formatDateToDisplay: (date: Date, format?: string) => string;
     convertStringToDate: (data: string, format?: string) => Date;
     generateToken: (length?: number, onlyDigit?: boolean) => string;
+    getLanguageCode: (acceptLanguageHeader: string) => string;
 };
 export default _default;

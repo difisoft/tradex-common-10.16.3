@@ -6,6 +6,7 @@ const validation_1 = require("./validation");
 const Singleton_1 = require("./Singleton");
 const date_1 = require("./date");
 const token_1 = require("./token");
+const locale_1 = require("./locale");
 exports.default = {
     validate: validation_1.validate,
     validateEmail: validation_1.validateEmail,
@@ -26,6 +27,7 @@ exports.default = {
     Validate: validation_1.Validate,
     formatDateToDisplay: date_1.formatDateToDisplay,
     convertStringToDate: date_1.convertStringToDate,
-    generateToken: token_1.generateToken
+    generateToken: token_1.generateToken,
+    getLanguageCode: locale_1.getLanguageCode
 };
 //# sourceMappingURL=index.js.map
