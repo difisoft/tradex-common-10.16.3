@@ -16,7 +16,7 @@ export default class SendRegistration {
   }
 
   private doRegister(): void {
-    this.serviceRegistration.currentTime = new Date().getUTCMilliseconds();
+    this.serviceRegistration.currentTime = new Date().getTime();
     this.send.sendMessage('', this.topic, '', this.serviceRegistration);
   }
 }

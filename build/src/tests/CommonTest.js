@@ -47,7 +47,7 @@ class CommonTest {
     constructor(conf) {
         this.expectedResults = new Map();
         this.currentTransactionId = 0;
-        this.baseNumber = new Date().getMilliseconds();
+        this.baseNumber = new Date().getTime();
         this.testConfiguration = {
             clientId: 'testingClientId',
             clusterId: conf.clusterId,

@@ -69,7 +69,7 @@ abstract class CommonTest {
   protected request: Kafka.SendRequest;
   protected expectedResults: Map<string, IExpectedResult> = new Map<string, IExpectedResult>();
   protected currentTransactionId: number = 0;
-  protected baseNumber: number = new Date().getMilliseconds();
+  protected baseNumber: number = new Date().getTime();
 
   protected constructor(conf: Kafka.IConf) {
     this.testConfiguration = {

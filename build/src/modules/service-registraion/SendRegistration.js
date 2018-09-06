@@ -12,7 +12,7 @@ class SendRegistration {
         setInterval(() => this.doRegister(), interval);
     }
     doRegister() {
-        this.serviceRegistration.currentTime = new Date().getUTCMilliseconds();
+        this.serviceRegistration.currentTime = new Date().getTime();
         this.send.sendMessage('', this.topic, '', this.serviceRegistration);
     }
 }
