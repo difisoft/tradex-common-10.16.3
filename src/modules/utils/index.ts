@@ -19,7 +19,7 @@ import {
   validatePassword
 } from './validation';
 import { singleton } from './Singleton';
-import { convertStringToDate, formatDateToDisplay } from './date';
+import { convertStringToDate, formatDateToDisplay, DATETIME_DISPLAY_FORMAT } from './date';
 import { generateToken } from './token';
 import { getLanguageCode } from './locale';
 
@@ -43,6 +43,7 @@ export default {
   Validate,
   formatDateToDisplay,
   convertStringToDate,
+  DATETIME_DISPLAY_FORMAT,
   generateToken,
   getLanguageCode
 }

@@ -1,6 +1,8 @@
 import * as moment from 'moment';
 
 const DISPLAY_FORMAT = 'YYYYMMDD';
+const DATETIME_DISPLAY_FORMAT = 'YYYYMMDDhhmmss'
+
 
 const formatDateToDisplay = (date: Date, format: string = DISPLAY_FORMAT): string => {
   try {
@@ -18,4 +20,4 @@ const convertStringToDate = (data: string, format: string = DISPLAY_FORMAT): Dat
   }
 };
 
-export { formatDateToDisplay, convertStringToDate }
+export { formatDateToDisplay, convertStringToDate, DATETIME_DISPLAY_FORMAT }

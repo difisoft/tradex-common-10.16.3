@@ -22,6 +22,7 @@ declare const _default: {
     Validate: typeof Validate;
     formatDateToDisplay: (date: Date, format?: string) => string;
     convertStringToDate: (data: string, format?: string) => Date;
+    DATETIME_DISPLAY_FORMAT: string;
     generateToken: (length?: number, onlyDigit?: boolean) => string;
     getLanguageCode: (acceptLanguageHeader: string) => string;
 };

@@ -27,6 +27,7 @@ exports.default = {
     Validate: validation_1.Validate,
     formatDateToDisplay: date_1.formatDateToDisplay,
     convertStringToDate: date_1.convertStringToDate,
+    DATETIME_DISPLAY_FORMAT: date_1.DATETIME_DISPLAY_FORMAT,
     generateToken: token_1.generateToken,
     getLanguageCode: locale_1.getLanguageCode
 };
