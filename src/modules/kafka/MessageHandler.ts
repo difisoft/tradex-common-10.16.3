@@ -25,7 +25,7 @@ class MessageHandler {
       if (obs === false) {
         getInstance().sendResponse(
           msg.transactionId,
-          null,
+          msg.messageId,
           msg.responseDestination.topic,
           msg.responseDestination.uri,
           this.getErrorMessage(new UriNotFound())
@@ -43,7 +43,7 @@ class MessageHandler {
         logger.logError('error while processing request', err);
         getInstance().sendResponse(
           msg.transactionId,
-          null,
+          msg.messageId,
           msg.responseDestination.topic,
           msg.responseDestination.uri,
           this.getErrorMessage(err)

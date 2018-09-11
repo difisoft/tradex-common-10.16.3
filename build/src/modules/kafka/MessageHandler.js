@@ -15,7 +15,7 @@ class MessageHandler {
             const msg = JSON.parse(msgString);
             const obs = func(msg);
             if (obs === false) {
-                SendRequest_1.getInstance().sendResponse(msg.transactionId, null, msg.responseDestination.topic, msg.responseDestination.uri, this.getErrorMessage(new UriNotFound_1.default()));
+                SendRequest_1.getInstance().sendResponse(msg.transactionId, msg.messageId, msg.responseDestination.topic, msg.responseDestination.uri, this.getErrorMessage(new UriNotFound_1.default()));
                 return;
             }
             else if (obs === true) {
@@ -23,7 +23,7 @@ class MessageHandler {
             }
             obs.subscribe((data) => SendRequest_1.getInstance().sendMessage(msg.transactionId, msg.responseDestination.topic, msg.responseDestination.uri, { data: data }), (err) => {
                 log_1.logger.logError('error while processing request', err);
-                SendRequest_1.getInstance().sendResponse(msg.transactionId, null, msg.responseDestination.topic, msg.responseDestination.uri, this.getErrorMessage(err));
+                SendRequest_1.getInstance().sendResponse(msg.transactionId, msg.messageId, msg.responseDestination.topic, msg.responseDestination.uri, this.getErrorMessage(err));
             });
         }
         catch (e) {
