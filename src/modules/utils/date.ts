@@ -6,7 +6,12 @@ const DATETIME_DISPLAY_FORMAT = 'YYYYMMDDhhmmss'
 
 const formatDateToDisplay = (date: Date, format: string = DISPLAY_FORMAT): string => {
   try {
-    return moment(date).format(format);
+    const obj = moment(date);
+    if (obj.isValid()) {
+      return moment(date).format(format);
+    } else {
+      return null;
+    }
   } catch (e) {
     return null;
   }
