@@ -5,6 +5,6 @@ export default class EmailVerificationData implements ITemplateData {
   public expirationTime: string;
 
   public getTemplate(): string {
-    return "alarm_notification";
+    return "email_verify";
   }
 }
