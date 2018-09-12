@@ -34,8 +34,9 @@ class MessageHandler {
       } else if (obs === true) {
         return; // forwarding. do nothing
       }
-      obs.subscribe((data: any) => getInstance().sendMessage(
+      obs.subscribe((data: any) => getInstance().sendResponse(
         <string>msg.transactionId,
+        msg.messageId,
         msg.responseDestination.topic,
         msg.responseDestination.uri,
         {data: data}
