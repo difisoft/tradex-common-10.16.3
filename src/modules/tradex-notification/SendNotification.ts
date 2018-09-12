@@ -15,7 +15,7 @@ export default class SendNotification {
     this.send.sendMessage(txId, this.notificationListenningTopic, '', request.toJson());
   }
 
-  public sendVerifiactionEmail(txId: string, conf: EmailConfiguration, locale: string, data: EmailVerificationData) {
+  public sendVerificationEmail(txId: string, conf: EmailConfiguration, locale: string, data: EmailVerificationData) {
     const request: NotificationRequest = new NotificationRequest();
     request.setConfiguration(conf);
     request.locale = locale;

@@ -13,7 +13,7 @@ class SendNotification {
         request.template = template;
         this.send.sendMessage(txId, this.notificationListenningTopic, '', request.toJson());
     }
-    sendVerifiactionEmail(txId, conf, locale, data) {
+    sendVerificationEmail(txId, conf, locale, data) {
         const request = new NotificationRequest_1.default();
         request.setConfiguration(conf);
         request.locale = locale;
