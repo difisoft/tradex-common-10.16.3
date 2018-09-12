@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const FieldRequiredError_1 = require("../errors/FieldRequiredError");
+const InvalidParameterError_1 = require("../errors/InvalidParameterError");
 const errors_1 = require("../errors");
 function createFailValidation(code, messageParams, paramName) {
     return {
@@ -56,7 +57,7 @@ class Validate {
                 invalidParameterError.adds(result.params);
             }
             else {
-                throw result;
+                throw new InvalidParameterError_1.default().adds(result.params);
             }
         }
     }
@@ -69,7 +70,7 @@ class Validate {
             }
         }
         if (this.checks.length > 0) {
-            if (!this.isRequired && (isEmpty(this.fieldValue))) {
+            if (this.isRequired || !isEmpty(this.fieldValue)) {
                 for (let i = 0; i < this.checks.length; i++) {
                     result = this.checks[i](this.fieldValue, this.fieldName);
                     if (result && !result.success) {

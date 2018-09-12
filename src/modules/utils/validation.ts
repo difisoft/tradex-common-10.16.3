@@ -64,7 +64,7 @@ export class Validate {
       if (invalidParameterError) {
         invalidParameterError.adds(result.params);
       } else {
-        throw result;
+        throw new InvalidParameterError().adds(result.params);
       }
     }
   };
@@ -77,7 +77,7 @@ export class Validate {
       }
     }
     if (this.checks.length > 0) {
-      if (!this.isRequired && (isEmpty(this.fieldValue))) {
+      if (this.isRequired || !isEmpty(this.fieldValue)) {
         for (let i = 0; i < this.checks.length; i++) {
           result = this.checks[i](this.fieldValue, this.fieldName);
           if (result && !result.success) {
