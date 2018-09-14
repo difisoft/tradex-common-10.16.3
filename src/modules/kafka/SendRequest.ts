@@ -121,12 +121,13 @@ class SendRequest extends SendRequestCommon {
     conf: IConf,
     consumerOptions: any,
     initListener: boolean = true,
+    topicConf: any = {}
   ) {
     super(conf);
     if (initListener) {
       logger.info(`init response listener ${this.responseTopic}`);
       new StreamHandler(this.conf, consumerOptions, [this.responseTopic]
-        , (data: any) => this.handlerResponse(data));
+        , (data: any) => this.handlerResponse(data), topicConf);
     }
   }
 

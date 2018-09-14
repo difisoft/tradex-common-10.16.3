@@ -7,7 +7,7 @@ class StreamHandler {
   private stream: ConsumerStream;
 
   constructor(conf: IConf, options: any, topics: string[]
-              , dataHandler: (data: any, handler: StreamHandler) => void
+              , dataHandler: (data: any, handler: StreamHandler) => void, topicConf: any = {}
   ) {
     const ops = {
       ...{
@@ -16,8 +16,9 @@ class StreamHandler {
       }, ...options
     };
 
+
     this.hasError = false;
-    this.stream = createReadStream(ops, {}, {
+    this.stream = createReadStream(ops, topicConf, {
       topics: topics
     });
 

@@ -108,7 +108,7 @@ class SendRequestCommon {
 }
 exports.SendRequestCommon = SendRequestCommon;
 class SendRequest extends SendRequestCommon {
-    constructor(conf, consumerOptions, initListener = true) {
+    constructor(conf, consumerOptions, initListener = true, topicConf = {}) {
         super(conf);
         this.requestedMessages = new Map();
         this.reallySendMessage = (message) => {
@@ -119,7 +119,7 @@ class SendRequest extends SendRequestCommon {
         };
         if (initListener) {
             log_1.logger.info(`init response listener ${this.responseTopic}`);
-            new StreamHandler_1.StreamHandler(this.conf, consumerOptions, [this.responseTopic], (data) => this.handlerResponse(data));
+            new StreamHandler_1.StreamHandler(this.conf, consumerOptions, [this.responseTopic], (data) => this.handlerResponse(data), topicConf);
         }
     }
     sendRequest(transactionId, topic, uri, data) {
