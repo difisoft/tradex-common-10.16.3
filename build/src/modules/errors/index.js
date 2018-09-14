@@ -20,5 +20,5 @@ const ForwardError_1 = require("./ForwardError");
 exports.ForwardError = ForwardError_1.ForwardError;
 const TokenExpiredError_1 = require("./TokenExpiredError");
 exports.TokenExpiredError = TokenExpiredError_1.default;
-exports.EMAIL_VALIDATION = 'ERROR_EMAIL_VALIDATION';
+exports.EMAIL_VALIDATION = 'EMAIL_VALIDATION_ERROR';
 //# sourceMappingURL=index.js.map
