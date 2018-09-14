@@ -5,7 +5,7 @@ class InvalidFieldValueError extends InvalidParameterError_1.default {
     constructor(fieldName, fieldValue) {
         super([{
                 code: 'INVALID_FIELD_VALUE',
-                params: fieldName,
+                param: fieldName,
                 messageParams: [fieldName, fieldValue]
             }]);
     }

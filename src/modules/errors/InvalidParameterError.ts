@@ -7,9 +7,9 @@ export default class InvalidParameterError extends GeneralError {
 
   public add = (code: any, fieldName: any, messageParams: any) => {
     this.params.push({
-      code,
-      fieldName,
-      messageParams,
+      code: code,
+      param: fieldName,
+      messageParams: messageParams,
     });
     return this;
   };

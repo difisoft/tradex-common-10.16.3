@@ -5,7 +5,7 @@ class FieldRequiredError extends InvalidParameterError_1.default {
     constructor(fieldName) {
         super([{
                 code: 'FIELD_IS_REQUIRED',
-                params: fieldName,
+                param: fieldName,
                 messageParams: [fieldName],
             }]);
     }

@@ -6,9 +6,9 @@ class InvalidParameterError extends GeneralError_1.default {
         super('INVALID_PARAMETER', params);
         this.add = (code, fieldName, messageParams) => {
             this.params.push({
-                code,
-                fieldName,
-                messageParams,
+                code: code,
+                param: fieldName,
+                messageParams: messageParams,
             });
             return this;
         };
