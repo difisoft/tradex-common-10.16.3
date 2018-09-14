@@ -139,12 +139,12 @@ class SendRequest extends SendRequestCommon {
     if (!this.isReady) {
       this.bufferedMessages.push(message);
     } else {
-      this.reallySendAMessage(message);
+      this.reallySendMessage(message);
     }
     return subject;
   };
 
-  protected reallySendAMessage: (message: ISendMessage) => void = (message: ISendMessage) => {
+  protected reallySendMessage: (message: ISendMessage) => void = (message: ISendMessage) => {
     if (message.subject) {
       this.requestedMessages[message.message.messageId] = message.subject;
     }

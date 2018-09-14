@@ -30,7 +30,7 @@ declare class SendRequest extends SendRequestCommon {
     private requestedMessages;
     constructor(conf: IConf, consumerOptions: any, initListener?: boolean);
     sendRequest(transactionId: string, topic: string, uri: string, data: any): Rx.Observable<IMessage>;
-    protected reallySendAMessage: (message: ISendMessage) => void;
+    protected reallySendMessage: (message: ISendMessage) => void;
     private handlerResponse;
 }
 declare function create(conf: IConf, consumerOptions: any, initResponseListener?: boolean): void;

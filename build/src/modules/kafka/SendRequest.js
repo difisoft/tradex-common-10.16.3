@@ -111,7 +111,7 @@ class SendRequest extends SendRequestCommon {
     constructor(conf, consumerOptions, initListener = true) {
         super(conf);
         this.requestedMessages = new Map();
-        this.reallySendAMessage = (message) => {
+        this.reallySendMessage = (message) => {
             if (message.subject) {
                 this.requestedMessages[message.message.messageId] = message.subject;
             }
@@ -130,7 +130,7 @@ class SendRequest extends SendRequestCommon {
             this.bufferedMessages.push(message);
         }
         else {
-            this.reallySendAMessage(message);
+            this.reallySendMessage(message);
         }
         return subject;
     }
