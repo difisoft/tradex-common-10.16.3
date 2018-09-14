@@ -169,8 +169,8 @@ class SendRequest extends SendRequestCommon {
 
 let instance: SendRequest = null;
 
-function create(conf: IConf, consumerOptions: any, initResponseListener: boolean = true): void {
-  instance = new SendRequest(conf, consumerOptions, initResponseListener);
+function create(conf: IConf, consumerOptions: any, initResponseListener: boolean = true, topicConf: any = {}): void {
+  instance = new SendRequest(conf, consumerOptions, initResponseListener, topicConf);
 }
 
 function getInstance(): SendRequest {

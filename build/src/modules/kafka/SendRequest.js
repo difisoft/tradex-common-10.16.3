@@ -150,8 +150,8 @@ class SendRequest extends SendRequestCommon {
 }
 exports.SendRequest = SendRequest;
 let instance = null;
-function create(conf, consumerOptions, initResponseListener = true) {
-    instance = new SendRequest(conf, consumerOptions, initResponseListener);
+function create(conf, consumerOptions, initResponseListener = true, topicConf = {}) {
+    instance = new SendRequest(conf, consumerOptions, initResponseListener, topicConf);
 }
 exports.create = create;
 function getInstance() {
