@@ -19,7 +19,12 @@ const formatDateToDisplay = (date: Date, format: string = DISPLAY_FORMAT): strin
 
 const convertStringToDate = (data: string, format: string = DISPLAY_FORMAT): Date => {
   try {
-    return moment(data, format).toDate();
+    const obj = moment(data, format);
+    if (obj.isValid()) {
+      return obj.toDate();
+    } else {
+      return null;
+    }
   } catch (e) {
     return null;
   }
