@@ -21,7 +21,7 @@ const formatDateToDisplay = (date, format = DISPLAY_FORMAT) => {
 exports.formatDateToDisplay = formatDateToDisplay;
 const convertStringToDate = (data, format = DISPLAY_FORMAT) => {
     try {
-        const obj = moment(data, format);
+        const obj = moment.utc(data, format);
         if (obj.isValid()) {
             return obj.toDate();
         }
