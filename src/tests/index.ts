@@ -10,6 +10,7 @@ import {
   results,
   TestFunc,
 } from "./CommonTest";
+import { startTest } from './Test';
 
 export {
   CommonTest
@@ -22,4 +23,5 @@ export {
   , createFailResult
   , createSuccessResult
   , TestFunc
+  , startTest
 }

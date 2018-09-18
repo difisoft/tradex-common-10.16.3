@@ -1,7 +1,7 @@
 export default interface IToken {
     userId?: number;
     serviceCode?: string;
-    connectionId?: string;
+    connectionId?: any;
     serviceId?: string;
     serviceName?: string;
     clientId?: number;
