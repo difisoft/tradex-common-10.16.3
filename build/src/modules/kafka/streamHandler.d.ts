@@ -5,4 +5,4 @@ declare class StreamHandler {
     constructor(conf: IConf, options: any, topics: string[], dataHandler: (data: any, handler: StreamHandler) => void, topicConf?: any);
     close(): void;
 }
-export { StreamHand
+export { StreamHandler };

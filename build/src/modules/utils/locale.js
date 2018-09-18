@@ -17,19 +17,19 @@ const getLanguageCode = (acceptLanguageHeader) => {
 };
 exports.getLanguageCode = getLanguageCode;
 const defaultResources = {};
-const init = (requestTopic, msNames, namsespaces) => {
+const init = (requestTopic, msNames, namespaceList) => {
     i18n
         .use(i18next_fetch_backend_1.default);
     __1.Kafka.getInstance().sendRequest(uuid_1.v4(), requestTopic, 'get:/api/v1/locale', {
         msNames: msNames
     })
         .subscribe((message) => {
-        const data = message.data.data;
-        if (data.status != null) {
-            __1.Logger.error(data.status);
+        if (message.data.status != null) {
+            __1.Logger.error(message.data.status);
             process.exit(1);
         }
         else {
+            const data = message.data.data;
             i18n
                 .init({
                 fallbackLng: 'en',
@@ -54,9 +54,9 @@ const init = (requestTopic, msNames, namsespaces) => {
                         return defaultResources[namespaces[0]];
                     }
                 },
-                ns: namsespaces,
-                defaultNS: namsespaces[0],
-                fallbackNS: namsespaces.slice(1)
+                ns: namespaceList,
+                defaultNS: namespaceList[0],
+                fallbackNS: namespaceList.slice(1)
             });
         }
     });

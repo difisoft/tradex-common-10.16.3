@@ -32,4 +32,4 @@ class StreamHandler {
     }
 }
 exports.StreamHandler = StreamHandler;
-//# sou
+//# sourceMappingURL=StreamHandler.js.map

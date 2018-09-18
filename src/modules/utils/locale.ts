@@ -17,7 +17,7 @@ const getLanguageCode = (acceptLanguageHeader: string): string => {
 
 const defaultResources: any = {};
 
-const init = (requestTopic: string, msNames: string[], namsespaces: string[]): void => {
+const init = (requestTopic: string, msNames: string[], namespaceList: string[]): void => {
   i18n
     .use(Backend)
 
@@ -29,11 +29,12 @@ const init = (requestTopic: string, msNames: string[], namsespaces: string[]): v
       msNames: msNames
     })
     .subscribe((message: Kafka.IMessage) => {
-      const data = message.data.data;
-      if (data.status != null) {
-        Logger.error(data.status);
+      if (message.data.status != null) {
+        Logger.error(message.data.status);
         process.exit(1);
       } else {
+        const data = message.data.data;
+
         i18n
           .init({
             fallbackLng: 'en',
@@ -60,9 +61,9 @@ const init = (requestTopic: string, msNames: string[], namsespaces: string[]): v
               }
             },
             // have a common namespace used around the full app
-            ns: namsespaces,
-            defaultNS: namsespaces[0],
-            fallbackNS: namsespaces.slice(1)
+            ns: namespaceList,
+            defaultNS: namespaceList[0],
+            fallbackNS: namespaceList.slice(1)
           });
       }
 
