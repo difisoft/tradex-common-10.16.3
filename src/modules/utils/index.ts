@@ -21,7 +21,7 @@ import {
 import { singleton } from './Singleton';
 import { convertStringToDate, formatDateToDisplay, DATETIME_DISPLAY_FORMAT } from './date';
 import { generateToken } from './token';
-import { getLanguageCode } from './locale';
+import { init as init18n, getLanguageCode, getInstance as getI18nInstance} from './locale';
 
 export default {
   validate,
@@ -45,5 +45,7 @@ export default {
   convertStringToDate,
   DATETIME_DISPLAY_FORMAT,
   generateToken,
-  getLanguageCode
+  getLanguageCode,
+  init18n,
+  getI18nInstance
 }

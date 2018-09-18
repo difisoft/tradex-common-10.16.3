@@ -26,6 +26,7 @@
     "no-unused-expression": false,
     "prefer-for-of": false,
     "insecure-random": false,
+    "no-import-side-effect": false,
     "typedef": [
       true,
       "parameter",
