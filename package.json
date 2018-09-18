@@ -14,10 +14,17 @@
   "author": "tuanhiep1232",
   "license": "UNLICENSED",
   "dependencies": {
+    "@types/i18next": "^8.4.5",
+    "@types/isomorphic-fetch": "0.0.34",
     "@types/node-zookeeper-client": "^0.2.6",
     "@types/rx": "^4.1.1",
+    "@types/uuid": "^3.4.4",
     "accept-language": "^3.0.18",
     "aws-sdk": "^2.302.0",
+    "es6-promise": "^4.2.5",
+    "i18next": "^11.9.0",
+    "i18next-fetch-backend": "^0.1.0",
+    "isomorphic-fetch": "^2.2.1",
     "locale-code": "^2.0.1",
     "log4js": "^3.0.5",
     "moment": "^2.22.2",
@@ -25,6 +32,7 @@
     "node-zookeeper-client": "^0.2.2",
     "path": "^0.12.7",
     "rx": "^4.1.0",
+    "uuid": "^3.3.2",
     "winston": "^3.0.0-rc5"
   },
   "devDependencies": {

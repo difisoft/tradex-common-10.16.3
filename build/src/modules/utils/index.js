@@ -29,6 +29,8 @@ exports.default = {
     convertStringToDate: date_1.convertStringToDate,
     DATETIME_DISPLAY_FORMAT: date_1.DATETIME_DISPLAY_FORMAT,
     generateToken: token_1.generateToken,
-    getLanguageCode: locale_1.getLanguageCode
+    getLanguageCode: locale_1.getLanguageCode,
+    init18n: locale_1.init,
+    getI18nInstance: locale_1.getInstance
 };
 //# sourceMappingURL=index.js.map
