@@ -25,7 +25,7 @@ declare const _default: {
     DATETIME_DISPLAY_FORMAT: string;
     generateToken: (length?: number, onlyDigit?: boolean) => string;
     getLanguageCode: (acceptLanguageHeader: string) => string;
-    init18n: (requestTopic: string, msNames: string[], namespaceList: string[]) => void;
+    init18n: (requestTopic: string, msNames: string, namespaceList: string[]) => void;
     getI18nInstance: () => any;
 };
 export default _default;
