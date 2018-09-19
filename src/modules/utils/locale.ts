@@ -5,7 +5,7 @@ import Backend from 'i18next-fetch-backend';
 import 'isomorphic-fetch';
 import { Kafka, Logger } from '../..';
 
-acceptLanguage.languages(['vi', 'en', 'kr', 'zh']);
+acceptLanguage.languages(['vi', 'en', 'ko', 'zh']);
 
 const getLanguageCode = (acceptLanguageHeader: string): string => {
   try {

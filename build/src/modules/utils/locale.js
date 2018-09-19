@@ -6,7 +6,7 @@ const uuid_1 = require("uuid");
 const i18next_fetch_backend_1 = require("i18next-fetch-backend");
 require("isomorphic-fetch");
 const __1 = require("../..");
-acceptLanguage.languages(['vi', 'en', 'kr', 'zh']);
+acceptLanguage.languages(['vi', 'en', 'ko', 'zh']);
 const getLanguageCode = (acceptLanguageHeader) => {
     try {
         return acceptLanguage.get(acceptLanguageHeader);
