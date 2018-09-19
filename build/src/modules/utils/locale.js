@@ -33,7 +33,7 @@ const init = (requestTopic, msNames, namespaceList) => {
             i18n
                 .init({
                 fallbackLng: 'en',
-                preload: ['en', 'kr', 'vi', 'zh'],
+                preload: ['en', 'ko', 'vi', 'zh'],
                 saveMissing: true,
                 backend: {
                     loadPath: (lngs, namespaces) => {
