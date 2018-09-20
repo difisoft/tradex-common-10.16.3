@@ -25,9 +25,9 @@ declare const _default: {
     DATETIME_DISPLAY_FORMAT: string;
     generateToken: (length?: number, onlyDigit?: boolean) => string;
     getLanguageCode: (acceptLanguageHeader: string) => string;
-    initI18n: (msNames: string, namespaceList: string[], requestTopic?: string) => void;
+    initI18n: (msNames: string, namespaceList: string[], requestTopic?: string, uri?: string) => void;
     getI18nInstance: () => any;
-    initTemplateResource: (msNames: string, requestTopic?: string) => void;
+    initTemplateResource: (msNames: string, requestTopic?: string, uri?: string) => void;
     getTemplateResources: () => any;
 };
 export default _default;

@@ -17,21 +17,20 @@ const getLanguageCode = (acceptLanguageHeader: string): string => {
 
 const defaultResources: any = {};
 
-const init = (msNames: string, namespaceList: string[], requestTopic: string = 'configuration'): void => {
+const init = (msNames: string, namespaceList: string[], requestTopic: string = 'configuration', uri: string = '/api/v1/locale'): void => {
   i18n
     .use(Backend)
 
   Kafka.getInstance().sendRequest(
     uuid(),
     requestTopic,
-    'get:/api/v1/locale',
+    uri,
     {
       msNames: msNames
     })
     .subscribe((message: Kafka.IMessage) => {
       if (message.data.status != null) {
         Logger.error(message.data.status);
-        process.exit(1);
       } else {
         const data = message.data.data;
 

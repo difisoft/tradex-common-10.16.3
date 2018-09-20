@@ -17,16 +17,15 @@ const getLanguageCode = (acceptLanguageHeader) => {
 };
 exports.getLanguageCode = getLanguageCode;
 const defaultResources = {};
-const init = (msNames, namespaceList, requestTopic = 'configuration') => {
+const init = (msNames, namespaceList, requestTopic = 'configuration', uri = '/api/v1/locale') => {
     i18n
         .use(i18next_fetch_backend_1.default);
-    __1.Kafka.getInstance().sendRequest(uuid_1.v4(), requestTopic, 'get:/api/v1/locale', {
+    __1.Kafka.getInstance().sendRequest(uuid_1.v4(), requestTopic, uri, {
         msNames: msNames
     })
         .subscribe((message) => {
         if (message.data.status != null) {
             __1.Logger.error(message.data.status);
-            process.exit(1);
         }
         else {
             const data = message.data.data;

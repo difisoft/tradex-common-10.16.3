@@ -3,18 +3,17 @@ import { Kafka, Logger } from '../..';
 
 let templateResources: any = [];
 
-const init = (msNames: string, requestTopic: string = 'configuration'): void => {
+const init = (msNames: string, requestTopic: string = 'configuration', uri: string = '/api/v1/template'): void => {
   Kafka.getInstance().sendRequest(
     uuid(),
     requestTopic,
-    'get:/api/v1/template',
+    uri,
     {
       msNames: msNames
     })
     .subscribe((message: Kafka.IMessage) => {
       if (message.data.status != null) {
         Logger.error(message.data.status);
-        process.exit(1);
       } else {
         templateResources = message.data.data;
       }
