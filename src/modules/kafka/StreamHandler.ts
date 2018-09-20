@@ -44,6 +44,18 @@ class StreamHandler {
   }
 }
 
+function createBroadcastListener(conf: IConf, options: any, topics: string[]
+  , dataHandler: (data: any, handler: StreamHandler) => void, topicConf: any = {}
+) {
+  const opt = {
+    ...{
+      'group.id': conf.clientId,
+    }, ...options
+  };
+  return new StreamHandler(conf, opt, topics, dataHandler, topicConf);
+}
+
 export {
-  StreamHandler
+  StreamHandler,
+  createBroadcastListener
 };

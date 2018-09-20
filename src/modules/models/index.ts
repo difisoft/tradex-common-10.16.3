@@ -4,8 +4,10 @@ import IParamError from './IParamError';
 import IDataRequest from './IDataRequest';
 import IHeaders from './IHeaders';
 import IToken from './IToken';
+import IConnectionIdentifier from './IConnectionIdentifier';
 
 export {
   IResponse, createFailResponse, createSuccessResponse,
-  IParamError, IStatus, IDataRequest, IHeaders, IToken
+  IParamError, IStatus, IDataRequest, IHeaders, IToken,
+  IConnectionIdentifier,
 }
