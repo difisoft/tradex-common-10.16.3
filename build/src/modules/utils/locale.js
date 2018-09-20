@@ -17,7 +17,7 @@ const getLanguageCode = (acceptLanguageHeader) => {
 };
 exports.getLanguageCode = getLanguageCode;
 const defaultResources = {};
-const init = (requestTopic, msNames, namespaceList) => {
+const init = (msNames, namespaceList, requestTopic = 'configuration') => {
     i18n
         .use(i18next_fetch_backend_1.default);
     __1.Kafka.getInstance().sendRequest(uuid_1.v4(), requestTopic, 'get:/api/v1/locale', {

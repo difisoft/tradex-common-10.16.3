@@ -17,7 +17,7 @@ const getLanguageCode = (acceptLanguageHeader: string): string => {
 
 const defaultResources: any = {};
 
-const init = (requestTopic: string, msNames: string, namespaceList: string[]): void => {
+const init = (msNames: string, namespaceList: string[], requestTopic: string = 'configuration'): void => {
   i18n
     .use(Backend)
 

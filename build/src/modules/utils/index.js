@@ -7,6 +7,7 @@ const Singleton_1 = require("./Singleton");
 const date_1 = require("./date");
 const token_1 = require("./token");
 const locale_1 = require("./locale");
+const template_1 = require("./template");
 exports.default = {
     validate: validation_1.validate,
     validateEmail: validation_1.validateEmail,
@@ -30,7 +31,9 @@ exports.default = {
     DATETIME_DISPLAY_FORMAT: date_1.DATETIME_DISPLAY_FORMAT,
     generateToken: token_1.generateToken,
     getLanguageCode: locale_1.getLanguageCode,
-    init18n: locale_1.init,
-    getI18nInstance: locale_1.getInstance
+    initI18n: locale_1.init,
+    getI18nInstance: locale_1.getInstance,
+    initTemplateResource: template_1.init,
+    getTemplateResources: template_1.getTemplateResources
 };
 //# sourceMappingURL=index.js.map
