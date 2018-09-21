@@ -49,4 +49,4 @@ const generatePresignedUrlForUpload = (bucket: string, key: string, option: IAWS
   });
 }
 
-export { loadCredentials, getTempCredentials, generatePresignedUrlForUpload }
+export { loadCredentials, getTempCredentials, generatePresignedUrlForUpload, IAWSUploadOption }

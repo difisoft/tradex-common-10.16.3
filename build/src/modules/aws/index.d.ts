@@ -8,4 +8,4 @@ declare interface IAWSUploadOption {
 declare const loadCredentials: (conf: any) => void;
 declare const getTempCredentials: (conf: any) => Promise<AWS.STS.Credentials>;
 declare const generatePresignedUrlForUpload: (bucket: string, key: string, option: IAWSUploadOption) => string;
-export { loadCredentials, getTempCredentials, generatePresignedUrlForUpload };
+export { loadCredentials, getTempCredentials, generatePresignedUrlForUpload, IAWSUploadOption };
