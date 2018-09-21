@@ -31,22 +31,29 @@ const getTempCredentials = (conf: any): Promise<AWS.STS.Credentials> => {
 
 }
 
-const generatePresignedUrlForUpload = (bucket: string, key: string, option: IAWSUploadOption): string => {
+const generateSignedDataForUpload = (bucket: string, key: string, option: IAWSUploadOption): any => {
   const S3 = new AWS.S3();
   if (option == null) {
     return null;
   }
 
-  return S3.getSignedUrl('putObject', {
+  S3.createPresignedPost({
     Bucket: bucket, 
-    Key: key, 
+    Fields: {
+      key: key
+    }, 
     Expires: option.expires,
     Conditions: [
       ['starts-with', '$key', option.pathToUpload],
       ['content-length-range', option.minUpload, option.maxUpload]
     ]
-
+  }, (err: Error, data: AWS.S3.PresignedPost) => {
+    if (err != null){
+      return null;
+    } else {
+      return data;
+    }
   });
 }
 
-export { loadCredentials, getTempCredentials, generatePresignedUrlForUpload, IAWSUploadOption }
+export { loadCredentials, getTempCredentials, generateSignedDataForUpload, IAWSUploadOption }

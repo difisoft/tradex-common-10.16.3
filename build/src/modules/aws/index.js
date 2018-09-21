@@ -23,20 +23,29 @@ const getTempCredentials = (conf) => {
     });
 };
 exports.getTempCredentials = getTempCredentials;
-const generatePresignedUrlForUpload = (bucket, key, option) => {
+const generateSignedDataForUpload = (bucket, key, option) => {
     const S3 = new AWS.S3();
     if (option == null) {
         return null;
     }
-    return S3.getSignedUrl('putObject', {
+    S3.createPresignedPost({
         Bucket: bucket,
-        Key: key,
+        Fields: {
+            key: key
+        },
         Expires: option.expires,
         Conditions: [
             ['starts-with', '$key', option.pathToUpload],
             ['content-length-range', option.minUpload, option.maxUpload]
         ]
+    }, (err, data) => {
+        if (err != null) {
+            return null;
+        }
+        else {
+            return data;
+        }
     });
 };
-exports.generatePresignedUrlForUpload = generatePresignedUrlForUpload;
+exports.generateSignedDataForUpload = generateSignedDataForUpload;
 //# sourceMappingURL=index.js.map
