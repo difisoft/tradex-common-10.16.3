@@ -1,5 +1,12 @@
 import * as AWS from 'aws-sdk';
 
+declare interface IAWSUploadOption {
+  expires: number; //seconds
+  pathToUpload: string;
+  minUpload: number;
+  maxUpload: number;
+}
+
 const loadCredentials = (conf: any) => {
   AWS.config.credentials = new AWS.Credentials({
     accessKeyId: conf.accessKeyId,
@@ -24,4 +31,22 @@ const getTempCredentials = (conf: any): Promise<AWS.STS.Credentials> => {
 
 }
 
-export { loadCredentials, getTempCredentials }
+const generatePresignedUrlForUpload = (bucket: string, key: string, option: IAWSUploadOption): string => {
+  const S3 = new AWS.S3();
+  if (option == null) {
+    return null;
+  }
+
+  return S3.getSignedUrl('putObject', {
+    Bucket: bucket, 
+    Key: key, 
+    Expires: option.expires,
+    Conditions: [
+      ['starts-with', '$key', option.pathToUpload],
+      ['content-length-range', option.minUpload, option.maxUpload]
+    ]
+
+  });
+}
+
+export { loadCredentials, getTempCredentials, generatePresignedUrlForUpload }

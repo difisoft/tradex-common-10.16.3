@@ -1,7 +1,7 @@
 import FieldRequiredError from "../errors/FieldRequiredError";
 import InvalidParameterError from "../errors/InvalidParameterError";
 import IParamError from "../models/IParamError";
-import { EMAIL_VALIDATION } from '../errors';
+import { EMAIL_VALIDATION_FAILED } from '../errors';
 
 declare type CheckFunc = (value: any, name: string) => IValidationResult;
 
@@ -103,7 +103,7 @@ function validateEmail(fieldValue: string, paramName: string = 'email'): IValida
   if (regex.test(fieldValue.toLowerCase())) {
     return createSuccessValidation(fieldValue);
   } else {
-    return createFailValidation(EMAIL_VALIDATION, null, paramName);
+    return createFailValidation(EMAIL_VALIDATION_FAILED, null, paramName);
   }
 }
 

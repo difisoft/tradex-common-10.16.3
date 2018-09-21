@@ -28,6 +28,7 @@ declare const _default: {
     initI18n: (msNames: string, namespaceList: string[], requestTopic?: string, uri?: string) => void;
     getI18nInstance: () => any;
     initTemplateResource: (msNames: string, requestTopic?: string, uri?: string) => void;
-    getTemplateResources: () => any;
+    getTemplateResources: () => any[];
+    compileTemplate: (templateUrl: string, data: any) => Promise<string>;
 };
 export default _default;

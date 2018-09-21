@@ -1,7 +1,10 @@
 import { v4 as uuid } from 'uuid';
+import * as Handlebars from 'handlebars';
 import { Kafka, Logger } from '../..';
+import { createFailResponse } from '../models';
+import { TEMPLATE_LOAD_FAILED } from '../errors';
 
-let templateResources: any = [];
+let templateResources: any[] = [];
 
 const init = (msNames: string, requestTopic: string = 'configuration', uri: string = '/api/v1/template'): void => {
   Kafka.getInstance().sendRequest(
@@ -20,8 +23,29 @@ const init = (msNames: string, requestTopic: string = 'configuration', uri: stri
     });
 }
 
-const getTemplateResources = (): any => {
+const getTemplateResources = (): any[] => {
   return templateResources;
 }
 
-export { init, getTemplateResources }
+const compileTemplate = (templateUrl: string, data: any): Promise<string> => {
+  return new Promise<string>((resolve: Function, reject: Function) => {
+    fetch(templateUrl)
+      .then((response: any) => {
+        if (response.status >= 400) {
+          reject(createFailResponse(TEMPLATE_LOAD_FAILED));
+        } else {
+          return response.text();
+        }
+      })
+      .then((text: string) => {
+        const template = Handlebars.compile(text);
+        resolve(template(data));
+      })
+      .catch((err: any) => {
+        reject(createFailResponse(TEMPLATE_LOAD_FAILED));
+      });
+  });
+
+}
+
+export { init, getTemplateResources, compileTemplate }

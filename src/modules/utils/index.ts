@@ -21,8 +21,8 @@ import {
 import { singleton } from './Singleton';
 import { convertStringToDate, formatDateToDisplay, DATETIME_DISPLAY_FORMAT } from './date';
 import { generateToken } from './token';
-import { init as initI18n, getLanguageCode, getInstance as getI18nInstance} from './locale';
-import { init as initTemplateResource, getTemplateResources} from './template';
+import { init as initI18n, getLanguageCode, getInstance as getI18nInstance } from './locale';
+import { init as initTemplateResource, getTemplateResources, compileTemplate } from './template';
 
 export default {
   validate,
@@ -50,5 +50,6 @@ export default {
   initI18n,
   getI18nInstance,
   initTemplateResource,
-  getTemplateResources
+  getTemplateResources,
+  compileTemplate
 }

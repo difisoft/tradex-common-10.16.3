@@ -97,7 +97,7 @@ function validateEmail(fieldValue, paramName = 'email') {
         return createSuccessValidation(fieldValue);
     }
     else {
-        return createFailValidation(errors_1.EMAIL_VALIDATION, null, paramName);
+        return createFailValidation(errors_1.EMAIL_VALIDATION_FAILED, null, paramName);
     }
 }
 exports.validateEmail = validateEmail;

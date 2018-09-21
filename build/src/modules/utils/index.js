@@ -34,6 +34,7 @@ exports.default = {
     initI18n: locale_1.init,
     getI18nInstance: locale_1.getInstance,
     initTemplateResource: template_1.init,
-    getTemplateResources: template_1.getTemplateResources
+    getTemplateResources: template_1.getTemplateResources,
+    compileTemplate: template_1.compileTemplate
 };
 //# sourceMappingURL=index.js.map
