@@ -31,28 +31,30 @@ const getTempCredentials = (conf: any): Promise<AWS.STS.Credentials> => {
 
 }
 
-const generateSignedDataForUpload = (bucket: string, key: string, option: IAWSUploadOption): any => {
-  const S3 = new AWS.S3();
-  if (option == null) {
-    return null;
-  }
-
-  S3.createPresignedPost({
-    Bucket: bucket, 
-    Fields: {
-      key: key
-    }, 
-    Expires: option.expires,
-    Conditions: [
-      ['starts-with', '$key', option.pathToUpload],
-      ['content-length-range', option.minUpload, option.maxUpload]
-    ]
-  }, (err: Error, data: AWS.S3.PresignedPost) => {
-    if (err != null){
-      return null;
-    } else {
-      return data;
+const generateSignedDataForUpload = (bucket: string, key: string, option: IAWSUploadOption): Promise<AWS.S3.PresignedPost> => {
+  return new Promise<AWS.S3.PresignedPost>((resolve: Function, reject: Function) => {
+    const S3 = new AWS.S3();
+    if (option == null) {
+      resolve(null);
     }
+
+    S3.createPresignedPost({
+      Bucket: bucket,
+      Fields: {
+        key: key
+      },
+      Expires: option.expires,
+      Conditions: [
+        ['starts-with', '$key', option.pathToUpload],
+        ['content-length-range', option.minUpload, option.maxUpload]
+      ]
+    }, (err: Error, data: AWS.S3.PresignedPost) => {
+      if (err != null) {
+        resolve(null);
+      } else {
+        resolve(data);
+      }
+    });
   });
 }
 
