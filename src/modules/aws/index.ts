@@ -7,6 +7,8 @@ declare interface IAWSUploadOption {
   maxUpload: number;
   acl: string;
   bucket: string;
+  region: string;
+  contentType: string;
 }
 
 const loadCredentials = (conf: any) => {
@@ -35,7 +37,7 @@ const getTempCredentials = (conf: any): Promise<AWS.STS.Credentials> => {
 
 const generateSignedDataForUpload = (key: string, option: IAWSUploadOption): Promise<AWS.S3.PresignedPost> => {
   return new Promise<AWS.S3.PresignedPost>((resolve: Function, reject: Function) => {
-    const S3 = new AWS.S3();
+    const S3 = new AWS.S3({ region: option.region });
     if (option == null) {
       resolve(null);
     }
@@ -43,11 +45,12 @@ const generateSignedDataForUpload = (key: string, option: IAWSUploadOption): Pro
     S3.createPresignedPost({
       Bucket: option.bucket,
       Fields: {
-        key: key
+        key: key,
       },
       Expires: option.expires,
       Conditions: [
         { 'acl': option.acl },
+        { 'Content-Type': option.contentType},
         { 'bucket': option.bucket },
         ['starts-with', '$key', option.pathToUpload],
         ['content-length-range', option.minUpload, option.maxUpload]

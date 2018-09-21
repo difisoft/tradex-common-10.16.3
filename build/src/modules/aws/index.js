@@ -25,18 +25,19 @@ const getTempCredentials = (conf) => {
 exports.getTempCredentials = getTempCredentials;
 const generateSignedDataForUpload = (key, option) => {
     return new Promise((resolve, reject) => {
-        const S3 = new AWS.S3();
+        const S3 = new AWS.S3({ region: option.region });
         if (option == null) {
             resolve(null);
         }
         S3.createPresignedPost({
             Bucket: option.bucket,
             Fields: {
-                key: key
+                key: key,
             },
             Expires: option.expires,
             Conditions: [
                 { 'acl': option.acl },
+                { 'Content-Type': option.contentType },
                 { 'bucket': option.bucket },
                 ['starts-with', '$key', option.pathToUpload],
                 ['content-length-range', option.minUpload, option.maxUpload]

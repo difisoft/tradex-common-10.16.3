@@ -6,6 +6,8 @@ declare interface IAWSUploadOption {
     maxUpload: number;
     acl: string;
     bucket: string;
+    region: string;
+    contentType: string;
 }
 declare const loadCredentials: (conf: any) => void;
 declare const getTempCredentials: (conf: any) => Promise<AWS.STS.Credentials>;
