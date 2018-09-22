@@ -50,7 +50,7 @@ const generateSignedDataForUpload = (key: string, option: IAWSUploadOption): Pro
       Expires: option.expires,
       Conditions: [
         { 'acl': option.acl },
-        { 'Content-Type': option.contentType},
+        ['starts-with', '$Content-Type', option.contentType],
         { 'bucket': option.bucket },
         ['starts-with', '$key', option.pathToUpload],
         ['content-length-range', option.minUpload, option.maxUpload]
