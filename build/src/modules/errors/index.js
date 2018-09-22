@@ -4,6 +4,7 @@ const FieldRequiredError_1 = require("./FieldRequiredError");
 exports.FieldRequiredError = FieldRequiredError_1.default;
 const GeneralError_1 = require("./GeneralError");
 exports.GeneralError = GeneralError_1.default;
+exports.createFromStatus = GeneralError_1.createFromStatus;
 const UriNotFound_1 = require("./UriNotFound");
 exports.UriNotFound = UriNotFound_1.default;
 const SystemError_1 = require("./SystemError");

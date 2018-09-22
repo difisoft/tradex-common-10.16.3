@@ -16,6 +16,7 @@ exports.default = {
     onError: rx_1.onError,
     onNext: rx_1.onNext,
     transform: rx_1.transform,
+    transformError: rx_1.transformError,
     transformAsync: rx_1.transformAsync,
     transformPromise: rx_1.transformPromise,
     singleton: Singleton_1.singleton,
@@ -35,6 +36,6 @@ exports.default = {
     getI18nInstance: locale_1.getInstance,
     initTemplateResource: template_1.init,
     getTemplateResources: template_1.getTemplateResources,
-    compileTemplate: template_1.compileTemplate
+    compileTemplate: template_1.compileTemplate,
 };
 //# sourceMappingURL=index.js.map

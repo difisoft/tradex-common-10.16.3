@@ -1,6 +1,6 @@
 /// <reference types="rx-core" />
 /// <reference types="rx-lite" />
-import { onError, onNext, transform, transformAsync, transformPromise, transformSingle, transformSingleAsync, transformSinglePromise } from './rx';
+import { onError, onNext, transform, transformAsync, transformPromise, transformSingle, transformSingleAsync, transformSinglePromise, transformError } from './rx';
 import { createFailFromError, createFailValidation, createSuccessValidation, validate, Validate, validateEmail, validatePassword } from './validation';
 declare const _default: {
     validate: typeof validate;
@@ -10,6 +10,7 @@ declare const _default: {
     onError: typeof onError;
     onNext: typeof onNext;
     transform: typeof transform;
+    transformError: typeof transformError;
     transformAsync: typeof transformAsync;
     transformPromise: typeof transformPromise;
     singleton: import("./Singleton").Singleton;

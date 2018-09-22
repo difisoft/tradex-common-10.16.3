@@ -1,5 +1,5 @@
 import FieldRequiredError from "./FieldRequiredError";
-import GeneralError from "./GeneralError";
+import GeneralError, { createFromStatus } from "./GeneralError";
 import UriNotFound from "./UriNotFound";
 import SystemError from "./SystemError";
 import ObjectNotFoundError from "./ObjectNotFoundError";
@@ -22,4 +22,5 @@ export {
   InvalidFieldValueError,
   ForwardError,
   TokenExpiredError,
+  createFromStatus,
 }
