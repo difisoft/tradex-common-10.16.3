@@ -21,6 +21,21 @@ function transform(observer, observable, func, errorHandler) {
     }, (err) => errorHandler ? errorHandler(err) : observer.onError(err), () => observer.onCompleted());
 }
 exports.transform = transform;
+function transformError(observer, observable, func, errorHandler) {
+    observable.subscribe((data) => {
+        try {
+            func(data, observer);
+        }
+        catch (e) {
+            onError(observer, e);
+        }
+    }, (err) => {
+        if (!errorHandler || !errorHandler(err)) {
+            observer.onError(err);
+        }
+    }, () => observer.onCompleted());
+}
+exports.transformError = transformError;
 function transformSingle(observer, observable, errorHandler) {
     observable.subscribe((data) => {
         try {

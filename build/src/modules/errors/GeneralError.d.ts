@@ -1,3 +1,4 @@
+import { IStatus } from '../models';
 export default class GeneralError extends Error {
     code: any;
     messageParams: any;
@@ -6,3 +7,5 @@ export default class GeneralError extends Error {
     isSystemError: boolean;
     constructor(code: any, params: any, source?: any, messageParams?: any);
 }
+declare function createFromStatus(status: IStatus): GeneralError;
+export { createFromStatus, };

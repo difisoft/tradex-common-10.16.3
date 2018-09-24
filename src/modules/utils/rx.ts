@@ -30,6 +30,25 @@ function transform<T, F>(observer: ObserverSubject<T>, observable: ObservableSub
   );
 }
 
+function transformError<T, F>(observer: ObserverSubject<T>, observable: ObservableSubject<F>
+  , func: (f: F, obs?: ObserverSubject<T>) => void, errorHandler?: (err: Error) => boolean): void {
+  observable.subscribe(
+    (data: F) => {
+      try {
+        func(data, observer);
+      } catch (e) {
+        onError(observer, e);
+      }
+    },
+    (err: Error) => {
+      if (!errorHandler || !errorHandler(err)) {
+        observer.onError(err);
+      }
+    },
+    () => observer.onCompleted()
+  );
+}
+
 function transformSingle<T>(observer: ObserverSubject<T>, observable: ObservableSubject<T>
   , errorHandler?: (err: Error) => void): void {
   observable.subscribe(
@@ -115,4 +134,5 @@ export {
   transformSingle,
   transformSingleAsync,
   transformSinglePromise,
+  transformError,
 }

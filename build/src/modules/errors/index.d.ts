@@ -1,5 +1,5 @@
 import FieldRequiredError from "./FieldRequiredError";
-import GeneralError from "./GeneralError";
+import GeneralError, { createFromStatus } from "./GeneralError";
 import UriNotFound from "./UriNotFound";
 import SystemError from "./SystemError";
 import ObjectNotFoundError from "./ObjectNotFoundError";
@@ -10,4 +10,4 @@ import { ForwardError } from "./ForwardError";
 import TokenExpiredError from "./TokenExpiredError";
 export declare const EMAIL_VALIDATION_FAILED = "EMAIL_VALIDATION_ERROR";
 export declare const TEMPLATE_LOAD_FAILED = "TEMPLATE_LOAD_FAILED";
-export { FieldRequiredError, GeneralError, UriNotFound, SystemError, ObjectNotFoundError, InvalidParameterError, InvalidIdSecretError, InvalidFieldValueError, ForwardError, TokenExpiredError, };
+export { FieldRequiredError, GeneralError, UriNotFound, SystemError, ObjectNotFoundError, InvalidParameterError, InvalidIdSecretError, InvalidFieldValueError, ForwardError, TokenExpiredError, createFromStatus, };

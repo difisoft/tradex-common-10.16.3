@@ -11,4 +11,8 @@ class GeneralError extends Error {
     }
 }
 exports.default = GeneralError;
+function createFromStatus(status) {
+    return new GeneralError(status.code, status.params, null, status.messageParams);
+}
+exports.createFromStatus = createFromStatus;
 //# sourceMappingURL=GeneralError.js.map

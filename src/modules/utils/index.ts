@@ -8,6 +8,7 @@ import {
   transformSingle,
   transformSingleAsync,
   transformSinglePromise,
+  transformError,
 } from './rx';
 import {
   createFailFromError,
@@ -32,6 +33,7 @@ export default {
   onError,
   onNext,
   transform,
+  transformError,
   transformAsync,
   transformPromise,
   singleton,
@@ -51,5 +53,5 @@ export default {
   getI18nInstance,
   initTemplateResource,
   getTemplateResources,
-  compileTemplate
+  compileTemplate,
 }
