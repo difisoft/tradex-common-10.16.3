@@ -33,6 +33,7 @@ const generateSignedDataForUpload = (key, option) => {
             Bucket: option.bucket,
             Fields: {
                 key: key,
+                acl: option.acl
             },
             Expires: option.expires,
             Conditions: [

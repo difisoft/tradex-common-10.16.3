@@ -46,7 +46,8 @@ const generateSignedDataForUpload = (key: string, option: IAWSUploadOption): Pro
       Bucket: option.bucket,
       Fields: {
         key: key,
-      },
+        acl: option.acl
+    },
       Expires: option.expires,
       Conditions: [
         { 'acl': option.acl },
