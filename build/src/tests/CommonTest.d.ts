@@ -1,6 +1,7 @@
 /// <reference types="rx-core-binding" />
 import * as Kafka from './../modules/kafka';
 import { Subject } from "rx";
+import { IToken } from '../modules/models';
 declare interface IExpectedResult {
     txId?: string;
     errorType?: string;
@@ -34,6 +35,7 @@ declare abstract class CommonTest {
     protected baseNumber: number;
     protected constructor(conf: Kafka.IConf);
     protected listenTopic(topic?: string): ListenTopic;
+    protected listenTopics(topics: string[]): ListenTopic;
     protected sendMessage(topic: string, uri: string, data: any, tx?: string): string;
     protected sendRequest(topic: string, uri: string, data: any, tx?: string): string;
     protected sendResponse(msgId: string, topic: string, uri: string, data: any, tx?: string): string;
@@ -43,5 +45,6 @@ declare abstract class CommonTest {
     protected getNewTxId(): string;
     protected createResult(name: string, expectedResult: IExpectedResult, result: IExpectedResult, compare: (expectedData: any, resultData: any) => string): ITestResult;
     protected callbackResult(name: string, subj: Subject<ITestResult>, data: Kafka.IMessage, func: (data?: Kafka.IMessage) => string): void;
+    protected getToken(token: any): IToken;
 }
 export { CommonTest, ListenTopic, Callback, Condition, ITestResult, IExpectedResult, createFailResult, createSuccessResult, TestFunc, };

@@ -61,6 +61,11 @@ class CommonTest {
         new Kafka.StreamHandler(this.testConfiguration, {}, [listeningTopic], listenTopic.handler);
         return listenTopic;
     }
+    listenTopics(topics) {
+        const listenTopic = new ListenTopic();
+        new Kafka.StreamHandler(this.testConfiguration, {}, topics, listenTopic.handler);
+        return listenTopic;
+    }
     sendMessage(topic, uri, data, tx) {
         const txId = tx ? tx : this.getNewTxId();
         this.request.sendMessage(txId, topic, uri, data);
@@ -166,6 +171,20 @@ class CommonTest {
         else {
             utils_1.default.onNext(subj, createFailResult(name, reason));
         }
+    }
+    getToken(token) {
+        return {
+            clientId: token.cId,
+            connectionId: token.conId ? token.conId.connectionId : undefined,
+            loginMethod: token.lm,
+            refreshTokenId: token.rId,
+            scopeGroupIds: token.sgIds,
+            serviceCode: token.sc,
+            serviceId: token.conId ? token.conId.serviceId : undefined,
+            serviceName: token.conId ? token.conId.serviceName : undefined,
+            serviceUserId: token.suId,
+            userId: token.uId,
+        };
     }
 }
 exports.CommonTest = CommonTest;

@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const node_rdkafka_1 = require("node-rdkafka");
 const log_1 = require("../log");
 class StreamHandler {
-    constructor(conf, options, topics, dataHandler, topicConf = {}) {
+    constructor(conf, options, topics, dataHandler, topicConf = {}, readyCallback) {
         const ops = Object.assign({
             'group.id': conf.clusterId,
             'metadata.broker.list': conf.kafkaUrls.join(),
@@ -12,6 +12,9 @@ class StreamHandler {
         this.stream = node_rdkafka_1.createReadStream(ops, topicConf, {
             topics: topics
         });
+        if (readyCallback) {
+            this.stream.consumer.on('ready', readyCallback);
+        }
         this.stream.on('error', (err) => {
             log_1.logger.logError('error on kafka', err);
             this.hasError = true;

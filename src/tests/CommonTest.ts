@@ -1,6 +1,7 @@
 import * as Kafka from './../modules/kafka';
 import Utils from './../modules/utils';
 import { Subject } from "rx";
+import { IToken } from '../modules/models';
 
 declare interface IExpectedResult {
   txId?: string,
@@ -84,6 +85,12 @@ abstract class CommonTest {
     const listeningTopic: string = topic ? topic : this.request.getResponseTopic();
     const listenTopic: ListenTopic = new ListenTopic();
     new Kafka.StreamHandler(this.testConfiguration, {}, [listeningTopic], listenTopic.handler);
+    return listenTopic;
+  }
+
+  protected listenTopics(topics: string[]): ListenTopic {
+    const listenTopic: ListenTopic = new ListenTopic();
+    new Kafka.StreamHandler(this.testConfiguration, {}, topics, listenTopic.handler);
     return listenTopic;
   }
 
@@ -203,6 +210,21 @@ abstract class CommonTest {
     } else {
       Utils.onNext(subj, createFailResult(name, reason));
     }
+  }
+
+  protected getToken(token: any): IToken {
+    return {
+      clientId: token.cId,
+      connectionId: token.conId ? token.conId.connectionId : undefined,
+      loginMethod: token.lm,
+      refreshTokenId: token.rId,
+      scopeGroupIds: token.sgIds,
+      serviceCode: token.sc,
+      serviceId: token.conId ? token.conId.serviceId : undefined,
+      serviceName: token.conId ? token.conId.serviceName : undefined,
+      serviceUserId: token.suId,
+      userId: token.uId,
+    };
   }
 }
 
