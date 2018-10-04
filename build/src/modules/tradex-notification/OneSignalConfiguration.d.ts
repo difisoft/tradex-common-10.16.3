@@ -40,8 +40,8 @@ export default class OneSignalConfiguration implements IConfiguration {
     ios_category: string;
     content_available: boolean;
     mutable_content: boolean;
-    buttons: IButton[];
-    web_buttons: IButton[];
+    buttons: IButton;
+    web_buttons: IButton;
     contents: Map<string, string>;
     headings: Map<string, string>;
     subtitle: Map<string, string>;

@@ -86,8 +86,8 @@ export default class OneSignalConfiguration implements IConfiguration {
   public ios_category: string;
   public content_available: boolean;
   public mutable_content: boolean;
-  public buttons: IButton[] = [];
-  public web_buttons: IButton[] = [];
+  public buttons: IButton;
+  public web_buttons: IButton;
   /**
    * @code {"en": "English Message", "es": "Spanish Message"}
    */
