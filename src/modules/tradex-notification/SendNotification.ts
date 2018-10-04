@@ -2,6 +2,8 @@ import { SendRequestCommon } from "../kafka";
 import EmailConfiguration from "./EmailConfiguration";
 import NotificationRequest from "./NotificationRequest";
 import EmailVerificationData from "./EmailVerificationData";
+import OneSignalConfiguration from "./OneSignalConfiguration";
+import AlarmNotificationData from "./AlarmNotificationData";
 
 export default class SendNotification {
   constructor(private send: SendRequestCommon, private notificationListenningTopic: string) {
@@ -22,6 +24,14 @@ export default class SendNotification {
     request.add(data.getTemplate(), data);
     this.send.sendMessage(txId, this.notificationListenningTopic, '', request.toJson());
   }
+
+  public sendPushNotification(txId: string, conf: OneSignalConfiguration, locale: string, data: AlarmNotificationData) {
+    const request: NotificationRequest = new NotificationRequest();
+    request.setConfiguration(conf);
+    request.locale = locale;
+    request.add(data.getTemplate(), data);
+    this.send.sendMessage(txId, this.notificationListenningTopic, '', request.toJson());
+   }
 }
 let instance: SendNotification = null;
 
