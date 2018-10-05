@@ -5,10 +5,10 @@ export interface Filter {
     key: string;
     relation: string;
     value: string;
-    radius: string;
-    latitude: string;
-    longitude: string;
-    operation: string;
+    radius?: string;
+    latitude?: string;
+    longitude?: string;
+    operation?: string;
 }
 export interface IButton {
     id?: string;
