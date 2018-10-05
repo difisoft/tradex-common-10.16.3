@@ -1,5 +1,15 @@
 import IConfiguration from "./IConfiguration";
 import MethodEnum from "./MethodEnum";
+export interface Filter {
+    field: string;
+    key: string;
+    relation: string;
+    value: string;
+    radius: string;
+    latitude: string;
+    longitude: string;
+    operation: string;
+}
 export interface IButton {
     id?: string;
     text?: string;
@@ -42,6 +52,7 @@ export default class OneSignalConfiguration implements IConfiguration {
     mutable_content: boolean;
     buttons: IButton;
     web_buttons: IButton;
+    filters: Filter[];
     contents: Map<string, string>;
     headings: Map<string, string>;
     subtitle: Map<string, string>;
