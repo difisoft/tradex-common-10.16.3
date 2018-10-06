@@ -2,8 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const SendNotification_1 = require("./SendNotification");
 exports.SendNotification = SendNotification_1.default;
-exports.getInstance = SendNotification_1.getInstance;
 exports.create = SendNotification_1.create;
+exports.getInstance = SendNotification_1.getInstance;
 const NotificationRequest_1 = require("./NotificationRequest");
 exports.NotificationRequest = NotificationRequest_1.default;
 const OneSignalConfiguration_1 = require("./OneSignalConfiguration");

@@ -1,7 +1,14 @@
-import SendNotification, {getInstance, create} from './SendNotification';
+import SendNotification, { create, getInstance } from './SendNotification';
 import NotificationRequest from './NotificationRequest';
 import IConfiguration from './IConfiguration';
-import OneSignalConfiguration, {AndroidVisibility, DelayedOption, IAndroidBackgroundLayout, IButton, IosBadgeType} from './OneSignalConfiguration';
+import OneSignalConfiguration, {
+  AndroidVisibility,
+  DelayedOption,
+  IAndroidBackgroundLayout,
+  IButton,
+  IFilter,
+  IosBadgeType
+} from './OneSignalConfiguration';
 import EmailConfiguration from './EmailConfiguration';
 import KakaoConfiguration from './KakaoConfiguration';
 import AlarmNotificationData from './AlarmNotificationData';
@@ -19,12 +26,13 @@ export {
   EmailVerificationData,
   MethodEnum,
   NotificationRequest,
-  SendNotification, 
-  getInstance, 
+  SendNotification,
+  getInstance,
   create,
   AndroidVisibility,
   DelayedOption,
   IAndroidBackgroundLayout,
   IButton,
   IosBadgeType,
+  IFilter
 }
