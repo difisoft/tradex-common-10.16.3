@@ -34,7 +34,7 @@ const convertStringToDate = (data: string, format: string = DISPLAY_FORMAT): Dat
 const compareDateOnly = (date1: Date, date2: Date): boolean => {
   date1.setHours(0, 0, 0, 0);
   date2.setHours(0, 0, 0, 0);
-  return date1.getTime() == date2.getTime();
+  return date1.getTime() === date2.getTime();
 };
 
 export { formatDateToDisplay, convertStringToDate, DATETIME_DISPLAY_FORMAT, compareDateOnly }
