@@ -2,7 +2,7 @@
 import IConfiguration from "./IConfiguration";
 import MethodEnum from "./MethodEnum";
 
-export interface Filter {
+export interface IFilter {
   field: string;
   key: string;
   relation: string;
@@ -99,7 +99,7 @@ export default class OneSignalConfiguration implements IConfiguration {
   public mutable_content: boolean;
   public buttons: IButton;
   public web_buttons: IButton;
-  public filters: Filter[]
+  public filters: IFilter[]
   /**
    * @code {"en": "English Message", "es": "Spanish Message"}
    */
