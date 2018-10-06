@@ -4,11 +4,11 @@ import {
   onNext,
   transform,
   transformAsync,
+  transformError,
   transformPromise,
   transformSingle,
   transformSingleAsync,
   transformSinglePromise,
-  transformError,
 } from './rx';
 import {
   createFailFromError,
@@ -20,10 +20,10 @@ import {
   validatePassword
 } from './validation';
 import { singleton } from './Singleton';
-import { convertStringToDate, formatDateToDisplay, DATETIME_DISPLAY_FORMAT } from './date';
+import { compareDateOnly, convertStringToDate, DATETIME_DISPLAY_FORMAT, formatDateToDisplay } from './date';
 import { generateToken } from './token';
-import { init as initI18n, getLanguageCode, getInstance as getI18nInstance } from './locale';
-import { init as initTemplateResource, getTemplateResources, compileTemplate } from './template';
+import { getInstance as getI18nInstance, getLanguageCode, init as initI18n } from './locale';
+import { compileTemplate, getTemplateResources, init as initTemplateResource } from './template';
 
 export default {
   validate,
@@ -45,6 +45,7 @@ export default {
   createSuccessValidation,
   Validate,
   formatDateToDisplay,
+  compareDateOnly,
   convertStringToDate,
   DATETIME_DISPLAY_FORMAT,
   generateToken,
