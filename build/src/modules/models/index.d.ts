@@ -7,4 +7,5 @@ import IToken from './IToken';
 import IConnectionIdentifier from './IConnectionIdentifier';
 import ILoginNotify from './ILoginNotify';
 import * as Htsbr from './htsbr';
-export { IResponse, createFailResponse, createSuccessResponse, IParamError, IStatus, IDataRequest, IHeaders, IToken, IConnectionIdentifier, ILoginNotify, Htsbr, };
+import * as SocketCluster from './socket-cluster';
+export { IResponse, createFailResponse, createSuccessResponse, IParamError, IStatus, IDataRequest, IHeaders, IToken, IConnectionIdentifier, ILoginNotify, Htsbr, SocketCluster };
