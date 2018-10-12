@@ -9,5 +9,5 @@ export default interface IToken {
   loginMethod?: number;
   refreshTokenId?: number;
   scopeGroupIds?: number[];
-  sec_username?: string;
+  serviceUsername?: string;
 }
