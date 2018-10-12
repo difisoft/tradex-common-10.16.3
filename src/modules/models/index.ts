@@ -7,12 +7,12 @@ import IToken from './IToken';
 import IConnectionIdentifier from './IConnectionIdentifier';
 import ILoginNotify from './ILoginNotify';
 import * as Htsbr from './htsbr';
-import * as SocketCluster from './socket-cluster';
+import * as Kafka from './kafka';
 
 export {
   IResponse, createFailResponse, createSuccessResponse,
   IParamError, IStatus, IDataRequest, IHeaders, IToken,
   IConnectionIdentifier,
   ILoginNotify,
-  Htsbr, SocketCluster
+  Htsbr, Kafka
 };

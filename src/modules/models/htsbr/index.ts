@@ -1,5 +1,7 @@
-import IAccountOrderHistoryRes from "./IAccountOrderHistoryRes";
+import IAccountOrderHistoryRes from './IAccountOrderHistoryRes';
+import IBaseAfterLoginRequest from './IBaseAfterLoginRequest';
+import IConnectionId from './IConnectionId';
 
 export {
-  IAccountOrderHistoryRes,
-}
+  IAccountOrderHistoryRes, IBaseAfterLoginRequest, IConnectionId
+};
