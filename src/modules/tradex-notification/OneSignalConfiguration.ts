@@ -2,6 +2,17 @@
 import IConfiguration from "./IConfiguration";
 import MethodEnum from "./MethodEnum";
 
+export interface IFilter {
+  field: string;
+  key: string;
+  relation: string;
+  value: string;
+  radius?: string;
+  latitude?: string;
+  longitude?: string;
+  operation?: string
+}
+
 export interface IButton {
   /**
    * Button ID.
@@ -86,8 +97,9 @@ export default class OneSignalConfiguration implements IConfiguration {
   public ios_category: string;
   public content_available: boolean;
   public mutable_content: boolean;
-  public buttons: IButton[] = [];
-  public web_buttons: IButton[] = [];
+  public buttons: IButton;
+  public web_buttons: IButton;
+  public filters: IFilter[]
   /**
    * @code {"en": "English Message", "es": "Spanish Message"}
    */

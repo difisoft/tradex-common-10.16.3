@@ -20,8 +20,6 @@ var DelayedOption;
 })(DelayedOption = exports.DelayedOption || (exports.DelayedOption = {}));
 class OneSignalConfiguration {
     constructor() {
-        this.buttons = [];
-        this.web_buttons = [];
         this.contents = new Map();
         this.headings = new Map();
         this.subtitle = new Map();

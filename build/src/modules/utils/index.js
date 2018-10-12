@@ -28,6 +28,7 @@ exports.default = {
     createSuccessValidation: validation_1.createSuccessValidation,
     Validate: validation_1.Validate,
     formatDateToDisplay: date_1.formatDateToDisplay,
+    compareDateOnly: date_1.compareDateOnly,
     convertStringToDate: date_1.convertStringToDate,
     DATETIME_DISPLAY_FORMAT: date_1.DATETIME_DISPLAY_FORMAT,
     generateToken: token_1.generateToken,

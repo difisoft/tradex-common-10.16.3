@@ -1,6 +1,6 @@
 /// <reference types="rx-core" />
 /// <reference types="rx-lite" />
-import { onError, onNext, transform, transformAsync, transformPromise, transformSingle, transformSingleAsync, transformSinglePromise, transformError } from './rx';
+import { onError, onNext, transform, transformAsync, transformError, transformPromise, transformSingle, transformSingleAsync, transformSinglePromise } from './rx';
 import { createFailFromError, createFailValidation, createSuccessValidation, validate, Validate, validateEmail, validatePassword } from './validation';
 declare const _default: {
     validate: typeof validate;
@@ -22,6 +22,7 @@ declare const _default: {
     createSuccessValidation: typeof createSuccessValidation;
     Validate: typeof Validate;
     formatDateToDisplay: (date: Date, format?: string) => string;
+    compareDateOnly: (date1: Date, date2: Date) => boolean;
     convertStringToDate: (data: string, format?: string) => Date;
     DATETIME_DISPLAY_FORMAT: string;
     generateToken: (length?: number, onlyDigit?: boolean) => string;
