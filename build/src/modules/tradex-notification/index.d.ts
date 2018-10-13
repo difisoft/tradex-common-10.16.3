@@ -5,7 +5,8 @@ import OneSignalConfiguration, { AndroidVisibility, DelayedOption, IAndroidBackg
 import EmailConfiguration from './EmailConfiguration';
 import KakaoConfiguration from './KakaoConfiguration';
 import AlarmNotificationData from './AlarmNotificationData';
+import OrderResultNotificationData from './OrderResultNotificationData';
 import EmailVerificationData from './EmailVerificationData';
 import ITemplateData from './ITemplateData';
 import MethodEnum from './MethodEnum';
-export { IConfiguration, EmailConfiguration, OneSignalConfiguration, KakaoConfiguration, ITemplateData, AlarmNotificationData, EmailVerificationData, MethodEnum, NotificationRequest, SendNotification, getInstance, create, AndroidVisibility, DelayedOption, IAndroidBackgroundLayout, IButton, IosBadgeType, IFilter };
+export { IConfiguration, EmailConfiguration, OneSignalConfiguration, KakaoConfiguration, ITemplateData, AlarmNotificationData, OrderResultNotificationData, EmailVerificationData, MethodEnum, NotificationRequest, SendNotification, getInstance, create, AndroidVisibility, DelayedOption, IAndroidBackgroundLayout, IButton, IosBadgeType, IFilter };
