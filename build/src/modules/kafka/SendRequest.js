@@ -6,8 +6,9 @@ const types_1 = require("./types");
 const Rx = require("rx");
 const Kafka = require("node-rdkafka");
 class SendRequestCommon {
-    constructor(conf) {
+    constructor(conf, handleSendError) {
         this.conf = conf;
+        this.handleSendError = handleSendError;
         this.messageId = 0;
         this.bufferedMessages = [];
         this.isReady = false;
@@ -78,7 +79,15 @@ class SendRequestCommon {
             this.producer.produce(message.topic, null, new Buffer(msgContent), this.conf.clientId, Date.now());
         }
         catch (e) {
-            log_1.logger.logError('error while sending the message', e);
+            if (!this.handleSendError || !this.handleSendError(e)) {
+                if (e.message.indexOf('Local: Queue full') > -1) {
+                    log_1.logger.logError('error while sending the message. exitting...', e);
+                    process.exit(1);
+                }
+                else {
+                    log_1.logger.logError('error while sending the message', e);
+                }
+            }
         }
     }
     getMessageId() {
@@ -108,8 +117,8 @@ class SendRequestCommon {
 }
 exports.SendRequestCommon = SendRequestCommon;
 class SendRequest extends SendRequestCommon {
-    constructor(conf, consumerOptions, initListener = true, topicConf = {}) {
-        super(conf);
+    constructor(conf, consumerOptions, initListener = true, topicConf = {}, handleSendError) {
+        super(conf, handleSendError);
         this.requestedMessages = new Map();
         this.reallySendMessage = (message) => {
             if (message.subject) {

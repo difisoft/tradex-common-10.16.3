@@ -11,12 +11,13 @@ import { IConf, IMessage, ISendMessage, MessageType } from './types';
 import Rx = require("rx");
 declare class SendRequestCommon {
     protected conf: IConf;
+    protected handleSendError?: (e: Error) => boolean;
     protected messageId: number;
     protected producer: any;
     protected readonly responseTopic: string;
     protected bufferedMessages: ISendMessage[];
     protected isReady: boolean;
-    constructor(conf: IConf);
+    constructor(conf: IConf, handleSendError?: (e: Error) => boolean);
     getResponseTopic(): string;
     sendMessage(transactionId: string, topic: string, uri: string, data: any): void;
     sendForwardMessage(originMessage: any, newTopic: string, newUri: string): void;
@@ -28,7 +29,7 @@ declare class SendRequestCommon {
 }
 declare class SendRequest extends SendRequestCommon {
     private requestedMessages;
-    constructor(conf: IConf, consumerOptions: any, initListener?: boolean, topicConf?: any);
+    constructor(conf: IConf, consumerOptions: any, initListener?: boolean, topicConf?: any, handleSendError?: (e: Error) => boolean);
     sendRequest(transactionId: string, topic: string, uri: string, data: any): Rx.Observable<IMessage>;
     protected reallySendMessage: (message: ISendMessage) => void;
     private handlerResponse;

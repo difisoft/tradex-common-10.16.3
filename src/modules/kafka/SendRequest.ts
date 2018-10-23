@@ -13,6 +13,7 @@ class SendRequestCommon {
 
   constructor(
     protected conf: IConf,
+    protected handleSendError?: (e: Error) => boolean
   ) {
     this.responseTopic = `${this.conf.clusterId}.response.${this.conf.clientId}`;
     this.producer = new Kafka.Producer({
@@ -78,7 +79,14 @@ class SendRequestCommon {
       logger.info(`send message ${msgContent} to topic ${message.topic}`);
       this.producer.produce(message.topic, null, new Buffer(msgContent), this.conf.clientId, Date.now());
     } catch (e) {
-      logger.logError('error while sending the message', e);
+      if (!this.handleSendError || !this.handleSendError(e)) {
+        if (e.message.indexOf('Local: Queue full') > -1) {
+          logger.logError('error while sending the message. exitting...', e);
+          process.exit(1);
+        } else {
+          logger.logError('error while sending the message', e);
+        }
+      }
     }
   }
 
@@ -121,9 +129,10 @@ class SendRequest extends SendRequestCommon {
     conf: IConf,
     consumerOptions: any,
     initListener: boolean = true,
-    topicConf: any = {}
+    topicConf: any = {},
+    handleSendError?: (e: Error) => boolean
   ) {
-    super(conf);
+    super(conf, handleSendError);
     if (initListener) {
       logger.info(`init response listener ${this.responseTopic}`);
       new StreamHandler(this.conf, consumerOptions, [this.responseTopic]
