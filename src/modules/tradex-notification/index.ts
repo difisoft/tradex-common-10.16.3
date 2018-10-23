@@ -12,6 +12,8 @@ import OneSignalConfiguration, {
 import EmailConfiguration from './EmailConfiguration';
 import KakaoConfiguration from './KakaoConfiguration';
 import AlarmNotificationData from './AlarmNotificationData';
+import OrderResultNotificationData from './OrderResultNotificationData';
+import DisconnectNotificationData from './DisconnectNotificationData';
 import EmailVerificationData from './EmailVerificationData';
 import ITemplateData from './ITemplateData';
 import MethodEnum from './MethodEnum';
@@ -23,6 +25,8 @@ export {
   KakaoConfiguration,
   ITemplateData,
   AlarmNotificationData,
+  OrderResultNotificationData,
+  DisconnectNotificationData,
   EmailVerificationData,
   MethodEnum,
   NotificationRequest,
@@ -35,4 +39,4 @@ export {
   IButton,
   IosBadgeType,
   IFilter
-}
+};
