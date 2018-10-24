@@ -3,7 +3,7 @@ import EmailConfiguration from "./EmailConfiguration";
 import NotificationRequest from "./NotificationRequest";
 import EmailVerificationData from "./EmailVerificationData";
 import OneSignalConfiguration from "./OneSignalConfiguration";
-import AlarmNotificationData from "./AlarmNotificationData";
+import ITemplateData from './ITemplateData';
 
 export default class SendNotification {
   constructor(private send: SendRequestCommon, private notificationListenningTopic: string) {
@@ -25,10 +25,9 @@ export default class SendNotification {
     this.send.sendMessage(txId, this.notificationListenningTopic, '', request.toJson());
   }
 
-  public sendPushNotification(txId: string, conf: OneSignalConfiguration, locale: string, data: AlarmNotificationData) {
+  public sendPushNotification(txId: string, conf: OneSignalConfiguration, data: ITemplateData) {
     const request: NotificationRequest = new NotificationRequest();
     request.setConfiguration(conf);
-    request.locale = locale;
     request.add(data.getTemplate(), data);
     this.send.sendMessage(txId, this.notificationListenningTopic, '', request.toJson());
    }
