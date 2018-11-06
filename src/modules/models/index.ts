@@ -6,6 +6,7 @@ import IHeaders from './IHeaders';
 import IToken from './IToken';
 import IConnectionIdentifier from './IConnectionIdentifier';
 import ILoginNotify from './ILoginNotify';
+import IForwardUriResult from './IForwardUriResult';
 import * as Htsbr from './htsbr';
 import * as Kafka from './kafka';
 import * as AAA from './aaa';
@@ -21,6 +22,7 @@ export {
   IToken,
   IConnectionIdentifier,
   ILoginNotify,
+  IForwardUriResult,
   Htsbr, 
   Kafka,
   AAA,

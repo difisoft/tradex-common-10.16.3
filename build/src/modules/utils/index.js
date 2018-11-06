@@ -8,6 +8,7 @@ const date_1 = require("./date");
 const token_1 = require("./token");
 const locale_1 = require("./locale");
 const template_1 = require("./template");
+const scope_1 = require("./scope");
 exports.default = {
     validate: validation_1.validate,
     validateEmail: validation_1.validateEmail,
@@ -38,5 +39,6 @@ exports.default = {
     initTemplateResource: template_1.init,
     getTemplateResources: template_1.getTemplateResources,
     compileTemplate: template_1.compileTemplate,
+    getForwardUri: scope_1.getForwardUri,
 };
 //# sourceMappingURL=index.js.map

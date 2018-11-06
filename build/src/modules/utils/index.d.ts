@@ -2,6 +2,7 @@
 /// <reference types="rx-lite" />
 import { onError, onNext, transform, transformAsync, transformError, transformPromise, transformSingle, transformSingleAsync, transformSinglePromise } from './rx';
 import { createFailFromError, createFailValidation, createSuccessValidation, validate, Validate, validateEmail, validatePassword } from './validation';
+import { getForwardUri } from './scope';
 declare const _default: {
     validate: typeof validate;
     validateEmail: typeof validateEmail;
@@ -32,5 +33,6 @@ declare const _default: {
     initTemplateResource: (msNames: string, requestTopic?: string, uri?: string) => void;
     getTemplateResources: () => any[];
     compileTemplate: (templateUrl: string, data: any) => Promise<string>;
+    getForwardUri: typeof getForwardUri;
 };
 export default _default;
