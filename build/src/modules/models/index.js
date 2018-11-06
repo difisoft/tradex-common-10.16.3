@@ -7,4 +7,6 @@ const Htsbr = require("./htsbr");
 exports.Htsbr = Htsbr;
 const Kafka = require("./kafka");
 exports.Kafka = Kafka;
+const AAA = require("./aaa");
+exports.AAA = AAA;
 //# sourceMappingURL=index.js.map

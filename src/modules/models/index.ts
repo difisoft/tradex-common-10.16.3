@@ -8,11 +8,20 @@ import IConnectionIdentifier from './IConnectionIdentifier';
 import ILoginNotify from './ILoginNotify';
 import * as Htsbr from './htsbr';
 import * as Kafka from './kafka';
+import * as AAA from './aaa';
 
 export {
-  IResponse, createFailResponse, createSuccessResponse,
-  IParamError, IStatus, IDataRequest, IHeaders, IToken,
+  IResponse, 
+  createFailResponse, 
+  createSuccessResponse,
+  IParamError, 
+  IStatus, 
+  IDataRequest, 
+  IHeaders, 
+  IToken,
   IConnectionIdentifier,
   ILoginNotify,
-  Htsbr, Kafka
+  Htsbr, 
+  Kafka,
+  AAA,
 };
