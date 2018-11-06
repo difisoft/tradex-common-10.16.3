@@ -34,5 +34,6 @@ declare const _default: {
     getTemplateResources: () => any[];
     compileTemplate: (templateUrl: string, data: any) => Promise<string>;
     getForwardUri: typeof getForwardUri;
+    isEmpty: (input: string) => boolean;
 };
 export default _default;

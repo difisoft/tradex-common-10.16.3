@@ -8,7 +8,7 @@ import {
   transformPromise,
   transformSingle,
   transformSingleAsync,
-  transformSinglePromise,
+  transformSinglePromise
 } from './rx';
 import {
   createFailFromError,
@@ -21,12 +21,11 @@ import {
 } from './validation';
 import { singleton } from './Singleton';
 import { compareDateOnly, convertStringToDate, DATETIME_DISPLAY_FORMAT, formatDateToDisplay } from './date';
+import { isEmpty } from './StringUtils';
 import { generateToken } from './token';
 import { getInstance as getI18nInstance, getLanguageCode, init as initI18n } from './locale';
 import { compileTemplate, getTemplateResources, init as initTemplateResource } from './template';
-import {  
-  getForwardUri,
-} from './scope';
+import { getForwardUri } from './scope';
 
 export default {
   validate,
@@ -59,4 +58,5 @@ export default {
   getTemplateResources,
   compileTemplate,
   getForwardUri,
-}
+  isEmpty
+};
