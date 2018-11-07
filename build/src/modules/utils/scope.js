@@ -38,6 +38,8 @@ function getForwardUriWithSetting(msg, forwardConfig, token, isServiceAlive, tra
         if (forwardData.backup && !isServiceAlive(forwardData.service)) {
             return getForwardUriWithSetting(msg, forwardData.backup, token, isServiceAlive, transformUriMap);
         }
+        result.topic = forwardData.service;
+        result.uri = forwardData.uri;
     }
     return result;
 }
