@@ -108,11 +108,13 @@ class Logger {
       if (!err) {
         this.log.error({
           message: message.message,
-          stackTrace: this.getStackTrace(message),
+          error: err,
+          stackTrace: this.getStackTrace(err),
         });
       } else {
         this.log.error({
           message: message,
+          error: err,
           stackTrace: this.getStackTrace(err),
         });
       }
