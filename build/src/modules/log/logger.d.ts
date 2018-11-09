@@ -1,17 +1,26 @@
-import { Logger as LoggerW } from 'winston';
-import { Logger as Logger4JS } from 'log4js';
-declare class Logger {
-    log: LoggerW;
-    logger: Logger;
-    log4JS: boolean;
-    logger4js: Logger4JS;
-    constructor();
-    info(...args: any[]): void;
-    warn(...args: any[]): void;
-    error(...args: any[]): void;
-    create: (conf: any, log4JS?: boolean) => void;
+interface ILogger {
+    info: (...args: any[]) => void;
+    error: (...args: any[]) => void;
+    warn: (...args: any[]) => void;
     logError: (message: any, err: any) => void;
-    getStackTrace: (err: any) => string;
+    create: (conf: any, log4JS?: boolean) => void;
 }
-declare const logger: Logger;
-export { logger };
+declare class LoggerWrapper implements ILogger {
+    private realLogger;
+    constructor(realLogger: ILogger);
+    info: (...args: any[]) => void;
+    error: (...args: any[]) => void;
+    warn: (...args: any[]) => void;
+    logError: (message: any, err: any) => void;
+    create: (conf: any, log4JS?: boolean) => void;
+    setLogger: (realLogger: ILogger) => void;
+}
+declare const logger: LoggerWrapper;
+declare class ConsoleLogger implements ILogger {
+    info: (...args: any[]) => void;
+    error: (...args: any[]) => void;
+    warn: (...args: any[]) => void;
+    logError: (message: any, err: any) => void;
+    create: (conf: any, log4JS?: boolean) => void;
+}
+export { logger, ConsoleLogger };

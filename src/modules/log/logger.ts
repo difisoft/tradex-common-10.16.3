@@ -44,7 +44,46 @@ const createLogger4JS = (conf: any) => {
   return getLogger('application');
 }
 
-class Logger {
+/* tslint:disable */
+interface ILogger {
+  info: (...args: any[]) => void;
+  error: (...args: any[]) => void;
+  warn: (...args: any[]) => void;
+  logError: (message: any, err: any) => void;
+  create: (conf: any, log4JS?: boolean) => void;
+}
+/* tslint:enable */
+
+class LoggerWrapper implements ILogger {
+  constructor(private realLogger: ILogger) {
+  }
+
+  public info = (...args: any[]) => {
+    this.realLogger.info(...args);
+  };
+
+  public error = (...args: any[]) => {
+    this.realLogger.error(...args);
+  };
+
+  public warn = (...args: any[]) => {
+    this.realLogger.warn(...args);
+  };
+
+  public logError = (message: any, err: any) => {
+    this.realLogger.info(message, err);
+  };
+
+  public create = (conf: any, log4JS?: boolean) => {
+    this.realLogger.create(conf, log4JS === true);
+  }
+
+  public setLogger = (realLogger: ILogger) => {
+    this.realLogger = realLogger;
+  }
+}
+
+class Logger implements ILogger {
   public log: LoggerW;
   public logger: Logger;
   public log4JS: boolean = false;
@@ -150,6 +189,32 @@ class Logger {
   };
 }
 
-const logger: Logger = new Logger();
+const logger: LoggerWrapper = new LoggerWrapper(new Logger());
+/* tslint:disable */
+class ConsoleLogger implements ILogger {
+  public info = (...args: any[]) => {
+    console.info(...args);
+  };
 
-export { logger };
+  public error = (...args: any[]) => {
+    console.error(...args);
+  };
+
+  public warn = (...args: any[]) => {
+    console.warn(...args);
+  };
+
+  public logError = (message: any, err: any) => {
+    console.error(message, err);
+  };
+
+  public create = (conf: any, log4JS?: boolean) => {
+    // do nothing
+  }
+}
+/* tslint:enable */
+
+export { 
+  logger,
+  ConsoleLogger
+};

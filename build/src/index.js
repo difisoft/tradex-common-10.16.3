@@ -6,6 +6,7 @@ const Kafka = require("./modules/kafka");
 exports.Kafka = Kafka;
 const log_1 = require("./modules/log");
 exports.Logger = log_1.logger;
+exports.ConsoleLogger = log_1.ConsoleLogger;
 const utils_1 = require("./modules/utils");
 exports.Utils = utils_1.default;
 const zookeeper_1 = require("./modules/zookeeper");

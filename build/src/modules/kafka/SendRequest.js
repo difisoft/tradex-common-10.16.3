@@ -163,10 +163,11 @@ class SendRequest extends SendRequestCommon {
             new StreamHandler_1.StreamHandler(this.conf, consumerOptions, [this.responseTopic], (data) => this.handlerResponse(data), topicConf);
         }
     }
-    sendRequest(transactionId, topic, uri, data) {
+    sendRequest(transactionId, topic, uri, data, timeout) {
         const subject = new Rx.Subject();
         const message = this.createMessage(transactionId, topic, uri, data, types_1.MessageType.REQUEST, this.responseTopic, 'REQUEST_RESPONSE');
         message.subject = subject;
+        message.timeout = timeout;
         if (!this.isReady) {
             this.bufferedMessages.push(message);
         }

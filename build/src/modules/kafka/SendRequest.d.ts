@@ -32,7 +32,7 @@ declare class SendRequestCommon {
 declare class SendRequest extends SendRequestCommon {
     private requestedMessages;
     constructor(conf: IConf, consumerOptions: any, initListener?: boolean, topicConf?: any, handleSendError?: (e: Error) => boolean, producerOptions?: any);
-    sendRequest(transactionId: string, topic: string, uri: string, data: any): Rx.Observable<IMessage>;
+    sendRequest(transactionId: string, topic: string, uri: string, data: any, timeout?: number): Rx.Observable<IMessage>;
     protected reallySendMessage: (message: ISendMessage) => void;
     protected timeout(message: ISendMessage): void;
     private handlerResponse;
