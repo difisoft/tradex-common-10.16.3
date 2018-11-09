@@ -16,6 +16,8 @@ declare interface ISendMessage {
   topic: string,
   subject?: Rx.Subject<IMessage>,
   message: IMessage,
+  highLatency?: boolean,
+  timeout?: number,
 }
 
 declare interface IResponseDestination {

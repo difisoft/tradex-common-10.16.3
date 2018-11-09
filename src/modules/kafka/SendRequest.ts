@@ -3,17 +3,20 @@ import { logger } from '../log';
 import { IConf, IMessage, ISendMessage, MessageType, } from './types';
 import Rx = require("rx");
 import Kafka = require('node-rdkafka');
+import { TimeoutError } from '../errors';
 
 class SendRequestCommon {
   protected messageId: number = 0;
   protected producer: any;
+  protected highLatencyProducer: any;
   protected readonly responseTopic: string;
   protected bufferedMessages: ISendMessage[] = [];
   protected isReady: boolean = false;
 
   constructor(
     protected conf: IConf,
-    protected handleSendError?: (e: Error) => boolean
+    protected handleSendError?: (e: Error) => boolean,
+    producerOptions?: any
   ) {
     this.responseTopic = `${this.conf.clusterId}.response.${this.conf.clientId}`;
     this.producer = new Kafka.Producer({
@@ -21,7 +24,8 @@ class SendRequestCommon {
       'metadata.broker.list': this.conf.kafkaUrls.join(),
       'retry.backoff.ms': 200,
       'message.send.max.retries': 10,
-    }, {});
+      'batch.num.messages': 10,
+    }, producerOptions ? producerOptions : {});
     this.producer.connect({
       topic: '',
       allTopics: true,
@@ -34,14 +38,34 @@ class SendRequestCommon {
     this.producer.on('event.error', (err: Error) => {
       logger.logError('producer error', err);
     });
+
+    this.highLatencyProducer = new Kafka.Producer({
+      'client.id': conf.clientId,
+      'metadata.broker.list': this.conf.kafkaUrls.join(),
+      'retry.backoff.ms': 200,
+      'message.send.max.retries': 10,
+    }, {});
+    this.highLatencyProducer.connect({
+      topic: '',
+      allTopics: true,
+      timeout: 30000,
+    }, () => logger.info('producer connect'));
+    this.highLatencyProducer.on('ready', () => {
+      this.isReady = true;
+      this.bufferedMessages.forEach(this.reallySendMessage);
+    });
+    this.highLatencyProducer.on('event.error', (err: Error) => {
+      logger.logError('producer error', err);
+    });
   }
 
   public getResponseTopic(): string {
     return this.responseTopic;
   }
 
-  public sendMessage(transactionId: string, topic: string, uri: string, data: any): void {
+  public sendMessage(transactionId: string, topic: string, uri: string, data: any, highLatency: boolean = true): void {
     const message: ISendMessage = this.createMessage(transactionId, topic, uri, data);
+    message.highLatency = highLatency;
     if (!this.isReady) {
       this.bufferedMessages.push(message);
     } else {
@@ -72,12 +96,23 @@ class SendRequestCommon {
     }
   };
 
+  protected timeout(message: ISendMessage) {
+    // do nothing
+  }
 
   protected doReallySendMessage(message: ISendMessage): void {
     try {
       const msgContent = JSON.stringify(message.message);
-      logger.info(`send message ${msgContent} to topic ${message.topic}`);
-      this.producer.produce(message.topic, null, new Buffer(msgContent), this.conf.clientId, Date.now());
+      if (message.highLatency === true) {
+        logger.info(`send message ${msgContent} to topic ${message.topic}`);
+        this.highLatencyProducer.produce(message.topic, null, new Buffer(msgContent), this.conf.clientId, Date.now());
+      } else {
+        logger.info(`send low latency message ${msgContent} to topic ${message.topic}`);
+        this.producer.produce(message.topic, null, new Buffer(msgContent), this.conf.clientId, Date.now());
+      }
+      if (message.timeout) {
+        setTimeout(() => this.timeout(message), message.timeout);
+      }
     } catch (e) {
       if (!this.handleSendError || !this.handleSendError(e)) {
         if (e.message.indexOf('Local: Queue full') > -1) {
@@ -130,9 +165,10 @@ class SendRequest extends SendRequestCommon {
     consumerOptions: any,
     initListener: boolean = true,
     topicConf: any = {},
-    handleSendError?: (e: Error) => boolean
+    handleSendError?: (e: Error) => boolean,
+    producerOptions?: any
   ) {
-    super(conf, handleSendError);
+    super(conf, handleSendError, producerOptions);
     if (initListener) {
       logger.info(`init response listener ${this.responseTopic}`);
       new StreamHandler(this.conf, consumerOptions, [this.responseTopic]
@@ -141,11 +177,12 @@ class SendRequest extends SendRequestCommon {
   }
 
 
-  public sendRequest(transactionId: string, topic: string, uri: string, data: any): Rx.Observable<IMessage> {
+  public sendRequest(transactionId: string, topic: string, uri: string, data: any, timeout?: number): Rx.Observable<IMessage> {
     const subject: Rx.Subject<IMessage> = new Rx.Subject();
     const message: ISendMessage = this.createMessage(transactionId, topic, uri, data, MessageType.REQUEST
       , this.responseTopic, 'REQUEST_RESPONSE');
     message.subject = subject;
+    message.timeout = timeout;
     if (!this.isReady) {
       this.bufferedMessages.push(message);
     } else {
@@ -161,6 +198,14 @@ class SendRequest extends SendRequestCommon {
     super.doReallySendMessage(message);
   };
 
+  protected timeout(message: ISendMessage) {
+    const msgId: string = <string>message.message.messageId;
+    if (this.requestedMessages[msgId]) {
+      this.requestedMessages[msgId].onError(new TimeoutError());
+      this.requestedMessages[msgId].onCompleted();
+      delete this.requestedMessages[msgId];
+    }
+  }
 
   private handlerResponse(message: any) {
     const msgStr = message.value.toString();
@@ -170,7 +215,7 @@ class SendRequest extends SendRequestCommon {
       this.requestedMessages[msg.messageId].onCompleted();
       delete this.requestedMessages[msg.messageId];
     } else {
-      logger.warn(`cannot find where to response "${msgStr}"`);
+      logger.warn(`cannot find where to response (probably timeout happen) "${msgStr}"`);
     }
   }
 
