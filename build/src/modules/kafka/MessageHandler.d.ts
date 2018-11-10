@@ -16,5 +16,6 @@ declare class MessageHandler {
     constructor();
     handle(message: any, func: Handle): void;
     getErrorMessage(error: Error): IResponse;
+    private shouldResponse;
 }
 export { HandleResult, Handle, MessageHandler, };
