@@ -41,6 +41,8 @@ exports.default = {
     getTemplateResources: template_1.getTemplateResources,
     compileTemplate: template_1.compileTemplate,
     getForwardUri: scope_1.getForwardUri,
-    isEmpty: StringUtils_1.isEmpty
+    isEmpty: StringUtils_1.isEmpty,
+    getStartOfDate: date_1.getStartOfDate,
+    getEndOfDate: date_1.getEndOfDate
 };
 //# sourceMappingURL=index.js.map
