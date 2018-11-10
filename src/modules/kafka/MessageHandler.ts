@@ -22,33 +22,42 @@ class MessageHandler {
       logger.info(msgString);
       const msg: IMessage = JSON.parse(msgString);
       const obs: HandleResult = func(msg);
+      const shouldResponse = this.shouldResponse(msg);
       if (obs === false) {
-        getInstance().sendResponse(
-          msg.transactionId,
-          msg.messageId,
-          msg.responseDestination.topic,
-          msg.responseDestination.uri,
-          this.getErrorMessage(new UriNotFound())
-        );
+        if (shouldResponse) {
+          getInstance().sendResponse(
+            msg.transactionId,
+            msg.messageId,
+            msg.responseDestination.topic,
+            msg.responseDestination.uri,
+            this.getErrorMessage(new UriNotFound())
+          );
+        } 
         return;
       } else if (obs === true) {
         return; // forwarding. do nothing
       }
-      obs.subscribe((data: any) => getInstance().sendResponse(
-        <string>msg.transactionId,
-        msg.messageId,
-        msg.responseDestination.topic,
-        msg.responseDestination.uri,
-        {data: data}
-      ), (err: Error) => {
+      obs.subscribe((data: any) => {
+        if (shouldResponse) {
+          getInstance().sendResponse(
+            <string>msg.transactionId,
+            msg.messageId,
+            msg.responseDestination.topic,
+            msg.responseDestination.uri,
+            {data: data}
+          );
+        }
+      }, (err: Error) => {
         logger.logError('error while processing request', err);
-        getInstance().sendResponse(
-          msg.transactionId,
-          msg.messageId,
-          msg.responseDestination.topic,
-          msg.responseDestination.uri,
-          this.getErrorMessage(err)
-        );
+        if (shouldResponse) {
+          getInstance().sendResponse(
+            msg.transactionId,
+            msg.messageId,
+            msg.responseDestination.topic,
+            msg.responseDestination.uri,
+            this.getErrorMessage(err)
+          );
+        }
       });
     } catch (e) {
       logger.logError('error while processing message', e);
@@ -72,6 +81,10 @@ class MessageHandler {
       return createFailResponse('INTERNAL_SERVER_ERROR');
     }
   };
+
+  private shouldResponse(msg: IMessage) {
+    return msg.responseDestination && msg.responseDestination.topic;
+  }
 }
 
 export {

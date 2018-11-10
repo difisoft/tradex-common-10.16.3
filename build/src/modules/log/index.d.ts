@@ -1,2 +1,2 @@
-import { logger } from './logger';
-export { logger };
+import { logger, ConsoleLogger } from './logger';
+export { logger, ConsoleLogger };

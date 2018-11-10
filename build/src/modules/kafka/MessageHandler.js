@@ -14,16 +14,25 @@ class MessageHandler {
             log_1.logger.info(msgString);
             const msg = JSON.parse(msgString);
             const obs = func(msg);
+            const shouldResponse = this.shouldResponse(msg);
             if (obs === false) {
-                SendRequest_1.getInstance().sendResponse(msg.transactionId, msg.messageId, msg.responseDestination.topic, msg.responseDestination.uri, this.getErrorMessage(new UriNotFound_1.default()));
+                if (shouldResponse) {
+                    SendRequest_1.getInstance().sendResponse(msg.transactionId, msg.messageId, msg.responseDestination.topic, msg.responseDestination.uri, this.getErrorMessage(new UriNotFound_1.default()));
+                }
                 return;
             }
             else if (obs === true) {
                 return;
             }
-            obs.subscribe((data) => SendRequest_1.getInstance().sendResponse(msg.transactionId, msg.messageId, msg.responseDestination.topic, msg.responseDestination.uri, { data: data }), (err) => {
+            obs.subscribe((data) => {
+                if (shouldResponse) {
+                    SendRequest_1.getInstance().sendResponse(msg.transactionId, msg.messageId, msg.responseDestination.topic, msg.responseDestination.uri, { data: data });
+                }
+            }, (err) => {
                 log_1.logger.logError('error while processing request', err);
-                SendRequest_1.getInstance().sendResponse(msg.transactionId, msg.messageId, msg.responseDestination.topic, msg.responseDestination.uri, this.getErrorMessage(err));
+                if (shouldResponse) {
+                    SendRequest_1.getInstance().sendResponse(msg.transactionId, msg.messageId, msg.responseDestination.topic, msg.responseDestination.uri, this.getErrorMessage(err));
+                }
             });
         }
         catch (e) {
@@ -49,6 +58,9 @@ class MessageHandler {
         }
     }
     ;
+    shouldResponse(msg) {
+        return msg.responseDestination && msg.responseDestination.topic;
+    }
 }
 exports.MessageHandler = MessageHandler;
 //# sourceMappingURL=MessageHandler.js.map

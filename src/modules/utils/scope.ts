@@ -19,7 +19,7 @@ function getForwardUriWithSetting(msg: IMessage, forwardConfig: ICommonForward, 
     }
     result.conId = {
       connectionId: token.connectionId,
-      serviceId: token.serviceId,
+      serviceId: token.serviceId, 
       serviceName: token.serviceName,
     }
     const serviceName: string = token.serviceName;
@@ -38,6 +38,8 @@ function getForwardUriWithSetting(msg: IMessage, forwardConfig: ICommonForward, 
     if (forwardData.backup && !isServiceAlive(forwardData.service)) {
       return getForwardUriWithSetting(msg, forwardData.backup, token, isServiceAlive, transformUriMap);
     }
+    result.topic = forwardData.service;
+    result.uri = forwardData.uri;
   }
   return result;
 }

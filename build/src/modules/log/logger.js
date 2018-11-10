@@ -32,6 +32,29 @@ const createLogger4JS = (conf) => {
     log4js_1.configure(conf);
     return log4js_1.getLogger('application');
 };
+class LoggerWrapper {
+    constructor(realLogger) {
+        this.realLogger = realLogger;
+        this.info = (...args) => {
+            this.realLogger.info(...args);
+        };
+        this.error = (...args) => {
+            this.realLogger.error(...args);
+        };
+        this.warn = (...args) => {
+            this.realLogger.warn(...args);
+        };
+        this.logError = (message, err) => {
+            this.realLogger.info(message, err);
+        };
+        this.create = (conf, log4JS) => {
+            this.realLogger.create(conf, log4JS === true);
+        };
+        this.setLogger = (realLogger) => {
+            this.realLogger = realLogger;
+        };
+    }
+}
 class Logger {
     constructor() {
         this.log4JS = false;
@@ -53,12 +76,14 @@ class Logger {
                 if (!err) {
                     this.log.error({
                         message: message.message,
-                        stackTrace: this.getStackTrace(message),
+                        error: err,
+                        stackTrace: this.getStackTrace(err),
                     });
                 }
                 else {
                     this.log.error({
                         message: message,
+                        error: err,
                         stackTrace: this.getStackTrace(err),
                     });
                 }
@@ -127,6 +152,25 @@ class Logger {
         }
     }
 }
-const logger = new Logger();
+const logger = new LoggerWrapper(new Logger());
 exports.logger = logger;
+class ConsoleLogger {
+    constructor() {
+        this.info = (...args) => {
+            console.info(...args);
+        };
+        this.error = (...args) => {
+            console.error(...args);
+        };
+        this.warn = (...args) => {
+            console.warn(...args);
+        };
+        this.logError = (message, err) => {
+            console.error(message, err);
+        };
+        this.create = (conf, log4JS) => {
+        };
+    }
+}
+exports.ConsoleLogger = ConsoleLogger;
 //# sourceMappingURL=logger.js.map
