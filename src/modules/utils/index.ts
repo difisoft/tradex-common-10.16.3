@@ -29,6 +29,7 @@ import {
   getEndOfDate
 } from './date';
 import { isEmpty } from './StringUtils';
+import { round } from './MathUtils';
 import { generateToken } from './token';
 import { getInstance as getI18nInstance, getLanguageCode, init as initI18n } from './locale';
 import { compileTemplate, getTemplateResources, init as initTemplateResource } from './template';
@@ -67,5 +68,6 @@ export default {
   getForwardUri,
   isEmpty,
   getStartOfDate,
-  getEndOfDate
+  getEndOfDate,
+  round
 };

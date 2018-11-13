@@ -37,5 +37,6 @@ declare const _default: {
     isEmpty: (input: string) => boolean;
     getStartOfDate: (date: Date) => Date;
     getEndOfDate: (date: Date) => Date;
+    round: (input: number, scale?: number) => number;
 };
 export default _default;
