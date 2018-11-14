@@ -28,7 +28,7 @@ class MessageHandler {
             }
             obs.subscribe((data) => {
                 const stopHrTime = process.hrtime();
-                __1.Logger.info(`request ${msg.uri} took ${(stopHrTime[0] - startedHrTime[0]) * 1000000 + stopHrTime[1] - startedHrTime[1]} nanoseconds`);
+                __1.Logger.info(`request ${msg.uri} took ${(stopHrTime[0] - startedHrTime[0]) * 1000 + (stopHrTime[1] - startedHrTime[1]) / 1000000} ms`);
                 if (shouldResponse) {
                     SendRequest_1.getInstance().sendResponse(msg.transactionId, msg.messageId, msg.responseDestination.topic, msg.responseDestination.uri, { data: data });
                 }

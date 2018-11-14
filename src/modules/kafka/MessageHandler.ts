@@ -41,7 +41,7 @@ class MessageHandler {
       }
       obs.subscribe((data: any) => {
         const stopHrTime = process.hrtime()
-        Logger.info(`request ${msg.uri} took ${(stopHrTime[0] - startedHrTime[0]) * 1000000 + stopHrTime[1] - startedHrTime[1]} nanoseconds`);
+        Logger.info(`request ${msg.uri} took ${(stopHrTime[0] - startedHrTime[0]) * 1000 + (stopHrTime[1] - startedHrTime[1])/1000000} ms`);
         if (shouldResponse) {
           getInstance().sendResponse(
             <string>msg.transactionId,
