@@ -193,19 +193,19 @@ const logger: LoggerWrapper = new LoggerWrapper(new Logger());
 /* tslint:disable */
 class ConsoleLogger implements ILogger {
   public info = (...args: any[]) => {
-    console.info(...args);
+    console.info(new Date(), ...args);
   };
 
   public error = (...args: any[]) => {
-    console.error(...args);
+    console.error(new Date(), ...args);
   };
 
   public warn = (...args: any[]) => {
-    console.warn(...args);
+    console.warn(new Date(), ...args);
   };
 
   public logError = (message: any, err: any) => {
-    console.error(message, err);
+    console.error(new Date(), message, err);
   };
 
   public create = (conf: any, log4JS?: boolean) => {

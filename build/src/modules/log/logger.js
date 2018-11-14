@@ -157,16 +157,16 @@ exports.logger = logger;
 class ConsoleLogger {
     constructor() {
         this.info = (...args) => {
-            console.info(...args);
+            console.info(new Date(), ...args);
         };
         this.error = (...args) => {
-            console.error(...args);
+            console.error(new Date(), ...args);
         };
         this.warn = (...args) => {
-            console.warn(...args);
+            console.warn(new Date(), ...args);
         };
         this.logError = (message, err) => {
-            console.error(message, err);
+            console.error(new Date(), message, err);
         };
         this.create = (conf, log4JS) => {
         };
