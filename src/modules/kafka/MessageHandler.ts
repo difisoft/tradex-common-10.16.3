@@ -6,6 +6,7 @@ import GeneralError from "../errors/GeneralError";
 import UriNotFound from "../errors/UriNotFound";
 import IResponse, { createFailResponse } from "../models/IResponse";
 import { ForwardError } from "../errors";
+import { Logger } from '../..';
 
 declare type HandleResult = Observable<any> | boolean;
 declare type Handle = (msg: IMessage) => HandleResult;
@@ -21,8 +22,9 @@ class MessageHandler {
       const msgString: string = message.value.toString();
       logger.info(msgString);
       const msg: IMessage = JSON.parse(msgString);
-      const obs: HandleResult = func(msg);
       const shouldResponse = this.shouldResponse(msg);
+      const startedHrTime = process.hrtime()
+      const obs: HandleResult = func(msg);
       if (obs === false) {
         if (shouldResponse) {
           getInstance().sendResponse(
@@ -38,6 +40,8 @@ class MessageHandler {
         return; // forwarding. do nothing
       }
       obs.subscribe((data: any) => {
+        const stopHrTime = process.hrtime()
+        Logger.info(`request ${msg.uri} took ${(stopHrTime[0] - startedHrTime[0]) * 1000000 + stopHrTime[1] - startedHrTime[1]} nanoseconds`);
         if (shouldResponse) {
           getInstance().sendResponse(
             <string>msg.transactionId,

@@ -4,6 +4,7 @@ const log_1 = require("../log");
 const SendRequest_1 = require("./SendRequest");
 const UriNotFound_1 = require("../errors/UriNotFound");
 const IResponse_1 = require("../models/IResponse");
+const __1 = require("../..");
 class MessageHandler {
     constructor() {
     }
@@ -13,8 +14,9 @@ class MessageHandler {
             const msgString = message.value.toString();
             log_1.logger.info(msgString);
             const msg = JSON.parse(msgString);
-            const obs = func(msg);
             const shouldResponse = this.shouldResponse(msg);
+            const startedHrTime = process.hrtime();
+            const obs = func(msg);
             if (obs === false) {
                 if (shouldResponse) {
                     SendRequest_1.getInstance().sendResponse(msg.transactionId, msg.messageId, msg.responseDestination.topic, msg.responseDestination.uri, this.getErrorMessage(new UriNotFound_1.default()));
@@ -25,6 +27,8 @@ class MessageHandler {
                 return;
             }
             obs.subscribe((data) => {
+                const stopHrTime = process.hrtime();
+                __1.Logger.info(`request ${msg.uri} took ${(stopHrTime[0] - startedHrTime[0]) * 1000000 + stopHrTime[1] - startedHrTime[1]} nanoseconds`);
                 if (shouldResponse) {
                     SendRequest_1.getInstance().sendResponse(msg.transactionId, msg.messageId, msg.responseDestination.topic, msg.responseDestination.uri, { data: data });
                 }
