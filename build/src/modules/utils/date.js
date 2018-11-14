@@ -40,4 +40,14 @@ const compareDateOnly = (date1, date2) => {
     return date1.getTime() === date2.getTime();
 };
 exports.compareDateOnly = compareDateOnly;
+const getEndOfDate = (date) => {
+    date.setHours(23, 59, 59, 999);
+    return date;
+};
+exports.getEndOfDate = getEndOfDate;
+const getStartOfDate = (date) => {
+    date.setHours(0, 0, 0, 0);
+    return date;
+};
+exports.getStartOfDate = getStartOfDate;
 //# sourceMappingURL=date.js.map

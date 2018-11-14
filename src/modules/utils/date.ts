@@ -37,4 +37,24 @@ const compareDateOnly = (date1: Date, date2: Date): boolean => {
   return date1.getTime() === date2.getTime();
 };
 
-export { formatDateToDisplay, convertStringToDate, DATETIME_DISPLAY_FORMAT, compareDateOnly }
+
+const getEndOfDate = (date: Date): Date => {
+  date.setHours(23, 59, 59, 999);
+  return date;
+};
+
+
+const getStartOfDate = (date: Date): Date => {
+  date.setHours(0, 0, 0, 0);
+  return date;
+};
+
+
+export {
+  formatDateToDisplay,
+  convertStringToDate,
+  DATETIME_DISPLAY_FORMAT,
+  compareDateOnly,
+  getEndOfDate,
+  getStartOfDate
+}

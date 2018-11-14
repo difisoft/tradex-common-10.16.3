@@ -35,5 +35,8 @@ declare const _default: {
     compileTemplate: (templateUrl: string, data: any) => Promise<string>;
     getForwardUri: typeof getForwardUri;
     isEmpty: (input: string) => boolean;
+    getStartOfDate: (date: Date) => Date;
+    getEndOfDate: (date: Date) => Date;
+    round: (input: number, scale?: number) => number;
 };
 export default _default;

@@ -6,6 +6,7 @@ const validation_1 = require("./validation");
 const Singleton_1 = require("./Singleton");
 const date_1 = require("./date");
 const StringUtils_1 = require("./StringUtils");
+const MathUtils_1 = require("./MathUtils");
 const token_1 = require("./token");
 const locale_1 = require("./locale");
 const template_1 = require("./template");
@@ -41,6 +42,9 @@ exports.default = {
     getTemplateResources: template_1.getTemplateResources,
     compileTemplate: template_1.compileTemplate,
     getForwardUri: scope_1.getForwardUri,
-    isEmpty: StringUtils_1.isEmpty
+    isEmpty: StringUtils_1.isEmpty,
+    getStartOfDate: date_1.getStartOfDate,
+    getEndOfDate: date_1.getEndOfDate,
+    round: MathUtils_1.round
 };
 //# sourceMappingURL=index.js.map
