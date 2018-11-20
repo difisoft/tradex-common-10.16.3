@@ -3,28 +3,29 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const FieldRequiredError_1 = require("../errors/FieldRequiredError");
 const InvalidParameterError_1 = require("../errors/InvalidParameterError");
 const errors_1 = require("../errors");
+const InvalidFieldValueError_1 = require("../errors/InvalidFieldValueError");
 function createFailValidation(code, messageParams, paramName) {
     return {
         success: false,
         params: [{
                 code: code,
                 messageParams: messageParams,
-                param: paramName,
-            }],
+                param: paramName
+            }]
     };
 }
 exports.createFailValidation = createFailValidation;
 function createFailFromError(error) {
     return {
         success: false,
-        params: error.params,
+        params: error.params
     };
 }
 exports.createFailFromError = createFailFromError;
 function createSuccessValidation(data) {
     return {
         success: true,
-        data: data,
+        data: data
     };
 }
 exports.createSuccessValidation = createSuccessValidation;
@@ -33,6 +34,7 @@ class Validate {
         this.fieldValue = fieldValue;
         this.fieldName = fieldName;
         this.isRequired = false;
+        this.isFetchCount = false;
         this.checks = [];
     }
     setRequire() {
@@ -40,6 +42,10 @@ class Validate {
         return this;
     }
     ;
+    setIsFetchCount() {
+        this.isFetchCount = true;
+        return this;
+    }
     add(func) {
         this.checks.push(func);
         return this;
@@ -67,6 +73,11 @@ class Validate {
         if (this.isRequired) {
             if (isEmpty(this.fieldValue)) {
                 return createFailFromError(new FieldRequiredError_1.default(this.fieldName));
+            }
+        }
+        if (this.isFetchCount) {
+            if (isNaN(this.fieldValue) || parseInt(this.fieldValue) < 0) {
+                return createFailFromError(new InvalidFieldValueError_1.default(this.fieldName, this.fieldValue));
             }
         }
         if (this.checks.length > 0) {

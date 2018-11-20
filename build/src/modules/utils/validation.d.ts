@@ -1,5 +1,5 @@
-import InvalidParameterError from "../errors/InvalidParameterError";
-import IParamError from "../models/IParamError";
+import InvalidParameterError from '../errors/InvalidParameterError';
+import IParamError from '../models/IParamError';
 declare type CheckFunc = (value: any, name: string) => IValidationResult;
 declare interface IValidationResult {
     success: boolean;
@@ -13,9 +13,11 @@ export declare class Validate {
     private readonly fieldValue;
     private readonly fieldName;
     private isRequired;
+    private isFetchCount;
     private checks;
     constructor(fieldValue: any, fieldName: string);
     setRequire(): Validate;
+    setIsFetchCount(): Validate;
     add(func: CheckFunc): Validate;
     adds(funcs: CheckFunc[]): Validate;
     throwValid(invalidParameterError?: InvalidParameterError): void;
@@ -24,4 +26,4 @@ export declare class Validate {
 declare function validate(fieldValue: any, fieldName: string): Validate;
 declare function validateEmail(fieldValue: string, paramName?: string): IValidationResult;
 declare function validatePassword(fieldValue: string, paramName?: string, regex?: string): IValidationResult;
-export { validate, validateEmail, createFailValidation, createFailFromError, createSuccessValidation, validatePassword, };
+export { validate, validateEmail, createFailValidation, createFailFromError, createSuccessValidation, validatePassword };

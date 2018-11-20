@@ -1,7 +1,8 @@
-import FieldRequiredError from "../errors/FieldRequiredError";
-import InvalidParameterError from "../errors/InvalidParameterError";
-import IParamError from "../models/IParamError";
+import FieldRequiredError from '../errors/FieldRequiredError';
+import InvalidParameterError from '../errors/InvalidParameterError';
+import IParamError from '../models/IParamError';
 import { EMAIL_VALIDATION_FAILED } from '../errors';
+import InvalidFieldValueError from '../errors/InvalidFieldValueError';
 
 declare type CheckFunc = (value: any, name: string) => IValidationResult;
 
@@ -17,27 +18,28 @@ function createFailValidation(code: string, messageParams: string[], paramName: 
     params: [{
       code: code,
       messageParams: messageParams,
-      param: paramName,
-    }],
+      param: paramName
+    }]
   }
 }
 
 function createFailFromError(error: InvalidParameterError): IValidationResult {
   return {
     success: false,
-    params: error.params,
+    params: error.params
   }
 }
 
 function createSuccessValidation(data: any): IValidationResult {
   return {
     success: true,
-    data: data,
+    data: data
   }
 }
 
 export class Validate {
   private isRequired: boolean = false;
+  private isFetchCount: boolean = false;
   private checks: CheckFunc[] = [];
 
   constructor(private readonly fieldValue: any, private readonly fieldName: string) {
@@ -47,6 +49,11 @@ export class Validate {
     this.isRequired = true;
     return this;
   };
+
+  public setIsFetchCount(): Validate {
+    this.isFetchCount = true;
+    return this;
+  }
 
   public add(func: CheckFunc): Validate {
     this.checks.push(func);
@@ -74,6 +81,11 @@ export class Validate {
     if (this.isRequired) {
       if (isEmpty(this.fieldValue)) {
         return createFailFromError(new FieldRequiredError(this.fieldName));
+      }
+    }
+    if (this.isFetchCount) {
+      if (isNaN(this.fieldValue) || parseInt(this.fieldValue) < 0) {
+        return createFailFromError(new InvalidFieldValueError(this.fieldName, this.fieldValue));
       }
     }
     if (this.checks.length > 0) {
@@ -117,5 +129,5 @@ export {
   createFailValidation,
   createFailFromError,
   createSuccessValidation,
-  validatePassword,
+  validatePassword
 };
