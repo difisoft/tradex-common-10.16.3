@@ -1,9 +1,9 @@
 import { StreamHandler } from './StreamHandler';
 import { logger } from '../log';
-import { IConf, IMessage, ISendMessage, MessageType, } from './types';
-import Rx = require("rx");
-import Kafka = require('node-rdkafka');
+import { IConf, IMessage, ISendMessage, MessageType } from './types';
 import { TimeoutError } from '../errors';
+import Rx = require('rx');
+import Kafka = require('node-rdkafka');
 
 class SendRequestCommon {
   protected messageId: number = 0;
@@ -25,11 +25,13 @@ class SendRequestCommon {
       'retry.backoff.ms': 200,
       'message.send.max.retries': 10,
       'batch.num.messages': 10,
+      'message.max.bytes': 1000000000,
+      'fetch.message.max.bytes': 1000000000
     }, producerOptions ? producerOptions : {});
     this.producer.connect({
       topic: '',
       allTopics: true,
-      timeout: 30000,
+      timeout: 30000
     }, () => logger.info('producer connect'));
     this.producer.on('ready', () => {
       this.isReady = true;
@@ -43,12 +45,12 @@ class SendRequestCommon {
       'client.id': conf.clientId,
       'metadata.broker.list': this.conf.kafkaUrls.join(),
       'retry.backoff.ms': 200,
-      'message.send.max.retries': 10,
+      'message.send.max.retries': 10
     }, {});
     this.highLatencyProducer.connect({
       topic: '',
       allTopics: true,
-      timeout: 30000,
+      timeout: 30000
     }, () => logger.info('producer connect'));
     this.highLatencyProducer.on('ready', () => {
       this.isReady = true;
@@ -76,7 +78,7 @@ class SendRequestCommon {
   public sendForwardMessage(originMessage: any, newTopic: string, newUri: string): void {
     const message: ISendMessage = {
       topic: newTopic,
-      message: originMessage,
+      message: originMessage
     };
     message.message.uri = newUri;
     if (!this.isReady) {
@@ -151,8 +153,8 @@ class SendRequestCommon {
           }
           :
           undefined,
-        data: data,
-      },
+        data: data
+      }
     };
   };
 }
@@ -235,5 +237,5 @@ export {
   SendRequest,
   SendRequestCommon,
   create,
-  getInstance,
+  getInstance
 };

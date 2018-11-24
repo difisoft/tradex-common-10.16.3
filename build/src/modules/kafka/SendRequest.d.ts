@@ -8,7 +8,7 @@
 /// <reference types="rx-lite-joinpatterns" />
 /// <reference types="rx-lite-time" />
 import { IConf, IMessage, ISendMessage, MessageType } from './types';
-import Rx = require("rx");
+import Rx = require('rx');
 declare class SendRequestCommon {
     protected conf: IConf;
     protected handleSendError?: (e: Error) => boolean;
@@ -39,4 +39,4 @@ declare class SendRequest extends SendRequestCommon {
 }
 declare function create(conf: IConf, consumerOptions: any, initResponseListener?: boolean, topicConf?: any): void;
 declare function getInstance(): SendRequest;
-export { SendRequest, SendRequestCommon, create, getInstance, };
+export { SendRequest, SendRequestCommon, create, getInstance };

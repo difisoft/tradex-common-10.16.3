@@ -3,9 +3,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const StreamHandler_1 = require("./StreamHandler");
 const log_1 = require("../log");
 const types_1 = require("./types");
+const errors_1 = require("../errors");
 const Rx = require("rx");
 const Kafka = require("node-rdkafka");
-const errors_1 = require("../errors");
 class SendRequestCommon {
     constructor(conf, handleSendError, producerOptions) {
         this.conf = conf;
@@ -23,11 +23,13 @@ class SendRequestCommon {
             'retry.backoff.ms': 200,
             'message.send.max.retries': 10,
             'batch.num.messages': 10,
+            'message.max.bytes': 1000000000,
+            'fetch.message.max.bytes': 1000000000
         }, producerOptions ? producerOptions : {});
         this.producer.connect({
             topic: '',
             allTopics: true,
-            timeout: 30000,
+            timeout: 30000
         }, () => log_1.logger.info('producer connect'));
         this.producer.on('ready', () => {
             this.isReady = true;
@@ -40,12 +42,12 @@ class SendRequestCommon {
             'client.id': conf.clientId,
             'metadata.broker.list': this.conf.kafkaUrls.join(),
             'retry.backoff.ms': 200,
-            'message.send.max.retries': 10,
+            'message.send.max.retries': 10
         }, {});
         this.highLatencyProducer.connect({
             topic: '',
             allTopics: true,
-            timeout: 30000,
+            timeout: 30000
         }, () => log_1.logger.info('producer connect'));
         this.highLatencyProducer.on('ready', () => {
             this.isReady = true;
@@ -72,7 +74,7 @@ class SendRequestCommon {
     sendForwardMessage(originMessage, newTopic, newUri) {
         const message = {
             topic: newTopic,
-            message: originMessage,
+            message: originMessage
         };
         message.message.uri = newUri;
         if (!this.isReady) {
@@ -141,8 +143,8 @@ class SendRequestCommon {
                 }
                     :
                         undefined,
-                data: data,
-            },
+                data: data
+            }
         };
     }
     ;
