@@ -3,6 +3,7 @@
 import { onError, onNext, transform, transformAsync, transformError, transformPromise, transformSingle, transformSingleAsync, transformSinglePromise } from './rx';
 import { createFailFromError, createFailValidation, createSuccessValidation, validate, Validate, validateEmail, validatePassword } from './validation';
 import { getForwardUri } from './scope';
+import { readTextFromFile } from './file';
 declare const _default: {
     validate: typeof validate;
     validateEmail: typeof validateEmail;
@@ -38,5 +39,6 @@ declare const _default: {
     getStartOfDate: (date: Date) => Date;
     getEndOfDate: (date: Date) => Date;
     round: (input: number, scale?: number) => number;
+    readTextFromFile: typeof readTextFromFile;
 };
 export default _default;
