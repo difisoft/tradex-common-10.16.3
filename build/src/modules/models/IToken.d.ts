@@ -1,5 +1,6 @@
 export default interface IToken {
-    userId?: number;
+    domain?: string;
+    userId?: number | string;
     serviceCode?: string;
     connectionId?: any;
     serviceId?: string;
