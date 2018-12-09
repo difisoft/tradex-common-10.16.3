@@ -34,7 +34,6 @@ import { generateToken } from './token';
 import { getInstance as getI18nInstance, getLanguageCode, init as initI18n } from './locale';
 import { compileTemplate, getTemplateResources, init as initTemplateResource } from './template';
 import { getForwardUri } from './scope';
-import { readTextFromFile } from './file';
 
 export default {
   validate,
@@ -71,5 +70,4 @@ export default {
   getStartOfDate,
   getEndOfDate,
   round,
-  readTextFromFile,
 };
