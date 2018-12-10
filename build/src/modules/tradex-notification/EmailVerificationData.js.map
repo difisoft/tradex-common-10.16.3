@@ -1,1 +1,1 @@
-{"version":3,"file":"EmailVerificationData.js","sourceRoot":"","sources":["../../../../src/modules/tradex-notification/EmailVerificationData.ts"],"names":[],"mappings":";;AAEA,MAAqB,qBAAqB;IAKjC,WAAW;QAChB,OAAO,cAAc,CAAC;IACxB,CAAC;CACF;AARD,wCAQC"}
+{"version":3,"file":"EmailVerificationData.js","sourceRoot":"","sources":["../../../../src/modules/tradex-notification/EmailVerificationData.ts"],"names":[],"mappings":";;AAEA,MAAqB,qBAAqB;IAMjC,WAAW;QAChB,OAAO,cAAc,CAAC;IACxB,CAAC;CACF;AATD,wCASC"}
