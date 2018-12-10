@@ -11,7 +11,6 @@ const token_1 = require("./token");
 const locale_1 = require("./locale");
 const template_1 = require("./template");
 const scope_1 = require("./scope");
-const file_1 = require("./file");
 exports.default = {
     validate: validation_1.validate,
     validateEmail: validation_1.validateEmail,
@@ -47,6 +46,5 @@ exports.default = {
     getStartOfDate: date_1.getStartOfDate,
     getEndOfDate: date_1.getEndOfDate,
     round: MathUtils_1.round,
-    readTextFromFile: file_1.readTextFromFile,
 };
 //# sourceMappingURL=index.js.map
