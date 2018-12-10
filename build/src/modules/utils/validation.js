@@ -76,7 +76,7 @@ class Validate {
             }
         }
         if (this.isFetchCount) {
-            if (!isEmpty(this.fieldValue) && (isNaN(this.fieldValue) || parseInt(this.fieldValue) < 0)) {
+            if (!isEmpty(this.fieldValue) && (isNaN(this.fieldValue) || this.fieldValue < 0)) {
                 return createFailFromError(new InvalidFieldValueError_1.default(this.fieldName, this.fieldValue));
             }
         }

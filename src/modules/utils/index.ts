@@ -69,5 +69,5 @@ export default {
   isEmpty,
   getStartOfDate,
   getEndOfDate,
-  round
+  round,
 };

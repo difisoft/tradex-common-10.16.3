@@ -45,6 +45,6 @@ exports.default = {
     isEmpty: StringUtils_1.isEmpty,
     getStartOfDate: date_1.getStartOfDate,
     getEndOfDate: date_1.getEndOfDate,
-    round: MathUtils_1.round
+    round: MathUtils_1.round,
 };
 //# sourceMappingURL=index.js.map
