@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 class EmailVerificationData {
     getTemplate() {
-        return "email_verify";
+        return 'email_verify';
     }
 }
 exports.default = EmailVerificationData;
