@@ -7,7 +7,7 @@ export default class GeneralError extends Error {
   public params: any;
   public isSystemError: boolean;
 
-  constructor(code: any, params: any, source?: any, messageParams?: any) {
+  constructor(code: string='INTERNAL_SERVER_ERROR', params: any[]=null, source?: any, messageParams?: any) {
     super();
     this.code = code;
     this.messageParams = messageParams;
