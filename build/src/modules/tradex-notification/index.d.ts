@@ -8,6 +8,7 @@ import AlarmNotificationData from './AlarmNotificationData';
 import OrderResultNotificationData from './OrderResultNotificationData';
 import DisconnectNotificationData from './DisconnectNotificationData';
 import EmailVerificationData from './EmailVerificationData';
+import EmailResetPasswordData from './EmailResetPasswordData';
 import ITemplateData from './ITemplateData';
 import MethodEnum from './MethodEnum';
-export { IConfiguration, EmailConfiguration, OneSignalConfiguration, KakaoConfiguration, ITemplateData, AlarmNotificationData, OrderResultNotificationData, DisconnectNotificationData, EmailVerificationData, MethodEnum, NotificationRequest, SendNotification, getInstance, create, AndroidVisibility, DelayedOption, IAndroidBackgroundLayout, IButton, IosBadgeType, IFilter };
+export { IConfiguration, EmailConfiguration, OneSignalConfiguration, KakaoConfiguration, ITemplateData, AlarmNotificationData, OrderResultNotificationData, DisconnectNotificationData, EmailVerificationData, EmailResetPasswordData, MethodEnum, NotificationRequest, SendNotification, getInstance, create, AndroidVisibility, DelayedOption, IAndroidBackgroundLayout, IButton, IosBadgeType, IFilter };
