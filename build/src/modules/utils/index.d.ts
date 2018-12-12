@@ -3,6 +3,7 @@
 import { onError, onNext, transform, transformAsync, transformError, transformPromise, transformSingle, transformSingleAsync, transformSinglePromise } from './rx';
 import { createFailFromError, createFailValidation, createSuccessValidation, validate, Validate, validateEmail, validatePassword } from './validation';
 import { getForwardUri } from './scope';
+import { processJwtKey } from './keys';
 declare const _default: {
     validate: typeof validate;
     validateEmail: typeof validateEmail;
@@ -38,5 +39,7 @@ declare const _default: {
     getStartOfDate: (date: Date) => Date;
     getEndOfDate: (date: Date) => Date;
     round: (input: number, scale?: number) => number;
+    processJwtKey: typeof processJwtKey;
+    TRADEX_DOMAIN: string;
 };
 export default _default;
