@@ -20,6 +20,13 @@ class SendNotification {
         request.add(data.getTemplate(), data);
         this.send.sendMessage(txId, this.notificationListenningTopic, '', request.toJson());
     }
+    sendResetPasswordEmail(txId, conf, locale, data) {
+        const request = new NotificationRequest_1.default();
+        request.setConfiguration(conf);
+        request.locale = locale;
+        request.add(data.getTemplate(), data);
+        this.send.sendMessage(txId, this.notificationListenningTopic, '', request.toJson());
+    }
     sendPushNotification(txId, conf, data) {
         const request = new NotificationRequest_1.default();
         request.setConfiguration(conf);

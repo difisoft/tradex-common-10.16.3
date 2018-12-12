@@ -1,9 +1,10 @@
-import { SendRequestCommon } from "../kafka";
-import EmailConfiguration from "./EmailConfiguration";
-import NotificationRequest from "./NotificationRequest";
-import EmailVerificationData from "./EmailVerificationData";
-import OneSignalConfiguration from "./OneSignalConfiguration";
+import { SendRequestCommon } from '../kafka';
+import EmailConfiguration from './EmailConfiguration';
+import NotificationRequest from './NotificationRequest';
+import EmailVerificationData from './EmailVerificationData';
+import OneSignalConfiguration from './OneSignalConfiguration';
 import ITemplateData from './ITemplateData';
+import EmailResetPasswordData from './EmailResetPasswordData';
 
 export default class SendNotification {
   constructor(private send: SendRequestCommon, private notificationListenningTopic: string) {
@@ -25,12 +26,21 @@ export default class SendNotification {
     this.send.sendMessage(txId, this.notificationListenningTopic, '', request.toJson());
   }
 
+
+  public sendResetPasswordEmail(txId: string, conf: EmailConfiguration, locale: string, data: EmailResetPasswordData) {
+    const request: NotificationRequest = new NotificationRequest();
+    request.setConfiguration(conf);
+    request.locale = locale;
+    request.add(data.getTemplate(), data);
+    this.send.sendMessage(txId, this.notificationListenningTopic, '', request.toJson());
+  }
+
   public sendPushNotification(txId: string, conf: OneSignalConfiguration, data: ITemplateData) {
     const request: NotificationRequest = new NotificationRequest();
     request.setConfiguration(conf);
     request.add(data.getTemplate(), data);
     this.send.sendMessage(txId, this.notificationListenningTopic, '', request.toJson());
-   }
+  }
 }
 let instance: SendNotification = null;
 
