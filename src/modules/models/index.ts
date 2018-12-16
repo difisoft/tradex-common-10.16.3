@@ -3,7 +3,7 @@ import IStatus from './IStatus';
 import IParamError from './IParamError';
 import IDataRequest from './IDataRequest';
 import IHeaders from './IHeaders';
-import IToken from './IToken';
+import IToken, { IUserData } from './IToken';
 import IConnectionIdentifier from './IConnectionIdentifier';
 import ILoginNotify from './ILoginNotify';
 import IForwardUriResult from './IForwardUriResult';
@@ -26,4 +26,5 @@ export {
   Htsbr, 
   Kafka,
   AAA,
+  IUserData,
 };
