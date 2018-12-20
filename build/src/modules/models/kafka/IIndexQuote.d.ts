@@ -6,8 +6,8 @@ export default interface IIndexQuote extends IAutoData {
     ceilingCount: number;
     downCount: number;
     floorCount: number;
-    foreignerBidVolume: number;
-    foreignerOfferVolume: number;
+    foreignerBuyVolume: number;
+    foreignerSellVolume: number;
     sameCount: number;
     sequence: number;
 }

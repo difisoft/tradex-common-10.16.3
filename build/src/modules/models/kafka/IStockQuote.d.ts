@@ -17,8 +17,8 @@ export default interface IStockQuote extends IAutoData {
     totalBidCount: number;
     totalOfferVolume: number;
     totalOfferCount: number;
-    foreignerBidVolume: number;
-    foreignerOfferVolume: number;
+    foreignerBuyVolume: number;
+    foreignerSellVolume: number;
     foreignerTotalRoom: number;
     foreignerCurrentRoom: number;
     matchedBy: string;
