@@ -10,7 +10,8 @@ function processJwtKey(conf) {
     else {
         processKey(conf, conf.domain);
     }
-    conf.getJwt = () => conf.domain === exports.TRADEX_DOMAIN || !conf.domain ? conf.jwt : conf.jwt.domains[conf.domain];
+    conf.getDefJwt = () => conf.domain === exports.TRADEX_DOMAIN || !conf.domain ? conf.jwt : conf.jwt.domains[conf.domain];
+    conf.getJwt = (domain = null) => domain ? conf.jwt.domains[domain] : conf.getDefJwt();
 }
 exports.processJwtKey = processJwtKey;
 function processKey(conf, domain = null) {
