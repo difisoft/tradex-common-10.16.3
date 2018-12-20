@@ -1,3 +1,7 @@
+export declare interface IUserData {
+    un?: string;
+    oks?: string[];
+}
 export default interface IToken {
     domain?: string;
     userId?: number;
@@ -11,4 +15,5 @@ export default interface IToken {
     refreshTokenId?: number;
     scopeGroupIds?: number[];
     serviceUsername?: string;
+    userData?: IUserData;
 }

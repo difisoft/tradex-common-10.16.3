@@ -8,7 +8,7 @@ function processJwtKey(conf) {
         conf.jwt.domains && Object.keys(conf.jwt.domains).forEach((domain) => processKey(conf, domain));
     }
     else {
-        processKey(conf.domain);
+        processKey(conf, conf.domain);
     }
     conf.getJwt = () => conf.domain === exports.TRADEX_DOMAIN || !conf.domain ? conf.jwt : conf.jwt.domains[conf.domain];
 }
