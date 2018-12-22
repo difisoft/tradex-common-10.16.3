@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const acceptLanguage = require("accept-language");
-const i18next_1 = require("i18next");
+const i18n = require("i18next");
 const uuid_1 = require("uuid");
 const i18next_fetch_backend_1 = require("i18next-fetch-backend");
 require("isomorphic-fetch");
@@ -18,7 +18,7 @@ const getLanguageCode = (acceptLanguageHeader) => {
 exports.getLanguageCode = getLanguageCode;
 const defaultResources = {};
 const init = (msNames, namespaceList, requestTopic = 'configuration', uri = '/api/v1/locale') => {
-    i18next_1.default
+    i18n
         .use(i18next_fetch_backend_1.default);
     __1.Kafka.getInstance().sendRequest(uuid_1.v4(), requestTopic, uri, {
         msNames: msNames
@@ -29,7 +29,7 @@ const init = (msNames, namespaceList, requestTopic = 'configuration', uri = '/ap
         }
         else {
             const data = message.data.data;
-            i18next_1.default
+            i18n
                 .init({
                 fallbackLng: 'en',
                 preload: ['en', 'ko', 'vi', 'zh'],
@@ -62,7 +62,7 @@ const init = (msNames, namespaceList, requestTopic = 'configuration', uri = '/ap
 };
 exports.init = init;
 const getInstance = () => {
-    return i18next_1.default;
+    return i18n;
 };
 exports.getInstance = getInstance;
 const translateErrorMessage = (errorObject, lang) => {
@@ -74,7 +74,7 @@ const translateErrorMessage = (errorObject, lang) => {
     const placeholders = {};
     if (messageParams != null) {
         for (let i = 0; i < messageParams.length; i++) {
-            placeholders[i] = i18next_1.default.t(messageParams[i], { lng: lang });
+            placeholders[i] = i18n.t(messageParams[i], { lng: lang });
         }
     }
     const params = errorObject.params;
@@ -87,10 +87,10 @@ const translateErrorMessage = (errorObject, lang) => {
             subPlaceholders.lng = lang;
             if (subMessageParams != null) {
                 for (let j = 0; j < subMessageParams.length; j++) {
-                    subPlaceholders[j] = i18next_1.default.t(subMessageParams[j], { lng: lang });
+                    subPlaceholders[j] = i18n.t(subMessageParams[j], { lng: lang });
                 }
             }
-            const subMessage = i18next_1.default.t(subCode, subPlaceholders);
+            const subMessage = i18n.t(subCode, subPlaceholders);
             errorResponse.params[i] = {
                 code: subCode,
                 message: subMessage,
@@ -98,7 +98,7 @@ const translateErrorMessage = (errorObject, lang) => {
             };
         }
     }
-    const message = i18next_1.default.t(errorObject.code, placeholders);
+    const message = i18n.t(errorObject.code, placeholders);
     errorResponse.message = message;
     return errorResponse;
 };

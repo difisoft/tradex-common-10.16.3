@@ -1,5 +1,5 @@
 import * as acceptLanguage from 'accept-language';
-import i18next from 'i18next';
+import * as i18n from 'i18next';
 import { v4 as uuid } from 'uuid';
 import Backend from 'i18next-fetch-backend';
 import 'isomorphic-fetch';
@@ -19,7 +19,7 @@ const getLanguageCode = (acceptLanguageHeader: string): string => {
 const defaultResources: any = {};
 
 const init = (msNames: string, namespaceList: string[], requestTopic: string = 'configuration', uri: string = '/api/v1/locale'): void => {
-  i18next
+  i18n
     .use(Backend)
 
   Kafka.getInstance().sendRequest(
@@ -35,7 +35,7 @@ const init = (msNames: string, namespaceList: string[], requestTopic: string = '
       } else {
         const data = message.data.data;
 
-        i18next
+        i18n
           .init({
             fallbackLng: 'en',
             preload: ['en', 'ko', 'vi', 'zh'],
@@ -71,7 +71,7 @@ const init = (msNames: string, namespaceList: string[], requestTopic: string = '
 }
 
 const getInstance = (): any => {
-  return i18next;
+  return i18n;
 }
 
 const translateErrorMessage = (errorObject: IStatus, lang: string): IStatus => {
@@ -86,7 +86,7 @@ const translateErrorMessage = (errorObject: IStatus, lang: string): IStatus => {
 
   if (messageParams != null) {
     for (let i = 0; i < messageParams.length; i++) {
-      placeholders[i] = i18next.t(messageParams[i], { lng: lang });
+      placeholders[i] = i18n.t(messageParams[i], { lng: lang });
     }
   }
 
@@ -103,12 +103,12 @@ const translateErrorMessage = (errorObject: IStatus, lang: string): IStatus => {
 
       if (subMessageParams != null) {
         for (let j = 0; j < subMessageParams.length; j++) {
-          subPlaceholders[j] = i18next.t(subMessageParams[j], { lng: lang });
+          subPlaceholders[j] = i18n.t(subMessageParams[j], { lng: lang });
         }
       }
 
 
-      const subMessage = i18next.t(subCode, subPlaceholders);
+      const subMessage = i18n.t(subCode, subPlaceholders);
       errorResponse.params[i] = {
         code: subCode,
         message: subMessage,
@@ -117,7 +117,7 @@ const translateErrorMessage = (errorObject: IStatus, lang: string): IStatus => {
     }
   }
 
-  const message = i18next.t(errorObject.code, placeholders);
+  const message = i18n.t(errorObject.code, placeholders);
   errorResponse.message = message;
 
   return errorResponse;
