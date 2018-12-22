@@ -72,6 +72,7 @@ const translateErrorMessage = (errorObject, lang) => {
         messageParams: messageParams
     };
     const placeholders = {};
+    placeholders.lng = lang;
     if (messageParams != null) {
         for (let i = 0; i < messageParams.length; i++) {
             placeholders[i] = i18n.t(messageParams[i], { lng: lang });

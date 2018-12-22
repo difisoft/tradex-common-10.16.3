@@ -83,6 +83,7 @@ const translateErrorMessage = (errorObject: IStatus, lang: string): IStatus => {
   };
 
   const placeholders: any = {};
+  placeholders.lng = lang;
 
   if (messageParams != null) {
     for (let i = 0; i < messageParams.length; i++) {
