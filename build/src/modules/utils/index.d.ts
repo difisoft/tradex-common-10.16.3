@@ -31,6 +31,7 @@ declare const _default: {
     getLanguageCode: (acceptLanguageHeader: string) => string;
     initI18n: (msNames: string, namespaceList: string[], requestTopic?: string, uri?: string) => void;
     getI18nInstance: () => any;
+    translateErrorMessage: (errorObject: import("../models").IStatus, lang: string) => import("../models").IStatus;
     initTemplateResource: (msNames: string, requestTopic?: string, uri?: string) => void;
     getTemplateResources: () => any[];
     compileTemplate: (templateUrl: string, data: any) => Promise<string>;

@@ -1,9 +1,10 @@
 import * as acceptLanguage from 'accept-language';
-import * as i18n from 'i18next';
+import i18next from 'i18next';
 import { v4 as uuid } from 'uuid';
 import Backend from 'i18next-fetch-backend';
 import 'isomorphic-fetch';
 import { Kafka, Logger } from '../..';
+import { IStatus, IParamError } from '../models';
 
 acceptLanguage.languages(['vi', 'en', 'ko', 'zh']);
 
@@ -18,7 +19,7 @@ const getLanguageCode = (acceptLanguageHeader: string): string => {
 const defaultResources: any = {};
 
 const init = (msNames: string, namespaceList: string[], requestTopic: string = 'configuration', uri: string = '/api/v1/locale'): void => {
-  i18n
+  i18next
     .use(Backend)
 
   Kafka.getInstance().sendRequest(
@@ -34,7 +35,7 @@ const init = (msNames: string, namespaceList: string[], requestTopic: string = '
       } else {
         const data = message.data.data;
 
-        i18n
+        i18next
           .init({
             fallbackLng: 'en',
             preload: ['en', 'ko', 'vi', 'zh'],
@@ -70,7 +71,56 @@ const init = (msNames: string, namespaceList: string[], requestTopic: string = '
 }
 
 const getInstance = (): any => {
-  return i18n;
+  return i18next;
 }
 
-export { getLanguageCode, init, getInstance}
+const translateErrorMessage = (errorObject: IStatus, lang: string): IStatus => {
+  const messageParams = errorObject.messageParams;
+
+  const errorResponse: IStatus = {
+    code: errorObject.code,
+    messageParams: messageParams
+  };
+
+  const placeholders: any = {};
+
+  if (messageParams != null) {
+    for (let i = 0; i < messageParams.length; i++) {
+      placeholders[i] = i18next.t(messageParams[i], { lng: lang });
+    }
+  }
+
+  //Handle sub messages
+  const params: IParamError[] = errorObject.params;
+
+  if (params != null && params.length > 0) {
+    errorResponse.params = [];
+    for (let i = 0; i < params.length; i++) {
+      const subCode = params[i].code;
+      const subMessageParams = params[i].messageParams;
+      const subPlaceholders: any = {};
+      subPlaceholders.lng = lang;
+
+      if (subMessageParams != null) {
+        for (let j = 0; j < subMessageParams.length; j++) {
+          subPlaceholders[j] = i18next.t(subMessageParams[j], { lng: lang });
+        }
+      }
+
+
+      const subMessage = i18next.t(subCode, subPlaceholders);
+      errorResponse.params[i] = {
+        code: subCode,
+        message: subMessage,
+        param: params[i].param
+      };
+    }
+  }
+
+  const message = i18next.t(errorObject.code, placeholders);
+  errorResponse.message = message;
+
+  return errorResponse;
+}
+
+export { getLanguageCode, init, getInstance, translateErrorMessage }

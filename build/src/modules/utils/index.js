@@ -39,6 +39,7 @@ exports.default = {
     getLanguageCode: locale_1.getLanguageCode,
     initI18n: locale_1.init,
     getI18nInstance: locale_1.getInstance,
+    translateErrorMessage: locale_1.translateErrorMessage,
     initTemplateResource: template_1.init,
     getTemplateResources: template_1.getTemplateResources,
     compileTemplate: template_1.compileTemplate,
