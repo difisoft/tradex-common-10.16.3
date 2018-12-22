@@ -15,7 +15,6 @@
   "license": "UNLICENSED",
   "dependencies": {
     "@types/handlebars": "^4.0.39",
-    "@types/i18next": "^8.4.5",
     "@types/isomorphic-fetch": "0.0.34",
     "@types/node-zookeeper-client": "^0.2.6",
     "@types/rx": "^4.1.1",
