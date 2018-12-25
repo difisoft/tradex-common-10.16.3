@@ -8,4 +8,5 @@ import * as Models from './modules/models';
 import * as TradexNotification from './modules/tradex-notification';
 import * as ServiceRegistration from './modules/service-registration';
 import * as Tests from './tests';
-export { Zookeeper, Utils, Logger, ConsoleLogger, Kafka, Errors, AWS, Models, TradexNotification, ServiceRegistration, Tests, };
+import * as Constants from './modules/constants';
+export { Zookeeper, Utils, Logger, ConsoleLogger, Kafka, Errors, AWS, Models, TradexNotification, ServiceRegistration, Tests, Constants, };

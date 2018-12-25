@@ -12,6 +12,7 @@ const locale_1 = require("./locale");
 const template_1 = require("./template");
 const scope_1 = require("./scope");
 const keys_1 = require("./keys");
+const InstanceContainer_1 = require("./InstanceContainer");
 exports.default = {
     validate: validation_1.validate,
     validateEmail: validation_1.validateEmail,
@@ -49,6 +50,9 @@ exports.default = {
     getEndOfDate: date_1.getEndOfDate,
     round: MathUtils_1.round,
     processJwtKey: keys_1.processJwtKey,
+    processJwtKeyByDomain: keys_1.processJwtKeyByDomain,
+    processJwtKeyObject: keys_1.processJwtKeyObject,
     TRADEX_DOMAIN: keys_1.TRADEX_DOMAIN,
+    container: InstanceContainer_1.default,
 };
 //# sourceMappingURL=index.js.map

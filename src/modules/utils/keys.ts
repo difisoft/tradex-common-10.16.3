@@ -3,32 +3,37 @@ export const TRADEX_DOMAIN = 'tradex';
 
 export function processJwtKey(conf: any) {
   if (conf.domain === TRADEX_DOMAIN) {
-    processKey(conf);
-    conf.jwt.domains && Object.keys(conf.jwt.domains).forEach((domain: any) => processKey(conf, domain));
+    processJwtKeyByDomain(conf);
+    conf.jwt.domains && Object.keys(conf.jwt.domains).forEach((domain: any) => processJwtKeyByDomain(conf, domain));
   } else {
-    processKey(conf, conf.domain);
+    processJwtKeyByDomain(conf, conf.domain);
   }
   conf.getDefJwt = () => conf.domain === TRADEX_DOMAIN || !conf.domain ? conf.jwt : conf.jwt.domains[conf.domain]
   conf.getJwt = (domain: string = null) => domain ? conf.jwt.domains[domain] : conf.getDefJwt();
 }
 
-
-function processKey(conf: any, domain:string=null) {
-    let obj = conf.jwt;
-    if (domain) {
-      obj = obj.domains[domain];
-    }
-  
-    if (!obj) {
-      return
-    }
-  
-  
-    if (obj.privateKeyFile) {
-      obj.privateKey = fs.readFileSync(obj.privateKeyFile, 'utf8');
-    }
-    
-    if (obj.publicKeyFile) {
-      obj.publicKey = fs.readFileSync(obj.publicKeyFile, 'utf8');
-    }  
+export function processJwtKeyByDomain(conf: any, domain: string = null) {
+  let obj = conf.jwt;
+  if (domain) {
+    obj = obj.domains[domain];
   }
+
+  if (!obj) {
+    return
+  }
+  processJwtKeyObject(obj);
+}
+
+
+export function processJwtKeyObject(obj: any) {
+  if (!obj) {
+    return
+  }
+  if (obj.privateKeyFile) {
+    obj.privateKey = fs.readFileSync(obj.privateKeyFile, 'utf8');
+  }
+
+  if (obj.publicKeyFile) {
+    obj.publicKey = fs.readFileSync(obj.publicKeyFile, 'utf8');
+  }
+}

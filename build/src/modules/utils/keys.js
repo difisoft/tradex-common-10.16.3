@@ -4,21 +4,28 @@ const fs = require("fs");
 exports.TRADEX_DOMAIN = 'tradex';
 function processJwtKey(conf) {
     if (conf.domain === exports.TRADEX_DOMAIN) {
-        processKey(conf);
-        conf.jwt.domains && Object.keys(conf.jwt.domains).forEach((domain) => processKey(conf, domain));
+        processJwtKeyByDomain(conf);
+        conf.jwt.domains && Object.keys(conf.jwt.domains).forEach((domain) => processJwtKeyByDomain(conf, domain));
     }
     else {
-        processKey(conf, conf.domain);
+        processJwtKeyByDomain(conf, conf.domain);
     }
     conf.getDefJwt = () => conf.domain === exports.TRADEX_DOMAIN || !conf.domain ? conf.jwt : conf.jwt.domains[conf.domain];
     conf.getJwt = (domain = null) => domain ? conf.jwt.domains[domain] : conf.getDefJwt();
 }
 exports.processJwtKey = processJwtKey;
-function processKey(conf, domain = null) {
+function processJwtKeyByDomain(conf, domain = null) {
     let obj = conf.jwt;
     if (domain) {
         obj = obj.domains[domain];
     }
+    if (!obj) {
+        return;
+    }
+    processJwtKeyObject(obj);
+}
+exports.processJwtKeyByDomain = processJwtKeyByDomain;
+function processJwtKeyObject(obj) {
     if (!obj) {
         return;
     }
@@ -29,4 +36,5 @@ function processKey(conf, domain = null) {
         obj.publicKey = fs.readFileSync(obj.publicKeyFile, 'utf8');
     }
 }
+exports.processJwtKeyObject = processJwtKeyObject;
 //# sourceMappingURL=keys.js.map

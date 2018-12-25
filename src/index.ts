@@ -8,6 +8,7 @@ import * as Models from './modules/models';
 import * as TradexNotification from './modules/tradex-notification';
 import * as ServiceRegistration from './modules/service-registration';
 import * as Tests from './tests';
+import * as Constants from './modules/constants';
 
 export {
   Zookeeper,
@@ -21,4 +22,5 @@ export {
   TradexNotification,
   ServiceRegistration,
   Tests,
+  Constants,
 }

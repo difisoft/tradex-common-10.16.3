@@ -21,4 +21,6 @@ const ServiceRegistration = require("./modules/service-registration");
 exports.ServiceRegistration = ServiceRegistration;
 const Tests = require("./tests");
 exports.Tests = Tests;
+const Constants = require("./modules/constants");
+exports.Constants = Constants;
 //# sourceMappingURL=index.js.map
