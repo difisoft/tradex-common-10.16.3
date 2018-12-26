@@ -13,6 +13,8 @@ const template_1 = require("./template");
 const scope_1 = require("./scope");
 const keys_1 = require("./keys");
 const InstanceContainer_1 = require("./InstanceContainer");
+const State_1 = require("./State");
+exports.State = State_1.default;
 exports.default = {
     validate: validation_1.validate,
     validateEmail: validation_1.validateEmail,

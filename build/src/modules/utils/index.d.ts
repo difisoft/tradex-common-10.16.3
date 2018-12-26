@@ -4,6 +4,7 @@ import { onError, onNext, transform, transformAsync, transformError, transformPr
 import { createFailFromError, createFailValidation, createSuccessValidation, validate, Validate, validateEmail, validatePassword } from './validation';
 import { getForwardUri } from './scope';
 import { processJwtKey, processJwtKeyByDomain, processJwtKeyObject } from './keys';
+import State from './State';
 declare const _default: {
     validate: typeof validate;
     validateEmail: typeof validateEmail;
@@ -47,3 +48,4 @@ declare const _default: {
     container: Map<string, any>;
 };
 export default _default;
+export { State, };

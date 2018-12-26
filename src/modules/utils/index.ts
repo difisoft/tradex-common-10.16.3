@@ -41,6 +41,7 @@ import {
   TRADEX_DOMAIN
 } from './keys';
 import container from './InstanceContainer';
+import State from './State';
 
 export default {
   validate,
@@ -84,3 +85,7 @@ export default {
   TRADEX_DOMAIN,
   container,
 };
+
+export {
+  State,
+}
