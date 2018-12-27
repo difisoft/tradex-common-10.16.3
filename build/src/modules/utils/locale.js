@@ -68,6 +68,7 @@ const initInternal = (msNames, namespaceList, requestTopic = 'configuration', ur
         .subscribe((message) => {
         if (message.data.status != null) {
             __1.Logger.error(message.data.status);
+            __1.Utils.initI18nInternal(msNames, namespaceList, requestTopic, uri);
         }
         else {
             const data = message.data.data;

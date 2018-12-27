@@ -3,7 +3,7 @@ import * as i18n from 'i18next';
 import { v4 as uuid } from 'uuid';
 import Backend from 'i18next-fetch-backend';
 import 'isomorphic-fetch';
-import { Kafka, Logger } from '../..';
+import { Kafka, Logger, Utils } from '../..';
 import { IStatus, IParamError } from '../models';
 
 acceptLanguage.languages(['vi', 'en', 'ko', 'zh']);
@@ -81,6 +81,7 @@ const initInternal = (msNames: string, namespaceList: string[], requestTopic: st
     .subscribe((message: Kafka.IMessage) => {
       if (message.data.status != null) {
         Logger.error(message.data.status);
+        Utils.initI18nInternal(msNames, namespaceList, requestTopic, uri);
       } else {
         const data = message.data.data;
         const resources = {};
