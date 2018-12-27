@@ -41,6 +41,7 @@ exports.default = {
     generateToken: token_1.generateToken,
     getLanguageCode: locale_1.getLanguageCode,
     initI18n: locale_1.init,
+    initI18nInternal: locale_1.initInternal,
     getI18nInstance: locale_1.getInstance,
     translateErrorMessage: locale_1.translateErrorMessage,
     initTemplateResource: template_1.init,

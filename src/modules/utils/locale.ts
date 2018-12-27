@@ -70,6 +70,47 @@ const init = (msNames: string, namespaceList: string[], requestTopic: string = '
     });
 }
 
+const initInternal = (msNames: string, namespaceList: string[], requestTopic: string = 'configuration', uri: string = '/api/v1/locale/internal'): void => {
+  Kafka.getInstance().sendRequest(
+    uuid(),
+    requestTopic,
+    uri,
+    {
+      msNames: msNames
+    })
+    .subscribe((message: Kafka.IMessage) => {
+      if (message.data.status != null) {
+        Logger.error(message.data.status);
+      } else {
+        const data = message.data.data;
+        const resources = {};
+
+        for (let i = 0; i < data.length; i++) {
+          const element = data[i];
+          resources[element.lang] = {};
+
+          for (let j = 0; j < element.files.length; j++) {
+            const file = element.files[j];
+            resources[element.lang][file.namespace] = file.content;
+          }
+        }
+
+        i18n
+          .init({
+            fallbackLng: 'en',
+            preload: ['en', 'ko', 'vi', 'zh'],
+            saveMissing: true,
+            resources: resources,
+            // have a common namespace used around the full app
+            ns: namespaceList,
+            defaultNS: namespaceList[0],
+            fallbackNS: namespaceList.slice(1)
+          });
+      }
+
+    });
+}
+
 const getInstance = (): any => {
   return i18n;
 }
@@ -124,4 +165,4 @@ const translateErrorMessage = (errorObject: IStatus, lang: string): IStatus => {
   return errorResponse;
 }
 
-export { getLanguageCode, init, getInstance, translateErrorMessage }
+export { getLanguageCode, init, initInternal, getInstance, translateErrorMessage }

@@ -17,12 +17,12 @@ const getLanguageCode = (acceptLanguageHeader) => {
 };
 exports.getLanguageCode = getLanguageCode;
 const defaultResources = {};
-const init = (msNames, namespaceList, requestTopic = 'configuration', uri = '/api/v1/locale') => {
+const init = (msNames, namespaceList, requestTopic = 'configuration', uri = '/api/v1/locale', timeout = 60) => {
     i18n
         .use(i18next_fetch_backend_1.default);
     __1.Kafka.getInstance().sendRequest(uuid_1.v4(), requestTopic, uri, {
         msNames: msNames
-    })
+    }, timeout)
         .subscribe((message) => {
         if (message.data.status != null) {
             __1.Logger.error(message.data.status);
@@ -61,6 +61,39 @@ const init = (msNames, namespaceList, requestTopic = 'configuration', uri = '/ap
     });
 };
 exports.init = init;
+const initInternal = (msNames, namespaceList, requestTopic = 'configuration', uri = '/api/v1/locale/internal', timmeout = 60) => {
+    __1.Kafka.getInstance().sendRequest(uuid_1.v4(), requestTopic, uri, {
+        msNames: msNames
+    }, timmeout)
+        .subscribe((message) => {
+        if (message.data.status != null) {
+            __1.Logger.error(message.data.status);
+        }
+        else {
+            const data = message.data.data;
+            const resources = {};
+            for (let i = 0; i < data.length; i++) {
+                const element = data[i];
+                resources[element.lang] = {};
+                for (let j = 0; j < element.files.length; j++) {
+                    const file = element.files[j];
+                    resources[element.lang][file.namespace] = file.content;
+                }
+            }
+            i18n
+                .init({
+                fallbackLng: 'en',
+                preload: ['en', 'ko', 'vi', 'zh'],
+                saveMissing: true,
+                resources: resources,
+                ns: namespaceList,
+                defaultNS: namespaceList[0],
+                fallbackNS: namespaceList.slice(1)
+            });
+        }
+    });
+};
+exports.initInternal = initInternal;
 const getInstance = () => {
     return i18n;
 };
