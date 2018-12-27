@@ -160,7 +160,11 @@ const translateErrorMessage = (errorObject: IStatus, lang: string): IStatus => {
   }
 
   const message = i18n.t(errorObject.code, placeholders);
-  errorResponse.message = message;
+  if (message != null) {
+    errorResponse.message = message;
+  } else {
+    errorResponse.message = errorResponse.code;
+  }
 
   return errorResponse;
 }
