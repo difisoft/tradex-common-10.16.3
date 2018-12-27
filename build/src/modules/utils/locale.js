@@ -17,12 +17,12 @@ const getLanguageCode = (acceptLanguageHeader) => {
 };
 exports.getLanguageCode = getLanguageCode;
 const defaultResources = {};
-const init = (msNames, namespaceList, requestTopic = 'configuration', uri = '/api/v1/locale') => {
+const init = (msNames, namespaceList, requestTopic = 'configuration', uri = '/api/v1/locale', timeout = 60) => {
     i18n
         .use(i18next_fetch_backend_1.default);
     __1.Kafka.getInstance().sendRequest(uuid_1.v4(), requestTopic, uri, {
         msNames: msNames
-    })
+    }, timeout)
         .subscribe((message) => {
         if (message.data.status != null) {
             __1.Logger.error(message.data.status);
@@ -61,12 +61,10 @@ const init = (msNames, namespaceList, requestTopic = 'configuration', uri = '/ap
     });
 };
 exports.init = init;
-const initInternal = (msNames, namespaceList, requestTopic = 'configuration', uri = '/api/v1/locale/internal') => {
-    i18n
-        .use(i18next_fetch_backend_1.default);
+const initInternal = (msNames, namespaceList, requestTopic = 'configuration', uri = '/api/v1/locale/internal', timmeout = 60) => {
     __1.Kafka.getInstance().sendRequest(uuid_1.v4(), requestTopic, uri, {
         msNames: msNames
-    })
+    }, timmeout)
         .subscribe((message) => {
         if (message.data.status != null) {
             __1.Logger.error(message.data.status);

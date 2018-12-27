@@ -30,8 +30,8 @@ declare const _default: {
     DATETIME_DISPLAY_FORMAT: string;
     generateToken: (length?: number, onlyDigit?: boolean) => string;
     getLanguageCode: (acceptLanguageHeader: string) => string;
-    initI18n: (msNames: string, namespaceList: string[], requestTopic?: string, uri?: string) => void;
-    initI18nInternal: (msNames: string, namespaceList: string[], requestTopic?: string, uri?: string) => void;
+    initI18n: (msNames: string, namespaceList: string[], requestTopic?: string, uri?: string, timeout?: number) => void;
+    initI18nInternal: (msNames: string, namespaceList: string[], requestTopic?: string, uri?: string, timmeout?: number) => void;
     getI18nInstance: () => any;
     translateErrorMessage: (errorObject: import("../models").IStatus, lang: string) => import("../models").IStatus;
     initTemplateResource: (msNames: string, requestTopic?: string, uri?: string) => void;

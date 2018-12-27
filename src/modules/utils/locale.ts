@@ -18,7 +18,7 @@ const getLanguageCode = (acceptLanguageHeader: string): string => {
 
 const defaultResources: any = {};
 
-const init = (msNames: string, namespaceList: string[], requestTopic: string = 'configuration', uri: string = '/api/v1/locale'): void => {
+const init = (msNames: string, namespaceList: string[], requestTopic: string = 'configuration', uri: string = '/api/v1/locale', timeout: number = 60): void => {
   i18n
     .use(Backend)
 
@@ -28,7 +28,7 @@ const init = (msNames: string, namespaceList: string[], requestTopic: string = '
     uri,
     {
       msNames: msNames
-    })
+    }, timeout)
     .subscribe((message: Kafka.IMessage) => {
       if (message.data.status != null) {
         Logger.error(message.data.status);
@@ -70,17 +70,14 @@ const init = (msNames: string, namespaceList: string[], requestTopic: string = '
     });
 }
 
-const initInternal = (msNames: string, namespaceList: string[], requestTopic: string = 'configuration', uri: string = '/api/v1/locale/internal'): void => {
-  i18n
-    .use(Backend)
-
+const initInternal = (msNames: string, namespaceList: string[], requestTopic: string = 'configuration', uri: string = '/api/v1/locale/internal', timmeout: number = 60): void => {
   Kafka.getInstance().sendRequest(
     uuid(),
     requestTopic,
     uri,
     {
       msNames: msNames
-    })
+    }, timmeout)
     .subscribe((message: Kafka.IMessage) => {
       if (message.data.status != null) {
         Logger.error(message.data.status);
