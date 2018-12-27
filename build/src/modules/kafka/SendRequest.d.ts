@@ -17,7 +17,9 @@ declare class SendRequestCommon {
     protected highLatencyProducer: any;
     protected readonly responseTopic: string;
     protected bufferedMessages: ISendMessage[];
+    protected highLatencyBufferedMessages: ISendMessage[];
     protected isReady: boolean;
+    protected isHighLatencyReady: boolean;
     constructor(conf: IConf, handleSendError?: (e: Error) => boolean, producerOptions?: any);
     getResponseTopic(): string;
     sendMessage(transactionId: string, topic: string, uri: string, data: any, highLatency?: boolean): void;
