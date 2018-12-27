@@ -2,12 +2,22 @@ import { ConsumerStream, createReadStream } from 'node-rdkafka';
 import { logger } from '../log';
 import { IConf } from "./types";
 
+interface IKafkaMessage {
+  value: Buffer;
+  size: number;
+  topic: string;
+  offset: number;
+  partition: number;
+  key: string;
+  timestamp: number;
+}
+
 class StreamHandler {
   private hasError: boolean;
   private stream: ConsumerStream;
 
   constructor(conf: IConf, options: any, topics: string[]
-              , dataHandler: (data: any, handler: StreamHandler) => void
+              , dataHandler: (data: IKafkaMessage, handler: StreamHandler) => void
               , topicConf: any = {}
               , readyCallback?: () => void
   ) {
@@ -40,7 +50,7 @@ class StreamHandler {
 
     this.stream.on('data', (data: any) => {
       this.hasError = false;
-      dataHandler(data, this);
+      dataHandler(<IKafkaMessage>data, this);
     });
   }
 
@@ -50,7 +60,7 @@ class StreamHandler {
 }
 
 function createBroadcastListener(conf: IConf, options: any, topics: string[]
-  , dataHandler: (data: any, handler: StreamHandler) => void, topicConf: any = {}
+  , dataHandler: (data: IKafkaMessage, handler: StreamHandler) => void, topicConf: any = {}
 ) {
   const opt = {
     ...{
@@ -62,5 +72,6 @@ function createBroadcastListener(conf: IConf, options: any, topics: string[]
 
 export {
   StreamHandler,
+  IKafkaMessage,
   createBroadcastListener
 };

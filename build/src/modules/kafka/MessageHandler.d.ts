@@ -10,12 +10,14 @@
 import { Observable } from "rx";
 import { IMessage } from "./types";
 import IResponse from "../models/IResponse";
-declare type HandleResult = Observable<any> | boolean;
-declare type Handle = (msg: IMessage) => HandleResult;
+import { IKafkaMessage } from './StreamHandler';
+declare type HandleResult = Observable<any> | Promise<any> | boolean;
+declare type Handle = (msg: IMessage, originalMessage?: IKafkaMessage) => HandleResult;
 declare class MessageHandler {
     constructor();
-    handle(message: any, func: Handle): void;
-    getErrorMessage(error: Error): IResponse;
+    handle(message: IKafkaMessage, func: Handle): void;
+    getErrorMessage: (error: Error) => IResponse;
     private shouldResponse;
 }
-export { HandleResult, Handle, MessageHandler, };
+declare function getErrorMessage(error: Error): IResponse;
+export { HandleResult, Handle, MessageHandler, getErrorMessage, };

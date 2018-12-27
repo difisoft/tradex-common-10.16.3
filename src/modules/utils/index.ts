@@ -34,10 +34,14 @@ import { generateToken } from './token';
 import { getInstance as getI18nInstance, getLanguageCode, init as initI18n, initInternal as initI18nInternal, translateErrorMessage } from './locale';
 import { compileTemplate, getTemplateResources, init as initTemplateResource } from './template';
 import { getForwardUri } from './scope';
-import { 
+import {
   processJwtKey,
+  processJwtKeyByDomain,
+  processJwtKeyObject,
   TRADEX_DOMAIN
 } from './keys';
+import container from './InstanceContainer';
+import State from './State';
 
 export default {
   validate,
@@ -77,5 +81,12 @@ export default {
   getEndOfDate,
   round,
   processJwtKey,
+  processJwtKeyByDomain,
+  processJwtKeyObject,
   TRADEX_DOMAIN,
+  container,
 };
+
+export {
+  State,
+}
