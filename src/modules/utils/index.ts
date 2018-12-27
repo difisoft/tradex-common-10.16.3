@@ -31,7 +31,7 @@ import {
 import { isEmpty } from './StringUtils';
 import { round } from './MathUtils';
 import { generateToken } from './token';
-import { getInstance as getI18nInstance, getLanguageCode, init as initI18n, translateErrorMessage } from './locale';
+import { getInstance as getI18nInstance, getLanguageCode, init as initI18n, initInternal as initI18nInternal, translateErrorMessage } from './locale';
 import { compileTemplate, getTemplateResources, init as initTemplateResource } from './template';
 import { getForwardUri } from './scope';
 import { 
@@ -65,6 +65,7 @@ export default {
   generateToken,
   getLanguageCode,
   initI18n,
+  initI18nInternal,
   getI18nInstance,
   translateErrorMessage,
   initTemplateResource,
