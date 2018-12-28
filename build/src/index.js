@@ -7,8 +7,9 @@ exports.Kafka = Kafka;
 const log_1 = require("./modules/log");
 exports.Logger = log_1.logger;
 exports.ConsoleLogger = log_1.ConsoleLogger;
-const utils_1 = require("./modules/utils");
+const utils_1 = require("./modules/utils"), UtilClasses = utils_1;
 exports.Utils = utils_1.default;
+exports.UtilClasses = UtilClasses;
 const zookeeper_1 = require("./modules/zookeeper");
 exports.Zookeeper = zookeeper_1.default;
 const AWS = require("./modules/aws");
@@ -21,4 +22,6 @@ const ServiceRegistration = require("./modules/service-registration");
 exports.ServiceRegistration = ServiceRegistration;
 const Tests = require("./tests");
 exports.Tests = Tests;
+const Constants = require("./modules/constants");
+exports.Constants = Constants;
 //# sourceMappingURL=index.js.map

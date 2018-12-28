@@ -3,7 +3,8 @@
 import { onError, onNext, transform, transformAsync, transformError, transformPromise, transformSingle, transformSingleAsync, transformSinglePromise } from './rx';
 import { createFailFromError, createFailValidation, createSuccessValidation, validate, Validate, validateEmail, validatePassword } from './validation';
 import { getForwardUri } from './scope';
-import { processJwtKey } from './keys';
+import { processJwtKey, processJwtKeyByDomain, processJwtKeyObject } from './keys';
+import State from './State';
 declare const _default: {
     validate: typeof validate;
     validateEmail: typeof validateEmail;
@@ -30,7 +31,9 @@ declare const _default: {
     generateToken: (length?: number, onlyDigit?: boolean) => string;
     getLanguageCode: (acceptLanguageHeader: string) => string;
     initI18n: (msNames: string, namespaceList: string[], requestTopic?: string, uri?: string) => void;
+    initI18nInternal: (msNames: string, namespaceList: string[], requestTopic?: string, uri?: string) => void;
     getI18nInstance: () => any;
+    translateErrorMessage: (errorObject: import("../models").IStatus, lang: string) => import("../models").IStatus;
     initTemplateResource: (msNames: string, requestTopic?: string, uri?: string) => void;
     getTemplateResources: () => any[];
     compileTemplate: (templateUrl: string, data: any) => Promise<string>;
@@ -40,6 +43,10 @@ declare const _default: {
     getEndOfDate: (date: Date) => Date;
     round: (input: number, scale?: number) => number;
     processJwtKey: typeof processJwtKey;
+    processJwtKeyByDomain: typeof processJwtKeyByDomain;
+    processJwtKeyObject: typeof processJwtKeyObject;
     TRADEX_DOMAIN: string;
+    container: Map<string, any>;
 };
 export default _default;
+export { State, };

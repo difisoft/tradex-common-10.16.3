@@ -12,7 +12,9 @@ class SendRequestCommon {
         this.handleSendError = handleSendError;
         this.messageId = 0;
         this.bufferedMessages = [];
+        this.highLatencyBufferedMessages = [];
         this.isReady = false;
+        this.isHighLatencyReady = false;
         this.reallySendMessage = (message) => {
             this.doReallySendMessage(message);
         };
@@ -50,8 +52,8 @@ class SendRequestCommon {
             timeout: 30000
         }, () => log_1.logger.info('producer connect'));
         this.highLatencyProducer.on('ready', () => {
-            this.isReady = true;
-            this.bufferedMessages.forEach(this.reallySendMessage);
+            this.isHighLatencyReady = true;
+            this.highLatencyBufferedMessages.forEach(this.reallySendMessage);
         });
         this.highLatencyProducer.on('event.error', (err) => {
             log_1.logger.logError('producer error', err);
@@ -64,7 +66,7 @@ class SendRequestCommon {
         const message = this.createMessage(transactionId, topic, uri, data);
         message.highLatency = highLatency;
         if (!this.isReady) {
-            this.bufferedMessages.push(message);
+            this.highLatencyBufferedMessages.push(message);
         }
         else {
             this.reallySendMessage(message);
