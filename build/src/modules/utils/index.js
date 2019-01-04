@@ -15,6 +15,7 @@ const keys_1 = require("./keys");
 const InstanceContainer_1 = require("./InstanceContainer");
 const State_1 = require("./State");
 exports.State = State_1.default;
+const promise_1 = require("./promise");
 exports.default = {
     validate: validation_1.validate,
     validateEmail: validation_1.validateEmail,
@@ -26,6 +27,7 @@ exports.default = {
     transformError: rx_1.transformError,
     transformAsync: rx_1.transformAsync,
     transformPromise: rx_1.transformPromise,
+    transformPromiseAsync: rx_1.transformPromiseAsync,
     singleton: Singleton_1.singleton,
     transformSingle: rx_1.transformSingle,
     transformSingleAsync: rx_1.transformSingleAsync,
@@ -57,5 +59,7 @@ exports.default = {
     processJwtKeyObject: keys_1.processJwtKeyObject,
     TRADEX_DOMAIN: keys_1.TRADEX_DOMAIN,
     container: InstanceContainer_1.default,
+    promise: promise_1.promise,
+    handlePromise: promise_1.handlePromise,
 };
 //# sourceMappingURL=index.js.map

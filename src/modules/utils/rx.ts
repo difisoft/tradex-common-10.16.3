@@ -79,6 +79,20 @@ function transformPromise<T, F>(observer: ObserverSubject<T>, promise: Promise<F
   });
 }
 
+function transformPromiseAsync<T, F>(observer: ObserverSubject<T>, promise: Promise<F>
+  , func: (f: F, observer?: ObserverSubject<T>) => void, errorHandler?: (err: Error) => void): void {
+  promise.then((f: F) => {
+    func(f, observer);
+  }).catch((err: Error) => {
+    if (errorHandler) {
+      errorHandler(err);
+    } else {
+      observer.onError(err);
+      observer.onCompleted();
+    }
+  });
+}
+
 function transformSinglePromise<T>(observer: ObserverSubject<T>, promise: Promise<T>
   , errorHandler?: (err: Error) => void): void {
   promise.then((data: T) => {
@@ -131,6 +145,7 @@ export {
   transform,
   transformAsync,
   transformPromise,
+  transformPromiseAsync,
   transformSingle,
   transformSingleAsync,
   transformSinglePromise,
