@@ -1,6 +1,11 @@
 export declare interface IUserData {
-  un?: string;// username
-  oks?: string[];//order_keys
+  username?: string;
+  orderKeys?: string;
+  identifierNumber?: string;
+  branchCode?: string;
+  mngDeptCode?: string;
+  deptCode?: string;
+  agencyNumber?: string;
 }
 
 export default interface IToken {
