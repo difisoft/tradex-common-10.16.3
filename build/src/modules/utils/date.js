@@ -6,6 +6,9 @@ const DATETIME_DISPLAY_FORMAT = 'YYYYMMDDHHmmss';
 exports.DATETIME_DISPLAY_FORMAT = DATETIME_DISPLAY_FORMAT;
 const formatDateToDisplay = (date, format = DISPLAY_FORMAT) => {
     try {
+        if (date == null) {
+            return null;
+        }
         const obj = moment(date);
         if (obj.isValid()) {
             return moment.utc(date).format(format);
