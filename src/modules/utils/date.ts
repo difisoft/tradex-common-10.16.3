@@ -1,14 +1,18 @@
 import * as moment from 'moment';
 
 const DISPLAY_FORMAT = 'YYYYMMDD';
-const DATETIME_DISPLAY_FORMAT = 'YYYYMMDDhhmmss'
+const DATETIME_DISPLAY_FORMAT = 'YYYYMMDDHHmmss'
 
 
 const formatDateToDisplay = (date: Date, format: string = DISPLAY_FORMAT): string => {
   try {
+    if (date == null) {
+      return null;
+    }
+    
     const obj = moment(date);
     if (obj.isValid()) {
-      return moment(date).format(format);
+      return moment.utc(date).format(format);
     } else {
       return null;
     }
