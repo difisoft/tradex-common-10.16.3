@@ -18,7 +18,8 @@ declare function transform<T, F>(observer: ObserverSubject<T>, observable: Obser
 declare function transformError<T, F>(observer: ObserverSubject<T>, observable: ObservableSubject<F>, func: (f: F, obs?: ObserverSubject<T>) => void, errorHandler?: (err: Error) => boolean): void;
 declare function transformSingle<T>(observer: ObserverSubject<T>, observable: ObservableSubject<T>, errorHandler?: (err: Error) => void): void;
 declare function transformPromise<T, F>(observer: ObserverSubject<T>, promise: Promise<F>, func: (f: F) => T, errorHandler?: (err: Error) => void): void;
+declare function transformPromiseAsync<T, F>(observer: ObserverSubject<T>, promise: Promise<F>, func: (f: F, observer?: ObserverSubject<T>) => void, errorHandler?: (err: Error) => void): void;
 declare function transformSinglePromise<T>(observer: ObserverSubject<T>, promise: Promise<T>, errorHandler?: (err: Error) => void): void;
 declare function transformAsync<T, F>(observer: ObserverSubject<T>, observable: ObservableSubject<F>, func: TransformAsync<T, F>, errorHandler?: (err: Error) => void): void;
 declare function transformSingleAsync<T>(observer: ObserverSubject<T>, observable: ObservableSubject<T>, errorHandler?: (err: Error) => void): void;
-export { onNext, onError, transform, transformAsync, transformPromise, transformSingle, transformSingleAsync, transformSinglePromise, transformError, };
+export { onNext, onError, transform, transformAsync, transformPromise, transformPromiseAsync, transformSingle, transformSingleAsync, transformSinglePromise, transformError, };

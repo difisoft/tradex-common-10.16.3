@@ -6,6 +6,7 @@ import {
   transformAsync,
   transformError,
   transformPromise,
+  transformPromiseAsync,
   transformSingle,
   transformSingleAsync,
   transformSinglePromise
@@ -42,6 +43,13 @@ import {
 } from './keys';
 import container from './InstanceContainer';
 import State from './State';
+import {
+  promise,
+  handlePromise,
+  Resolve,
+  Reject,
+  PromiseFunction,
+} from './promise';
 
 export default {
   validate,
@@ -54,6 +62,7 @@ export default {
   transformError,
   transformAsync,
   transformPromise,
+  transformPromiseAsync,
   singleton,
   transformSingle,
   transformSingleAsync,
@@ -85,8 +94,13 @@ export default {
   processJwtKeyObject,
   TRADEX_DOMAIN,
   container,
+  promise,
+  handlePromise,
 };
 
 export {
   State,
+  Resolve,
+  Reject,
+  PromiseFunction,
 }

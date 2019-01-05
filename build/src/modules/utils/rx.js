@@ -62,6 +62,20 @@ function transformPromise(observer, promise, func, errorHandler) {
     });
 }
 exports.transformPromise = transformPromise;
+function transformPromiseAsync(observer, promise, func, errorHandler) {
+    promise.then((f) => {
+        func(f, observer);
+    }).catch((err) => {
+        if (errorHandler) {
+            errorHandler(err);
+        }
+        else {
+            observer.onError(err);
+            observer.onCompleted();
+        }
+    });
+}
+exports.transformPromiseAsync = transformPromiseAsync;
 function transformSinglePromise(observer, promise, errorHandler) {
     promise.then((data) => {
         observer.onNext(data);
