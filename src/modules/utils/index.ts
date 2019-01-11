@@ -30,26 +30,22 @@ import {
   getEndOfDate
 } from './date';
 import { isEmpty } from './StringUtils';
+import { isNullOrUndefined } from './ObjectUtils';
 import { round } from './MathUtils';
 import { generateToken } from './token';
-import { getInstance as getI18nInstance, getLanguageCode, init as initI18n, initInternal as initI18nInternal, translateErrorMessage } from './locale';
+import {
+  getInstance as getI18nInstance,
+  getLanguageCode,
+  init as initI18n,
+  initInternal as initI18nInternal,
+  translateErrorMessage
+} from './locale';
 import { compileTemplate, getTemplateResources, init as initTemplateResource } from './template';
 import { getForwardUri } from './scope';
-import {
-  processJwtKey,
-  processJwtKeyByDomain,
-  processJwtKeyObject,
-  TRADEX_DOMAIN
-} from './keys';
+import { processJwtKey, processJwtKeyByDomain, processJwtKeyObject, TRADEX_DOMAIN } from './keys';
 import container from './InstanceContainer';
 import State from './State';
-import {
-  promise,
-  handlePromise,
-  Resolve,
-  Reject,
-  PromiseFunction,
-} from './promise';
+import { promise, handlePromise, Resolve, Reject, PromiseFunction } from './promise';
 
 export default {
   validate,
@@ -86,6 +82,7 @@ export default {
   compileTemplate,
   getForwardUri,
   isEmpty,
+  isNullOrUndefined,
   getStartOfDate,
   getEndOfDate,
   round,
@@ -95,12 +92,12 @@ export default {
   TRADEX_DOMAIN,
   container,
   promise,
-  handlePromise,
+  handlePromise
 };
 
 export {
   State,
   Resolve,
   Reject,
-  PromiseFunction,
+  PromiseFunction
 }

@@ -35,12 +35,13 @@ declare const _default: {
     initI18n: (msNames: string, namespaceList: string[], requestTopic?: string, uri?: string) => void;
     initI18nInternal: (msNames: string, namespaceList: string[], requestTopic?: string, uri?: string) => void;
     getI18nInstance: () => any;
-    translateErrorMessage: (errorObject: import("../models").IStatus, lang: string) => import("../models").IStatus;
+    translateErrorMessage: (errorObject: import("../models/IStatus").default, lang: string) => import("../models/IStatus").default;
     initTemplateResource: (msNames: string, requestTopic?: string, uri?: string) => void;
     getTemplateResources: () => any[];
     compileTemplate: (templateUrl: string, data: any) => Promise<string>;
     getForwardUri: typeof getForwardUri;
     isEmpty: (input: string) => boolean;
+    isNullOrUndefined: (input: any) => boolean;
     getStartOfDate: (date: Date) => Date;
     getEndOfDate: (date: Date) => Date;
     round: (input: number, scale?: number) => number;
@@ -53,4 +54,4 @@ declare const _default: {
     handlePromise: typeof handlePromise;
 };
 export default _default;
-export { State, Resolve, Reject, PromiseFunction, };
+export { State, Resolve, Reject, PromiseFunction };

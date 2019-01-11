@@ -6,6 +6,7 @@ const validation_1 = require("./validation");
 const Singleton_1 = require("./Singleton");
 const date_1 = require("./date");
 const StringUtils_1 = require("./StringUtils");
+const ObjectUtils_1 = require("./ObjectUtils");
 const MathUtils_1 = require("./MathUtils");
 const token_1 = require("./token");
 const locale_1 = require("./locale");
@@ -51,6 +52,7 @@ exports.default = {
     compileTemplate: template_1.compileTemplate,
     getForwardUri: scope_1.getForwardUri,
     isEmpty: StringUtils_1.isEmpty,
+    isNullOrUndefined: ObjectUtils_1.isNullOrUndefined,
     getStartOfDate: date_1.getStartOfDate,
     getEndOfDate: date_1.getEndOfDate,
     round: MathUtils_1.round,
@@ -60,6 +62,6 @@ exports.default = {
     TRADEX_DOMAIN: keys_1.TRADEX_DOMAIN,
     container: InstanceContainer_1.default,
     promise: promise_1.promise,
-    handlePromise: promise_1.handlePromise,
+    handlePromise: promise_1.handlePromise
 };
 //# sourceMappingURL=index.js.map
