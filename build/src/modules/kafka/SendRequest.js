@@ -7,7 +7,7 @@ const errors_1 = require("../errors");
 const Rx = require("rx");
 const Kafka = require("node-rdkafka");
 class SendRequestCommon {
-    constructor(conf, handleSendError, producerOptions) {
+    constructor(conf, handleSendError, producerOptions, topicOptions) {
         this.conf = conf;
         this.handleSendError = handleSendError;
         this.messageId = 0;
@@ -19,7 +19,7 @@ class SendRequestCommon {
             this.doReallySendMessage(message);
         };
         this.responseTopic = `${this.conf.clusterId}.response.${this.conf.clientId}`;
-        this.producer = new Kafka.Producer({
+        const ops = Object.assign({
             'client.id': conf.clientId,
             'metadata.broker.list': this.conf.kafkaUrls.join(),
             'retry.backoff.ms': 200,
@@ -27,7 +27,8 @@ class SendRequestCommon {
             'batch.num.messages': 10,
             'message.max.bytes': 1000000000,
             'fetch.message.max.bytes': 1000000000
-        }, producerOptions ? producerOptions : {});
+        }, producerOptions);
+        this.producer = new Kafka.Producer(ops, topicOptions ? topicOptions : {});
         this.producer.connect({
             topic: '',
             allTopics: true,
@@ -154,7 +155,7 @@ class SendRequestCommon {
 exports.SendRequestCommon = SendRequestCommon;
 class SendRequest extends SendRequestCommon {
     constructor(conf, consumerOptions, initListener = true, topicConf = {}, handleSendError, producerOptions) {
-        super(conf, handleSendError, producerOptions);
+        super(conf, handleSendError, producerOptions, topicConf);
         this.requestedMessages = new Map();
         this.reallySendMessage = (message) => {
             if (message.subject) {
@@ -204,8 +205,8 @@ class SendRequest extends SendRequestCommon {
 }
 exports.SendRequest = SendRequest;
 let instance = null;
-function create(conf, consumerOptions, initResponseListener = true, topicConf = {}) {
-    instance = new SendRequest(conf, consumerOptions, initResponseListener, topicConf);
+function create(conf, consumerOptions, initResponseListener = true, topicConf = {}, producerOptions = {}) {
+    instance = new SendRequest(conf, consumerOptions, initResponseListener, topicConf, null, producerOptions);
 }
 exports.create = create;
 function getInstance() {

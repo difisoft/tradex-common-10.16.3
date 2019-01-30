@@ -18,18 +18,22 @@ class SendRequestCommon {
   constructor(
     protected conf: IConf,
     protected handleSendError?: (e: Error) => boolean,
-    producerOptions?: any
+    producerOptions?: any,
+    topicOptions?: any,
   ) {
     this.responseTopic = `${this.conf.clusterId}.response.${this.conf.clientId}`;
-    this.producer = new Kafka.Producer({
-      'client.id': conf.clientId,
-      'metadata.broker.list': this.conf.kafkaUrls.join(),
-      'retry.backoff.ms': 200,
-      'message.send.max.retries': 10,
-      'batch.num.messages': 10,
-      'message.max.bytes': 1000000000,
-      'fetch.message.max.bytes': 1000000000
-    }, producerOptions ? producerOptions : {});
+    const ops = {
+      ...{
+        'client.id': conf.clientId,
+        'metadata.broker.list': this.conf.kafkaUrls.join(),
+        'retry.backoff.ms': 200,
+        'message.send.max.retries': 10,
+        'batch.num.messages': 10,
+        'message.max.bytes': 1000000000,
+        'fetch.message.max.bytes': 1000000000
+      }, ...producerOptions
+    };
+    this.producer = new Kafka.Producer(ops, topicOptions ? topicOptions : {});
     this.producer.connect({
       topic: '',
       allTopics: true,
@@ -170,9 +174,9 @@ class SendRequest extends SendRequestCommon {
     initListener: boolean = true,
     topicConf: any = {},
     handleSendError?: (e: Error) => boolean,
-    producerOptions?: any
+    producerOptions?: any,
   ) {
-    super(conf, handleSendError, producerOptions);
+    super(conf, handleSendError, producerOptions, topicConf);
     if (initListener) {
       logger.info(`init response listener ${this.responseTopic}`);
       new StreamHandler(this.conf, consumerOptions, [this.responseTopic]
@@ -227,8 +231,8 @@ class SendRequest extends SendRequestCommon {
 
 let instance: SendRequest = null;
 
-function create(conf: IConf, consumerOptions: any, initResponseListener: boolean = true, topicConf: any = {}): void {
-  instance = new SendRequest(conf, consumerOptions, initResponseListener, topicConf);
+function create(conf: IConf, consumerOptions: any, initResponseListener: boolean = true, topicConf: any = {}, producerOptions: any = {}): void {
+  instance = new SendRequest(conf, consumerOptions, initResponseListener, topicConf, null, producerOptions);
 }
 
 function getInstance(): SendRequest {

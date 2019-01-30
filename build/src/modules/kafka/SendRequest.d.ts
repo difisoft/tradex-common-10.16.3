@@ -20,7 +20,7 @@ declare class SendRequestCommon {
     protected highLatencyBufferedMessages: ISendMessage[];
     protected isReady: boolean;
     protected isHighLatencyReady: boolean;
-    constructor(conf: IConf, handleSendError?: (e: Error) => boolean, producerOptions?: any);
+    constructor(conf: IConf, handleSendError?: (e: Error) => boolean, producerOptions?: any, topicOptions?: any);
     getResponseTopic(): string;
     sendMessage(transactionId: string, topic: string, uri: string, data: any, highLatency?: boolean): void;
     sendForwardMessage(originMessage: any, newTopic: string, newUri: string): void;
@@ -39,6 +39,6 @@ declare class SendRequest extends SendRequestCommon {
     protected timeout(message: ISendMessage): void;
     private handlerResponse;
 }
-declare function create(conf: IConf, consumerOptions: any, initResponseListener?: boolean, topicConf?: any): void;
+declare function create(conf: IConf, consumerOptions: any, initResponseListener?: boolean, topicConf?: any, producerOptions?: any): void;
 declare function getInstance(): SendRequest;
 export { SendRequest, SendRequestCommon, create, getInstance };

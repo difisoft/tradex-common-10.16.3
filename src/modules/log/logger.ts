@@ -3,13 +3,13 @@ import { configure, getLogger, Logger as Logger4JS } from 'log4js';
 
 const LOG_FORMAT = {
   JSON: (conf: any) => format.combine(
-    format.label({service: conf.serviceName}),
+    format.label({label: conf.serviceName}),
     format.timestamp(),
     format.splat(),
     format.json(),
   ),
   FLAT: (conf: any) => format.combine(
-    format.label({service: conf.serviceName}),
+    format.label({label: conf.serviceName}),
     format.timestamp(),
     // format.splat(),
     format.simple(),
