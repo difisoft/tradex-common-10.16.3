@@ -7,6 +7,7 @@ import IToken, { IUserData } from './IToken';
 import IConnectionIdentifier from './IConnectionIdentifier';
 import ILoginNotify from './ILoginNotify';
 import IForwardUriResult from './IForwardUriResult';
+import Pair from './Pair';
 import * as Htsbr from './htsbr';
 import * as Kafka from './kafka';
 import * as AAA from './aaa';
@@ -27,4 +28,5 @@ export {
   Kafka,
   AAA,
   IUserData,
+  Pair,
 };
