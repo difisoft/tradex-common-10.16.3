@@ -1,10 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const moment = require("moment");
-const DISPLAY_FORMAT = 'YYYYMMDD';
-const DATETIME_DISPLAY_FORMAT = 'YYYYMMDDHHmmss';
+const DATE_DISPLAY_FORMAT = 'YYYYMMDD';
+exports.DATE_DISPLAY_FORMAT = DATE_DISPLAY_FORMAT;
+const DATETIME_DISPLAY_FORMAT = 'YYYYMMDDkkmmss';
 exports.DATETIME_DISPLAY_FORMAT = DATETIME_DISPLAY_FORMAT;
-const formatDateToDisplay = (date, format = DISPLAY_FORMAT) => {
+const formatDateToDisplay = (date, format = DATE_DISPLAY_FORMAT) => {
     try {
         if (date == null) {
             return null;
@@ -22,7 +23,7 @@ const formatDateToDisplay = (date, format = DISPLAY_FORMAT) => {
     }
 };
 exports.formatDateToDisplay = formatDateToDisplay;
-const convertStringToDate = (data, format = DISPLAY_FORMAT) => {
+const convertStringToDate = (data, format = DATE_DISPLAY_FORMAT) => {
     try {
         const obj = moment.utc(data, format);
         if (obj.isValid()) {

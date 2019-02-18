@@ -25,6 +25,7 @@ import {
   compareDateOnly,
   convertStringToDate,
   DATETIME_DISPLAY_FORMAT,
+  DATE_DISPLAY_FORMAT,
   formatDateToDisplay,
   getStartOfDate,
   getEndOfDate
@@ -71,6 +72,7 @@ export default {
   compareDateOnly,
   convertStringToDate,
   DATETIME_DISPLAY_FORMAT,
+  DATE_DISPLAY_FORMAT,
   generateToken,
   getLanguageCode,
   initI18n,

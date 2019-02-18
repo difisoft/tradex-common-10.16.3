@@ -30,6 +30,7 @@ declare const _default: {
     compareDateOnly: (date1: Date, date2: Date) => boolean;
     convertStringToDate: (data: string, format?: string) => Date;
     DATETIME_DISPLAY_FORMAT: string;
+    DATE_DISPLAY_FORMAT: string;
     generateToken: (length?: number, onlyDigit?: boolean) => string;
     getLanguageCode: (acceptLanguageHeader: string) => string;
     initI18n: (msNames: string, namespaceList: string[], requestTopic?: string, uri?: string) => void;

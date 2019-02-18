@@ -1,15 +1,15 @@
 import * as moment from 'moment';
 
-const DISPLAY_FORMAT = 'YYYYMMDD';
-const DATETIME_DISPLAY_FORMAT = 'YYYYMMDDHHmmss'
+const DATE_DISPLAY_FORMAT = 'YYYYMMDD';
+const DATETIME_DISPLAY_FORMAT = 'YYYYMMDDkkmmss'
 
 
-const formatDateToDisplay = (date: Date, format: string = DISPLAY_FORMAT): string => {
+const formatDateToDisplay = (date: Date, format: string = DATE_DISPLAY_FORMAT): string => {
   try {
     if (date == null) {
       return null;
     }
-    
+
     const obj = moment(date);
     if (obj.isValid()) {
       return moment.utc(date).format(format);
@@ -21,7 +21,7 @@ const formatDateToDisplay = (date: Date, format: string = DISPLAY_FORMAT): strin
   }
 };
 
-const convertStringToDate = (data: string, format: string = DISPLAY_FORMAT): Date => {
+const convertStringToDate = (data: string, format: string = DATE_DISPLAY_FORMAT): Date => {
   try {
     const obj = moment.utc(data, format);
     if (obj.isValid()) {
@@ -58,6 +58,7 @@ export {
   formatDateToDisplay,
   convertStringToDate,
   DATETIME_DISPLAY_FORMAT,
+  DATE_DISPLAY_FORMAT,
   compareDateOnly,
   getEndOfDate,
   getStartOfDate

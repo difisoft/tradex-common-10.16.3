@@ -41,6 +41,7 @@ exports.default = {
     compareDateOnly: date_1.compareDateOnly,
     convertStringToDate: date_1.convertStringToDate,
     DATETIME_DISPLAY_FORMAT: date_1.DATETIME_DISPLAY_FORMAT,
+    DATE_DISPLAY_FORMAT: date_1.DATE_DISPLAY_FORMAT,
     generateToken: token_1.generateToken,
     getLanguageCode: locale_1.getLanguageCode,
     initI18n: locale_1.init,
