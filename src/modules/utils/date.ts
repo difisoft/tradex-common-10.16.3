@@ -35,10 +35,10 @@ const convertStringToDate = (data: string, format: string = DATE_DISPLAY_FORMAT)
 };
 
 
-const compareDateOnly = (date1: Date, date2: Date): boolean => {
+const compareDateOnly = (date1: Date, date2: Date): number => {
   date1.setHours(0, 0, 0, 0);
   date2.setHours(0, 0, 0, 0);
-  return date1.getTime() === date2.getTime();
+  return date1.getTime() - date2.getTime();
 };
 
 
