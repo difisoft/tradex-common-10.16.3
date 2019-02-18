@@ -6,10 +6,14 @@ const UriNotFound_1 = require("../errors/UriNotFound");
 const IResponse_1 = require("../models/IResponse");
 const __1 = require("../..");
 class MessageHandler {
-    constructor() {
+    constructor(sendRequest = null) {
+        this.sendRequest = sendRequest;
         this.getErrorMessage = (error) => {
             return getErrorMessage(error);
         };
+        if (this.sendRequest == null) {
+            this.sendRequest = SendRequest_1.getInstance();
+        }
     }
     handle(message, func) {
         try {
@@ -22,7 +26,7 @@ class MessageHandler {
             const obs = func(msg, message);
             if (obs === false) {
                 if (shouldResponse) {
-                    SendRequest_1.getInstance().sendResponse(msg.transactionId, msg.messageId, msg.responseDestination.topic, msg.responseDestination.uri, this.getErrorMessage(new UriNotFound_1.default()));
+                    this.sendRequest.sendResponse(msg.transactionId, msg.messageId, msg.responseDestination.topic, msg.responseDestination.uri, this.getErrorMessage(new UriNotFound_1.default()));
                 }
                 return;
             }
@@ -32,16 +36,15 @@ class MessageHandler {
             const handleError = (err) => {
                 log_1.logger.logError('error while processing request', err);
                 if (shouldResponse) {
-                    SendRequest_1.getInstance().sendResponse(msg.transactionId, msg.messageId, msg.responseDestination.topic, msg.responseDestination.uri, this.getErrorMessage(err));
+                    this.sendRequest.sendResponse(msg.transactionId, msg.messageId, msg.responseDestination.topic, msg.responseDestination.uri, this.getErrorMessage(err));
                 }
-                ;
             };
             const handleData = (data) => {
                 try {
                     const stopHrTime = process.hrtime();
                     __1.Logger.info(`request ${msg.uri} took ${(stopHrTime[0] - startedHrTime[0]) * 1000 + (stopHrTime[1] - startedHrTime[1]) / 1000000} ms`);
                     if (shouldResponse) {
-                        SendRequest_1.getInstance().sendResponse(msg.transactionId, msg.messageId, msg.responseDestination.topic, msg.responseDestination.uri, { data: data });
+                        this.sendRequest.sendResponse(msg.transactionId, msg.messageId, msg.responseDestination.topic, msg.responseDestination.uri, { data: data });
                     }
                 }
                 catch (err) {
@@ -83,5 +86,4 @@ function getErrorMessage(error) {
     }
 }
 exports.getErrorMessage = getErrorMessage;
-;
 //# sourceMappingURL=MessageHandler.js.map

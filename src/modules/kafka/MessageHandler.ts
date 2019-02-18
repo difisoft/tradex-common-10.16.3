@@ -1,7 +1,7 @@
 import { Observable } from "rx";
 import { IMessage } from "./types";
 import { logger } from "../log";
-import { getInstance } from "./SendRequest";
+import { getInstance, SendRequest } from "./SendRequest";
 import GeneralError from "../errors/GeneralError";
 import UriNotFound from "../errors/UriNotFound";
 import IResponse, { createFailResponse } from "../models/IResponse";
@@ -13,8 +13,10 @@ declare type HandleResult = Observable<any> | Promise<any> | boolean;
 declare type Handle = (msg: IMessage, originalMessage?: IKafkaMessage) => HandleResult;
 
 class MessageHandler {
-  constructor() {
-    // nothing to do
+  constructor(private sendRequest: SendRequest = null) {
+    if (this.sendRequest == null) {
+      this.sendRequest = getInstance();
+    }
   }
 
   public handle(message: IKafkaMessage, func: Handle): void {
@@ -24,11 +26,11 @@ class MessageHandler {
       logger.info(msgString);
       const msg: IMessage = JSON.parse(msgString);
       const shouldResponse = this.shouldResponse(msg);
-      const startedHrTime = process.hrtime()
+      const startedHrTime = process.hrtime();
       const obs: HandleResult = func(msg, message);
       if (obs === false) {
         if (shouldResponse) {
-          getInstance().sendResponse(
+          this.sendRequest.sendResponse(
             msg.transactionId,
             msg.messageId,
             msg.responseDestination.topic,
@@ -43,21 +45,21 @@ class MessageHandler {
       const handleError = (err: Error) => {
         logger.logError('error while processing request', err);
         if (shouldResponse) {
-          getInstance().sendResponse(
+          this.sendRequest.sendResponse(
             msg.transactionId,
             msg.messageId,
             msg.responseDestination.topic,
             msg.responseDestination.uri,
             this.getErrorMessage(err)
           );
-        };
-      }
+        }
+      };
       const handleData = (data: any) => {
         try {
-          const stopHrTime = process.hrtime()
+          const stopHrTime = process.hrtime();
           Logger.info(`request ${msg.uri} took ${(stopHrTime[0] - startedHrTime[0]) * 1000 + (stopHrTime[1] - startedHrTime[1])/1000000} ms`);
           if (shouldResponse) {
-            getInstance().sendResponse(
+            this.sendRequest.sendResponse(
               <string>msg.transactionId,
               msg.messageId,
               msg.responseDestination.topic,
@@ -81,7 +83,7 @@ class MessageHandler {
 
   public getErrorMessage = (error: Error) => {
     return getErrorMessage(error);
-  }
+  };
 
   private shouldResponse(msg: IMessage) {
     return msg.responseDestination && msg.responseDestination.topic;
@@ -103,7 +105,7 @@ function getErrorMessage(error: Error): IResponse {
     logger.logError('error', error);
     return createFailResponse('INTERNAL_SERVER_ERROR');
   }
-};
+}
 
 export {
   HandleResult,

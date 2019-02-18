@@ -9,12 +9,14 @@
 /// <reference types="rx-lite-time" />
 import { Observable } from "rx";
 import { IMessage } from "./types";
+import { SendRequest } from "./SendRequest";
 import IResponse from "../models/IResponse";
 import { IKafkaMessage } from './StreamHandler';
 declare type HandleResult = Observable<any> | Promise<any> | boolean;
 declare type Handle = (msg: IMessage, originalMessage?: IKafkaMessage) => HandleResult;
 declare class MessageHandler {
-    constructor();
+    private sendRequest;
+    constructor(sendRequest?: SendRequest);
     handle(message: IKafkaMessage, func: Handle): void;
     getErrorMessage: (error: Error) => IResponse;
     private shouldResponse;
