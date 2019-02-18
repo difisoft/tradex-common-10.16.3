@@ -27,7 +27,7 @@ declare const _default: {
     createSuccessValidation: typeof createSuccessValidation;
     Validate: typeof Validate;
     formatDateToDisplay: (date: Date, format?: string) => string;
-    compareDateOnly: (date1: Date, date2: Date) => boolean;
+    compareDateOnly: (date1: Date, date2: Date) => number;
     convertStringToDate: (data: string, format?: string) => Date;
     DATETIME_DISPLAY_FORMAT: string;
     DATE_DISPLAY_FORMAT: string;
