@@ -39,9 +39,11 @@ const convertStringToDate = (data, format = DATE_DISPLAY_FORMAT) => {
 };
 exports.convertStringToDate = convertStringToDate;
 const compareDateOnly = (date1, date2) => {
-    date1.setHours(0, 0, 0, 0);
-    date2.setHours(0, 0, 0, 0);
-    return date1.getTime() - date2.getTime();
+    const temp1 = new Date(date1.getTime());
+    const temp2 = new Date(date2.getTime());
+    temp1.setHours(0, 0, 0, 0);
+    temp2.setHours(0, 0, 0, 0);
+    return temp1.getTime() - temp2.getTime();
 };
 exports.compareDateOnly = compareDateOnly;
 const getEndOfDate = (date) => {
