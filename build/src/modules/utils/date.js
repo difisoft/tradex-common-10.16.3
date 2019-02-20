@@ -47,13 +47,15 @@ const compareDateOnly = (date1, date2) => {
 };
 exports.compareDateOnly = compareDateOnly;
 const getEndOfDate = (date) => {
-    date.setHours(23, 59, 59, 999);
-    return date;
+    const temp = new Date(date.getTime());
+    temp.setHours(23, 59, 59, 999);
+    return temp;
 };
 exports.getEndOfDate = getEndOfDate;
 const getStartOfDate = (date) => {
-    date.setHours(0, 0, 0, 0);
-    return date;
+    const temp = new Date(date.getTime());
+    temp.setHours(0, 0, 0, 0);
+    return temp;
 };
 exports.getStartOfDate = getStartOfDate;
 //# sourceMappingURL=date.js.map

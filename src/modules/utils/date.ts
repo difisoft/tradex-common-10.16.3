@@ -45,14 +45,16 @@ const compareDateOnly = (date1: Date, date2: Date): number => {
 
 
 const getEndOfDate = (date: Date): Date => {
-  date.setHours(23, 59, 59, 999);
-  return date;
+  const temp: Date = new Date(date.getTime());
+  temp.setHours(23, 59, 59, 999);
+  return temp;
 };
 
 
 const getStartOfDate = (date: Date): Date => {
-  date.setHours(0, 0, 0, 0);
-  return date;
+  const temp: Date = new Date(date.getTime());
+  temp.setHours(0, 0, 0, 0);
+  return temp;
 };
 
 

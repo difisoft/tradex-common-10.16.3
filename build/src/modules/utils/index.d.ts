@@ -1,58 +1,78 @@
 /// <reference types="rx-core" />
 /// <reference types="rx-lite" />
-import { onError, onNext, transform, transformAsync, transformError, transformPromise, transformPromiseAsync, transformSingle, transformSingleAsync, transformSinglePromise } from './rx';
-import { createFailFromError, createFailValidation, createSuccessValidation, validate, Validate, validateEmail, validatePassword } from './validation';
+import {
+  onError,
+  onNext,
+  transform,
+  transformAsync,
+  transformError,
+  transformPromise,
+  transformPromiseAsync,
+  transformSingle,
+  transformSingleAsync,
+  transformSinglePromise
+} from './rx';
+import {
+  createFailFromError,
+  createFailValidation,
+  createSuccessValidation,
+  validate,
+  Validate,
+  validateEmail,
+  validatePassword
+} from './validation';
 import { getForwardUri } from './scope';
 import { processJwtKey, processJwtKeyByDomain, processJwtKeyObject } from './keys';
 import State from './State';
 import { promise, handlePromise, Resolve, Reject, PromiseFunction } from './promise';
+
 declare const _default: {
-    validate: typeof validate;
-    validateEmail: typeof validateEmail;
-    validatePassword: typeof validatePassword;
-    doSafe: (observable: Rx.Observer<any>, func: any) => void;
-    onError: typeof onError;
-    onNext: typeof onNext;
-    transform: typeof transform;
-    transformError: typeof transformError;
-    transformAsync: typeof transformAsync;
-    transformPromise: typeof transformPromise;
-    transformPromiseAsync: typeof transformPromiseAsync;
-    singleton: import("./Singleton").Singleton;
-    transformSingle: typeof transformSingle;
-    transformSingleAsync: typeof transformSingleAsync;
-    transformSinglePromise: typeof transformSinglePromise;
-    createFailFromError: typeof createFailFromError;
-    createFailValidation: typeof createFailValidation;
-    createSuccessValidation: typeof createSuccessValidation;
-    Validate: typeof Validate;
-    formatDateToDisplay: (date: Date, format?: string) => string;
-    compareDateOnly: (date1: Date, date2: Date) => number;
-    convertStringToDate: (data: string, format?: string) => Date;
-    DATETIME_DISPLAY_FORMAT: string;
-    DATE_DISPLAY_FORMAT: string;
-    generateToken: (length?: number, onlyDigit?: boolean) => string;
-    getLanguageCode: (acceptLanguageHeader: string) => string;
-    initI18n: (msNames: string, namespaceList: string[], requestTopic?: string, uri?: string) => void;
-    initI18nInternal: (msNames: string, namespaceList: string[], requestTopic?: string, uri?: string) => void;
-    getI18nInstance: () => any;
-    translateErrorMessage: (errorObject: import("../models").IStatus, lang: string) => import("../models").IStatus;
-    initTemplateResource: (msNames: string, requestTopic?: string, uri?: string) => void;
-    getTemplateResources: () => any[];
-    compileTemplate: (templateUrl: string, data: any) => Promise<string>;
-    getForwardUri: typeof getForwardUri;
-    isEmpty: (input: string) => boolean;
-    isNullOrUndefined: (input: any) => boolean;
-    getStartOfDate: (date: Date) => Date;
-    getEndOfDate: (date: Date) => Date;
-    round: (input: number, scale?: number) => number;
-    processJwtKey: typeof processJwtKey;
-    processJwtKeyByDomain: typeof processJwtKeyByDomain;
-    processJwtKeyObject: typeof processJwtKeyObject;
-    TRADEX_DOMAIN: string;
-    container: Map<string, any>;
-    promise: typeof promise;
-    handlePromise: typeof handlePromise;
+  validate: typeof validate;
+  validateEmail: typeof validateEmail;
+  validatePassword: typeof validatePassword;
+  doSafe: (observable: Rx.Observer<any>, func: any) => void;
+  onError: typeof onError;
+  onNext: typeof onNext;
+  transform: typeof transform;
+  transformError: typeof transformError;
+  transformAsync: typeof transformAsync;
+  transformPromise: typeof transformPromise;
+  transformPromiseAsync: typeof transformPromiseAsync;
+  singleton: import('./Singleton').Singleton;
+  transformSingle: typeof transformSingle;
+  transformSingleAsync: typeof transformSingleAsync;
+  transformSinglePromise: typeof transformSinglePromise;
+  createFailFromError: typeof createFailFromError;
+  createFailValidation: typeof createFailValidation;
+  createSuccessValidation: typeof createSuccessValidation;
+  Validate: typeof Validate;
+  formatDateToDisplay: (date: Date, format?: string) => string;
+  compareDateOnly: (date1: Date, date2: Date) => number;
+  convertStringToDate: (data: string, format?: string) => Date;
+  DATETIME_DISPLAY_FORMAT: string;
+  DATE_DISPLAY_FORMAT: string;
+  generateToken: (length?: number, onlyDigit?: boolean) => string;
+  getLanguageCode: (acceptLanguageHeader: string) => string;
+  initI18n: (msNames: string, namespaceList: string[], requestTopic?: string, uri?: string) => void;
+  initI18nInternal: (msNames: string, namespaceList: string[], requestTopic?: string, uri?: string) => void;
+  getI18nInstance: () => any;
+  translateErrorMessage: (errorObject: import('../models').IStatus, lang: string) => import('../models').IStatus;
+  initTemplateResource: (msNames: string, requestTopic?: string, uri?: string) => void;
+  getTemplateResources: () => any[];
+  compileTemplate: (templateUrl: string, data: any) => Promise<string>;
+  getForwardUri: typeof getForwardUri;
+  isEmpty: (input: string) => boolean;
+  isNullOrUndefined: (input: any) => boolean;
+  getStartOfDate: (date: Date) => Date;
+  getEndOfDate: (date: Date) => Date;
+  round: (input: number, scale?: number) => number;
+  processJwtKey: typeof processJwtKey;
+  processJwtKeyByDomain: typeof processJwtKeyByDomain;
+  processJwtKeyObject: typeof processJwtKeyObject;
+  TRADEX_DOMAIN: string;
+  container: Map<string, any>;
+  promise: typeof promise;
+  handlePromise: typeof handlePromise;
 };
 export default _default;
 export { State, Resolve, Reject, PromiseFunction };
