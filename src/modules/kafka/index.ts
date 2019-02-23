@@ -13,7 +13,8 @@ import {
   create, 
   getInstance, 
   SendRequest, 
-  SendRequestCommon 
+  SendRequestCommon,
+  getResponse,
 } from "./SendRequest";
 import { 
   IConf, 
@@ -40,4 +41,5 @@ export {
   IResponseDestination,
   HandleResult,
   Handle,
+  getResponse,
 };

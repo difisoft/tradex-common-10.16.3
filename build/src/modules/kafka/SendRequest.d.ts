@@ -45,4 +45,5 @@ declare class SendRequest extends SendRequestCommon {
 }
 declare function create(conf: IConf, consumerOptions: any, initResponseListener?: boolean, topicConf?: any, producerOptions?: any): void;
 declare function getInstance(): SendRequest;
-export { SendRequest, SendRequestCommon, create, getInstance };
+declare function getResponse<T>(msg: IMessage): T;
+export { SendRequest, SendRequestCommon, create, getInstance, getResponse, };

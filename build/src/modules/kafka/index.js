@@ -11,6 +11,7 @@ exports.create = SendRequest_1.create;
 exports.getInstance = SendRequest_1.getInstance;
 exports.SendRequest = SendRequest_1.SendRequest;
 exports.SendRequestCommon = SendRequest_1.SendRequestCommon;
+exports.getResponse = SendRequest_1.getResponse;
 const types_1 = require("./types");
 exports.MessageType = types_1.MessageType;
 //# sourceMappingURL=index.js.map

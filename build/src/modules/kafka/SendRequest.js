@@ -7,6 +7,7 @@ const types_1 = require("./types");
 const errors_1 = require("../errors");
 const Rx = require("rx");
 const Kafka = require("node-rdkafka");
+const GeneralError_1 = require("../errors/GeneralError");
 class SendRequestCommon {
     constructor(conf, handleSendError, producerOptions, topicOptions) {
         this.conf = conf;
@@ -242,4 +243,20 @@ function getInstance() {
     return instance;
 }
 exports.getInstance = getInstance;
+function getResponse(msg) {
+    if (msg.data != null) {
+        const response = msg.data;
+        if (response.status != null) {
+            throw errors_1.createFromStatus(response.status);
+        }
+        else {
+            return response.data;
+        }
+    }
+    else {
+        log_1.logger.error("no data in response of message", msg);
+        throw new GeneralError_1.default();
+    }
+}
+exports.getResponse = getResponse;
 //# sourceMappingURL=SendRequest.js.map

@@ -1,9 +1,11 @@
 import { StreamHandler } from './StreamHandler';
 import { logger } from '../log';
 import { IConf, IMessage, ISendMessage, MessageType, PromiseState, SEND_MESSAGE_TYPE } from "./types";
-import { TimeoutError } from '../errors';
+import { createFromStatus, TimeoutError } from "../errors";
 import Rx = require('rx');
 import Kafka = require('node-rdkafka');
+import GeneralError from "../errors/GeneralError";
+import IResponse from "../models/IResponse";
 
 class SendRequestCommon {
   protected messageId: number = 0;
@@ -264,9 +266,25 @@ function getInstance(): SendRequest {
   return instance;
 }
 
+
+function getResponse<T> (msg: IMessage): T {
+  if (msg.data != null) {
+    const response: IResponse = msg.data;
+    if (response.status != null) {
+      throw createFromStatus(response.status);
+    } else {
+      return <T>response.data;
+    }
+  } else {
+    logger.error("no data in response of message", msg);
+    throw new GeneralError();
+  }
+}
+
 export {
   SendRequest,
   SendRequestCommon,
   create,
-  getInstance
+  getInstance,
+  getResponse,
 };
