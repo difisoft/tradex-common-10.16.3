@@ -10,12 +10,26 @@ declare enum MessageType {
     REQUEST = "REQUEST",
     RESPONSE = "RESPONSE"
 }
+declare const SEND_MESSAGE_TYPE: {
+    OBSERVABLE: number;
+    PROMISE: number;
+};
+declare class PromiseState<T> {
+    private rs;
+    private rj;
+    private prom;
+    constructor();
+    resolve(v: T): void;
+    reject(err: Error): void;
+    promise(): Promise<T>;
+}
 declare interface ISendMessage {
     topic: string;
-    subject?: Rx.Subject<IMessage>;
+    subject?: Rx.Subject<IMessage> | PromiseState<IMessage>;
     message: IMessage;
     highLatency?: boolean;
     timeout?: number;
+    sendType?: number;
 }
 declare interface IResponseDestination {
     topic: string;
@@ -30,4 +44,4 @@ declare interface IMessage {
     responseDestination?: IResponseDestination;
     data: any;
 }
-export { IConf, MessageType, ISendMessage, IMessage, IResponseDestination, };
+export { IConf, MessageType, ISendMessage, IMessage, IResponseDestination, SEND_MESSAGE_TYPE, PromiseState, };

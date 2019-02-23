@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const tslib_1 = require("tslib");
 const StreamHandler_1 = require("./StreamHandler");
 const log_1 = require("../log");
 const types_1 = require("./types");
@@ -168,34 +169,62 @@ class SendRequest extends SendRequestCommon {
             new StreamHandler_1.StreamHandler(this.conf, consumerOptions, [this.responseTopic], (data) => this.handlerResponse(data), topicConf);
         }
     }
+    sendRequestAsync(transactionId, topic, uri, data, timeout) {
+        return tslib_1.__awaiter(this, void 0, void 0, function* () {
+            const promise = new types_1.PromiseState();
+            this.sendRequestBase(transactionId, topic, uri, data, promise, types_1.SEND_MESSAGE_TYPE.PROMISE, timeout);
+            return promise.promise();
+        });
+    }
+    ;
     sendRequest(transactionId, topic, uri, data, timeout) {
         const subject = new Rx.Subject();
+        this.sendRequestBase(transactionId, topic, uri, data, subject, types_1.SEND_MESSAGE_TYPE.OBSERVABLE, timeout);
+        return subject;
+    }
+    ;
+    sendRequestBase(transactionId, topic, uri, data, subject, sendType, timeout) {
         const message = this.createMessage(transactionId, topic, uri, data, types_1.MessageType.REQUEST, this.responseTopic, 'REQUEST_RESPONSE');
         message.subject = subject;
         message.timeout = timeout;
+        message.sendType = sendType;
         if (!this.isReady) {
             this.bufferedMessages.push(message);
         }
         else {
             this.reallySendMessage(message);
         }
-        return subject;
     }
     ;
     timeout(message) {
         const msgId = message.message.messageId;
         if (this.requestedMessages[msgId]) {
-            this.requestedMessages[msgId].onError(new errors_1.TimeoutError());
-            this.requestedMessages[msgId].onCompleted();
+            this.respondError(message, new errors_1.TimeoutError());
             delete this.requestedMessages[msgId];
+        }
+    }
+    respondData(message, data) {
+        if (message.sendType === types_1.SEND_MESSAGE_TYPE.PROMISE) {
+            (message.subject).resolve(data);
+        }
+        else {
+            (message.subject).onNext(data);
+            (message.subject).onCompleted();
+        }
+    }
+    respondError(message, err) {
+        if (message.sendType === types_1.SEND_MESSAGE_TYPE.PROMISE) {
+            (message.subject).reject(err);
+        }
+        else {
+            (message.subject).onError(err);
         }
     }
     handlerResponse(message) {
         const msgStr = message.value.toString();
         const msg = JSON.parse(msgStr);
         if (this.requestedMessages[msg.messageId]) {
-            this.requestedMessages[msg.messageId].onNext(msg);
-            this.requestedMessages[msg.messageId].onCompleted();
+            this.respondData(this.requestedMessages[msg.messageId], msg);
             delete this.requestedMessages[msg.messageId];
         }
         else {

@@ -1,6 +1,6 @@
 import { StreamHandler } from './StreamHandler';
 import { logger } from '../log';
-import { IConf, IMessage, ISendMessage, MessageType } from './types';
+import { IConf, IMessage, ISendMessage, MessageType, PromiseState, SEND_MESSAGE_TYPE } from "./types";
 import { TimeoutError } from '../errors';
 import Rx = require('rx');
 import Kafka = require('node-rdkafka');
@@ -183,20 +183,30 @@ class SendRequest extends SendRequestCommon {
         , (data: any) => this.handlerResponse(data), topicConf);
     }
   }
+  public async sendRequestAsync(transactionId: string, topic: string, uri: string, data: any, timeout?: number): Promise<IMessage> {
+    const promise: PromiseState<IMessage> = new PromiseState();
+    this.sendRequestBase(transactionId, topic, uri, data, promise, SEND_MESSAGE_TYPE.PROMISE, timeout);
+    return promise.promise();
+  };
 
 
   public sendRequest(transactionId: string, topic: string, uri: string, data: any, timeout?: number): Rx.Observable<IMessage> {
     const subject: Rx.Subject<IMessage> = new Rx.Subject();
+    this.sendRequestBase(transactionId, topic, uri, data, subject, SEND_MESSAGE_TYPE.OBSERVABLE, timeout);
+    return subject;
+  };
+
+  public sendRequestBase(transactionId: string, topic: string, uri: string, data: any, subject: Rx.Subject<IMessage> | PromiseState<IMessage>, sendType?: number, timeout?: number) {
     const message: ISendMessage = this.createMessage(transactionId, topic, uri, data, MessageType.REQUEST
       , this.responseTopic, 'REQUEST_RESPONSE');
     message.subject = subject;
     message.timeout = timeout;
+    message.sendType = sendType;
     if (!this.isReady) {
       this.bufferedMessages.push(message);
     } else {
       this.reallySendMessage(message);
     }
-    return subject;
   };
 
   protected reallySendMessage: (message: ISendMessage) => void = (message: ISendMessage) => {
@@ -209,9 +219,25 @@ class SendRequest extends SendRequestCommon {
   protected timeout(message: ISendMessage) {
     const msgId: string = <string>message.message.messageId;
     if (this.requestedMessages[msgId]) {
-      this.requestedMessages[msgId].onError(new TimeoutError());
-      this.requestedMessages[msgId].onCompleted();
+      this.respondError(message, new TimeoutError());
       delete this.requestedMessages[msgId];
+    }
+  }
+
+  private respondData(message: ISendMessage, data: IMessage) {
+    if (message.sendType === SEND_MESSAGE_TYPE.PROMISE) {
+      (<PromiseState<IMessage>>(message.subject)).resolve(data);
+    } else {
+      (<Rx.Subject<IMessage>>(message.subject)).onNext(data);
+      (<Rx.Subject<IMessage>>(message.subject)).onCompleted();
+    }
+  }
+
+  private respondError(message: ISendMessage, err: Error) {
+    if (message.sendType === SEND_MESSAGE_TYPE.PROMISE) {
+      (<PromiseState<IMessage>>(message.subject)).reject(err);
+    } else {
+      (<Rx.Subject<IMessage>>(message.subject)).onError(err);
     }
   }
 
@@ -219,8 +245,7 @@ class SendRequest extends SendRequestCommon {
     const msgStr = message.value.toString();
     const msg: IMessage = JSON.parse(msgStr);
     if (this.requestedMessages[msg.messageId]) {
-      this.requestedMessages[msg.messageId].onNext(msg);
-      this.requestedMessages[msg.messageId].onCompleted();
+      this.respondData(this.requestedMessages[msg.messageId], msg);
       delete this.requestedMessages[msg.messageId];
     } else {
       logger.warn(`cannot find where to response (probably timeout happen) "${msgStr}"`);
