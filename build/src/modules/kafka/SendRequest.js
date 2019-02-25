@@ -161,7 +161,7 @@ class SendRequest extends SendRequestCommon {
         this.requestedMessages = new Map();
         this.reallySendMessage = (message) => {
             if (message.subject) {
-                this.requestedMessages[message.message.messageId] = message.subject;
+                this.requestedMessages[message.message.messageId] = message;
             }
             super.doReallySendMessage(message);
         };
@@ -205,6 +205,9 @@ class SendRequest extends SendRequestCommon {
         }
     }
     respondData(message, data) {
+        if (message.subject == null) {
+            return;
+        }
         if (message.sendType === types_1.SEND_MESSAGE_TYPE.PROMISE) {
             (message.subject).resolve(data);
         }
@@ -214,6 +217,9 @@ class SendRequest extends SendRequestCommon {
         }
     }
     respondError(message, err) {
+        if (message.subject == null) {
+            return;
+        }
         if (message.sendType === types_1.SEND_MESSAGE_TYPE.PROMISE) {
             (message.subject).reject(err);
         }

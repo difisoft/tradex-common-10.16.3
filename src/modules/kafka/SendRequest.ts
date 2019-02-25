@@ -213,7 +213,7 @@ class SendRequest extends SendRequestCommon {
 
   protected reallySendMessage: (message: ISendMessage) => void = (message: ISendMessage) => {
     if (message.subject) {
-      this.requestedMessages[message.message.messageId] = message.subject;
+      this.requestedMessages[message.message.messageId] = message;
     }
     super.doReallySendMessage(message);
   };
@@ -227,6 +227,9 @@ class SendRequest extends SendRequestCommon {
   }
 
   private respondData(message: ISendMessage, data: IMessage) {
+    if (message.subject == null) {
+      return;
+    }
     if (message.sendType === SEND_MESSAGE_TYPE.PROMISE) {
       (<PromiseState<IMessage>>(message.subject)).resolve(data);
     } else {
@@ -236,6 +239,9 @@ class SendRequest extends SendRequestCommon {
   }
 
   private respondError(message: ISendMessage, err: Error) {
+    if (message.subject == null) {
+      return;
+    }
     if (message.sendType === SEND_MESSAGE_TYPE.PROMISE) {
       (<PromiseState<IMessage>>(message.subject)).reject(err);
     } else {
