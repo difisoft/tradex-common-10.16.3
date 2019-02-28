@@ -46,7 +46,15 @@ import { getForwardUri } from './scope';
 import { processJwtKey, processJwtKeyByDomain, processJwtKeyObject, TRADEX_DOMAIN } from './keys';
 import container from './InstanceContainer';
 import State from './State';
-import { promise, handlePromise, Resolve, Reject, PromiseFunction } from './promise';
+import {
+  promise,
+  handlePromise,
+  Resolve,
+  Reject,
+  PromiseFunction,
+  RetryError,
+  asyncWithRetry,
+} from './promise';
 
 export default {
   validate,
@@ -94,7 +102,9 @@ export default {
   TRADEX_DOMAIN,
   container,
   promise,
-  handlePromise
+  handlePromise,
+  RetryError,
+  asyncWithRetry,
 };
 
 export {

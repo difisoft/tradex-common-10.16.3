@@ -15,10 +15,31 @@ function handlePromise<T>(func: (data: T) => void, reject: Reject, prom: Promise
   }).catch(reject);
 }
 
+class RetryError extends Error {
+  constructor(public errors: Error[], message?: string) {
+    super(message);
+  }
+}
+
+async function asyncWithRetry<T>(func: () => Promise<T>, maxRetryTime: number) {
+  const errors: Error[] = [];
+  for (let i = 0; i < maxRetryTime; i++) {
+    try {
+      const result: T = await func(); // tslint:disable-line
+      return result;
+    } catch (e) {
+      errors.push(e);
+    }
+  }
+  throw new RetryError(errors, `fail to retry with ${maxRetryTime} times`);
+}
+
 export {
   promise,
   handlePromise,
   Resolve,
   Reject,
   PromiseFunction,
+  RetryError,
+  asyncWithRetry,
 }

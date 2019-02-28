@@ -63,6 +63,8 @@ exports.default = {
     TRADEX_DOMAIN: keys_1.TRADEX_DOMAIN,
     container: InstanceContainer_1.default,
     promise: promise_1.promise,
-    handlePromise: promise_1.handlePromise
+    handlePromise: promise_1.handlePromise,
+    RetryError: promise_1.RetryError,
+    asyncWithRetry: promise_1.asyncWithRetry,
 };
 //# sourceMappingURL=index.js.map
