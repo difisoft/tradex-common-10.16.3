@@ -4,9 +4,16 @@ import { onNext, onError } from './rx';
 export default class State<T> {
   private stateData: Map<string, T> = new Map();
   private completed: Subject<boolean> = null;
-  constructor(public fields: string[], public completedStateValue: T, getDefaultValue: () => T) {
+  constructor(public fields: string[], public completedStateValue: T, private getDefaultValue: () => T) {
     fields.forEach((field: string) => {
       this.stateData[field] = getDefaultValue();
+    });
+  }
+
+  public addField(fields: string[]) {
+    this.fields.push(...fields);
+    fields.forEach((field: string) => {
+      this.stateData[field] = this.getDefaultValue();
     });
   }
 

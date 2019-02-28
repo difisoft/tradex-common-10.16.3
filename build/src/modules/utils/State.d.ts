@@ -11,9 +11,11 @@ import { Observable } from 'rx';
 export default class State<T> {
     fields: string[];
     completedStateValue: T;
+    private getDefaultValue;
     private stateData;
     private completed;
     constructor(fields: string[], completedStateValue: T, getDefaultValue: () => T);
+    addField(fields: string[]): void;
     subscribeCompleted(): Observable<boolean>;
     setState(field: string, value: T): void;
     private checkCompleted;

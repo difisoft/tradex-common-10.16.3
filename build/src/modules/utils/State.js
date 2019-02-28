@@ -6,10 +6,17 @@ class State {
     constructor(fields, completedStateValue, getDefaultValue) {
         this.fields = fields;
         this.completedStateValue = completedStateValue;
+        this.getDefaultValue = getDefaultValue;
         this.stateData = new Map();
         this.completed = null;
         fields.forEach((field) => {
             this.stateData[field] = getDefaultValue();
+        });
+    }
+    addField(fields) {
+        this.fields.push(...fields);
+        fields.forEach((field) => {
+            this.stateData[field] = this.getDefaultValue();
         });
     }
     subscribeCompleted() {

@@ -8,8 +8,12 @@ const errors_1 = require("../errors");
 const Rx = require("rx");
 const Kafka = require("node-rdkafka");
 const GeneralError_1 = require("../errors/GeneralError");
+const State_1 = require("../utils/State");
+const LOW_PRODUCER = 'LOW_PRODUCER';
+const HIGH_PRODUCER = 'HIGH_PRODUCER';
+const CONSUMER = 'CONSUMER';
 class SendRequestCommon {
-    constructor(conf, handleSendError, producerOptions, topicOptions) {
+    constructor(conf, handleSendError, producerOptions, topicOptions, readyCallback) {
         this.conf = conf;
         this.handleSendError = handleSendError;
         this.messageId = 0;
@@ -17,9 +21,13 @@ class SendRequestCommon {
         this.highLatencyBufferedMessages = [];
         this.isReady = false;
         this.isHighLatencyReady = false;
+        this.readyState = new State_1.default([HIGH_PRODUCER, LOW_PRODUCER], true, () => false);
         this.reallySendMessage = (message) => {
             this.doReallySendMessage(message);
         };
+        if (readyCallback != null) {
+            this.readyState.subscribeCompleted().subscribe(readyCallback);
+        }
         this.responseTopic = `${this.conf.clusterId}.response.${this.conf.clientId}`;
         const ops = Object.assign({
             'client.id': conf.clientId,
@@ -38,6 +46,9 @@ class SendRequestCommon {
         }, () => log_1.logger.info('producer connect'));
         this.producer.on('ready', () => {
             this.isReady = true;
+            if (readyCallback != null) {
+                this.readyState.setState(LOW_PRODUCER, true);
+            }
             this.bufferedMessages.forEach(this.reallySendMessage);
         });
         this.producer.on('event.error', (err) => {
@@ -56,6 +67,9 @@ class SendRequestCommon {
         }, () => log_1.logger.info('producer connect'));
         this.highLatencyProducer.on('ready', () => {
             this.isHighLatencyReady = true;
+            if (readyCallback != null) {
+                this.readyState.setState(HIGH_PRODUCER, true);
+            }
             this.highLatencyBufferedMessages.forEach(this.reallySendMessage);
         });
         this.highLatencyProducer.on('event.error', (err) => {
@@ -156,8 +170,8 @@ class SendRequestCommon {
 }
 exports.SendRequestCommon = SendRequestCommon;
 class SendRequest extends SendRequestCommon {
-    constructor(conf, consumerOptions, initListener = true, topicConf = {}, handleSendError, producerOptions) {
-        super(conf, handleSendError, producerOptions, topicConf);
+    constructor(conf, consumerOptions, initListener = true, topicConf = {}, handleSendError, producerOptions, readyCallback) {
+        super(conf, handleSendError, producerOptions, topicConf, readyCallback);
         this.requestedMessages = new Map();
         this.reallySendMessage = (message) => {
             if (message.subject) {
@@ -166,8 +180,9 @@ class SendRequest extends SendRequestCommon {
             super.doReallySendMessage(message);
         };
         if (initListener) {
+            this.readyState.addField([CONSUMER]);
             log_1.logger.info(`init response listener ${this.responseTopic}`);
-            new StreamHandler_1.StreamHandler(this.conf, consumerOptions, [this.responseTopic], (data) => this.handlerResponse(data), topicConf);
+            new StreamHandler_1.StreamHandler(this.conf, consumerOptions, [this.responseTopic], (data) => this.handlerResponse(data), topicConf, () => this.readyState.setState(CONSUMER, true));
         }
     }
     sendRequestAsync(transactionId, topic, uri, data, timeout) {
@@ -241,8 +256,8 @@ class SendRequest extends SendRequestCommon {
 }
 exports.SendRequest = SendRequest;
 let instance = null;
-function create(conf, consumerOptions, initResponseListener = true, topicConf = {}, producerOptions = {}) {
-    instance = new SendRequest(conf, consumerOptions, initResponseListener, topicConf, null, producerOptions);
+function create(conf, consumerOptions, initResponseListener = true, topicConf = {}, producerOptions = {}, readyCallback) {
+    instance = new SendRequest(conf, consumerOptions, initResponseListener, topicConf, null, producerOptions, readyCallback);
 }
 exports.create = create;
 function getInstance() {

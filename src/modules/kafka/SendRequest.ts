@@ -6,6 +6,11 @@ import Rx = require('rx');
 import Kafka = require('node-rdkafka');
 import GeneralError from "../errors/GeneralError";
 import IResponse from "../models/IResponse";
+import State from "../utils/State";
+
+const LOW_PRODUCER = 'LOW_PRODUCER';
+const HIGH_PRODUCER = 'HIGH_PRODUCER';
+const CONSUMER = 'CONSUMER';
 
 class SendRequestCommon {
   protected messageId: number = 0;
@@ -16,13 +21,18 @@ class SendRequestCommon {
   protected highLatencyBufferedMessages: ISendMessage[] = [];
   protected isReady: boolean = false;
   protected isHighLatencyReady: boolean = false;
+  protected readyState: State<boolean> = new State([HIGH_PRODUCER, LOW_PRODUCER], true, () => false);
 
   constructor(
     protected conf: IConf,
     protected handleSendError?: (e: Error) => boolean,
     producerOptions?: any,
     topicOptions?: any,
+    readyCallback?: () => void,
   ) {
+    if (readyCallback != null) {
+      this.readyState.subscribeCompleted().subscribe(readyCallback);
+    }
     this.responseTopic = `${this.conf.clusterId}.response.${this.conf.clientId}`;
     const ops = {
       ...{
@@ -43,6 +53,9 @@ class SendRequestCommon {
     }, () => logger.info('producer connect'));
     this.producer.on('ready', () => {
       this.isReady = true;
+      if (readyCallback != null) {
+        this.readyState.setState(LOW_PRODUCER, true);
+      }
       this.bufferedMessages.forEach(this.reallySendMessage);
     });
     this.producer.on('event.error', (err: Error) => {
@@ -62,6 +75,9 @@ class SendRequestCommon {
     }, () => logger.info('producer connect'));
     this.highLatencyProducer.on('ready', () => {
       this.isHighLatencyReady = true;
+      if (readyCallback != null) {
+        this.readyState.setState(HIGH_PRODUCER, true);
+      }
       this.highLatencyBufferedMessages.forEach(this.reallySendMessage);
     });
     this.highLatencyProducer.on('event.error', (err: Error) => {
@@ -177,12 +193,14 @@ class SendRequest extends SendRequestCommon {
     topicConf: any = {},
     handleSendError?: (e: Error) => boolean,
     producerOptions?: any,
+    readyCallback?: () => void,
   ) {
-    super(conf, handleSendError, producerOptions, topicConf);
+    super(conf, handleSendError, producerOptions, topicConf, readyCallback);
     if (initListener) {
+      this.readyState.addField([CONSUMER]);
       logger.info(`init response listener ${this.responseTopic}`);
       new StreamHandler(this.conf, consumerOptions, [this.responseTopic]
-        , (data: any) => this.handlerResponse(data), topicConf);
+        , (data: any) => this.handlerResponse(data), topicConf, () => this.readyState.setState(CONSUMER, true));
     }
   }
   public async sendRequestAsync(transactionId: string, topic: string, uri: string, data: any, timeout?: number): Promise<IMessage> {
@@ -264,8 +282,13 @@ class SendRequest extends SendRequestCommon {
 
 let instance: SendRequest = null;
 
-function create(conf: IConf, consumerOptions: any, initResponseListener: boolean = true, topicConf: any = {}, producerOptions: any = {}): void {
-  instance = new SendRequest(conf, consumerOptions, initResponseListener, topicConf, null, producerOptions);
+function create(conf: IConf, consumerOptions: any,
+                initResponseListener: boolean = true,
+                topicConf: any = {},
+                producerOptions: any = {},
+                readyCallback?: () => void
+                ): void {
+  instance = new SendRequest(conf, consumerOptions, initResponseListener, topicConf, null, producerOptions, readyCallback);
 }
 
 function getInstance(): SendRequest {

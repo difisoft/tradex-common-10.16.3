@@ -9,6 +9,7 @@
 /// <reference types="rx-lite-time" />
 import { IConf, IMessage, ISendMessage, MessageType, PromiseState } from "./types";
 import Rx = require('rx');
+import State from "../utils/State";
 declare class SendRequestCommon {
     protected conf: IConf;
     protected handleSendError?: (e: Error) => boolean;
@@ -20,7 +21,8 @@ declare class SendRequestCommon {
     protected highLatencyBufferedMessages: ISendMessage[];
     protected isReady: boolean;
     protected isHighLatencyReady: boolean;
-    constructor(conf: IConf, handleSendError?: (e: Error) => boolean, producerOptions?: any, topicOptions?: any);
+    protected readyState: State<boolean>;
+    constructor(conf: IConf, handleSendError?: (e: Error) => boolean, producerOptions?: any, topicOptions?: any, readyCallback?: () => void);
     getResponseTopic(): string;
     sendMessage(transactionId: string, topic: string, uri: string, data: any, highLatency?: boolean): void;
     sendForwardMessage(originMessage: any, newTopic: string, newUri: string): void;
@@ -33,7 +35,7 @@ declare class SendRequestCommon {
 }
 declare class SendRequest extends SendRequestCommon {
     private requestedMessages;
-    constructor(conf: IConf, consumerOptions: any, initListener?: boolean, topicConf?: any, handleSendError?: (e: Error) => boolean, producerOptions?: any);
+    constructor(conf: IConf, consumerOptions: any, initListener?: boolean, topicConf?: any, handleSendError?: (e: Error) => boolean, producerOptions?: any, readyCallback?: () => void);
     sendRequestAsync(transactionId: string, topic: string, uri: string, data: any, timeout?: number): Promise<IMessage>;
     sendRequest(transactionId: string, topic: string, uri: string, data: any, timeout?: number): Rx.Observable<IMessage>;
     sendRequestBase(transactionId: string, topic: string, uri: string, data: any, subject: Rx.Subject<IMessage> | PromiseState<IMessage>, sendType?: number, timeout?: number): void;
@@ -43,7 +45,7 @@ declare class SendRequest extends SendRequestCommon {
     private respondError;
     private handlerResponse;
 }
-declare function create(conf: IConf, consumerOptions: any, initResponseListener?: boolean, topicConf?: any, producerOptions?: any): void;
+declare function create(conf: IConf, consumerOptions: any, initResponseListener?: boolean, topicConf?: any, producerOptions?: any, readyCallback?: () => void): void;
 declare function getInstance(): SendRequest;
 declare function getResponse<T>(msg: IMessage): T;
 export { SendRequest, SendRequestCommon, create, getInstance, getResponse, };
