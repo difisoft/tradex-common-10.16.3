@@ -21,9 +21,12 @@ class RetryError extends Error {
   }
 }
 
-async function asyncWithRetry<T>(func: () => Promise<T>, maxRetryTime: number) {
+async function asyncWithRetry<T>(func: () => Promise<T>, maxRetryTime: number): Promise<T> {
+  if (maxRetryTime <= 0) {
+    return func();
+  }
   const errors: Error[] = [];
-  for (let i = 0; i < maxRetryTime; i++) {
+  for (let i = 0; i <= maxRetryTime; i++) {
     try {
       const result: T = await func(); // tslint:disable-line
       return result;

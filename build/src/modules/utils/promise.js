@@ -23,8 +23,11 @@ class RetryError extends Error {
 exports.RetryError = RetryError;
 function asyncWithRetry(func, maxRetryTime) {
     return tslib_1.__awaiter(this, void 0, void 0, function* () {
+        if (maxRetryTime <= 0) {
+            return func();
+        }
         const errors = [];
-        for (let i = 0; i < maxRetryTime; i++) {
+        for (let i = 0; i <= maxRetryTime; i++) {
             try {
                 const result = yield func();
                 return result;
