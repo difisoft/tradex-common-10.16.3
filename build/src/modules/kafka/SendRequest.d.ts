@@ -27,6 +27,7 @@ declare class SendRequestCommon {
     sendMessage(transactionId: string, topic: string, uri: string, data: any, highLatency?: boolean): void;
     sendForwardMessage(originMessage: any, newTopic: string, newUri: string): void;
     sendResponse(transactionId: string | number, messageId: string | number, topic: string, uri: string, data: any): void;
+    sendMessageCheckReady(message: ISendMessage, highLatency: boolean): void;
     protected timeout(message: ISendMessage): void;
     protected doReallySendMessage(message: ISendMessage): void;
     protected reallySendMessage: (message: ISendMessage) => void;

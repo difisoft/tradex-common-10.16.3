@@ -34,17 +34,19 @@ class SendRequestCommon {
             'metadata.broker.list': this.conf.kafkaUrls.join(),
             'retry.backoff.ms': 200,
             'message.send.max.retries': 10,
-            'batch.num.messages': 10,
+            'batch.num.messages': 5,
             'message.max.bytes': 1000000000,
             'fetch.message.max.bytes': 1000000000
         }, producerOptions);
-        this.producer = new Kafka.Producer(ops, topicOptions ? topicOptions : {});
+        const topicOps = topicOptions ? topicOptions : {};
+        this.producer = new Kafka.Producer(ops, topicOps);
         this.producer.connect({
             topic: '',
             allTopics: true,
             timeout: 30000
-        }, () => log_1.logger.info('producer connect'));
+        }, () => log_1.logger.info('low latency producer connect'));
         this.producer.on('ready', () => {
+            log_1.logger.info('low latency producer ready', this.readyState);
             this.isReady = true;
             if (readyCallback != null) {
                 this.readyState.setState(LOW_PRODUCER, true);
@@ -54,18 +56,22 @@ class SendRequestCommon {
         this.producer.on('event.error', (err) => {
             log_1.logger.logError('producer error', err);
         });
-        this.highLatencyProducer = new Kafka.Producer({
+        const highLatencyOps = Object.assign({
             'client.id': conf.clientId,
             'metadata.broker.list': this.conf.kafkaUrls.join(),
             'retry.backoff.ms': 200,
-            'message.send.max.retries': 10
-        }, {});
+            'message.send.max.retries': 10,
+            'message.max.bytes': 1000000000,
+            'fetch.message.max.bytes': 1000000000
+        }, producerOptions);
+        this.highLatencyProducer = new Kafka.Producer(highLatencyOps, topicOps);
         this.highLatencyProducer.connect({
             topic: '',
             allTopics: true,
             timeout: 30000
         }, () => log_1.logger.info('producer connect'));
         this.highLatencyProducer.on('ready', () => {
+            log_1.logger.info('high latency producer ready', this.readyState);
             this.isHighLatencyReady = true;
             if (readyCallback != null) {
                 this.readyState.setState(HIGH_PRODUCER, true);
@@ -82,12 +88,7 @@ class SendRequestCommon {
     sendMessage(transactionId, topic, uri, data, highLatency = true) {
         const message = this.createMessage(transactionId, topic, uri, data);
         message.highLatency = highLatency;
-        if (!this.isReady) {
-            this.highLatencyBufferedMessages.push(message);
-        }
-        else {
-            this.reallySendMessage(message);
-        }
+        this.sendMessageCheckReady(message, highLatency);
     }
     ;
     sendForwardMessage(originMessage, newTopic, newUri) {
@@ -96,24 +97,29 @@ class SendRequestCommon {
             message: originMessage
         };
         message.message.uri = newUri;
-        if (!this.isReady) {
-            this.bufferedMessages.push(message);
-        }
-        else {
-            this.reallySendMessage(message);
-        }
+        this.sendMessageCheckReady(message, false);
     }
     ;
     sendResponse(transactionId, messageId, topic, uri, data) {
         const message = this.createMessage(transactionId, topic, uri, data, types_1.MessageType.RESPONSE, undefined, undefined, messageId);
-        if (!this.isReady) {
-            this.bufferedMessages.push(message);
-        }
-        else {
-            this.reallySendMessage(message);
-        }
+        this.sendMessageCheckReady(message, false);
     }
     ;
+    sendMessageCheckReady(message, highLatency) {
+        if (highLatency) {
+            if (!this.isHighLatencyReady) {
+                this.highLatencyBufferedMessages.push(message);
+                return;
+            }
+        }
+        else {
+            if (!this.isReady) {
+                this.bufferedMessages.push(message);
+                return;
+            }
+        }
+        this.reallySendMessage(message);
+    }
     timeout(message) {
     }
     doReallySendMessage(message) {
@@ -182,7 +188,10 @@ class SendRequest extends SendRequestCommon {
         if (initListener) {
             this.readyState.addField([CONSUMER]);
             log_1.logger.info(`init response listener ${this.responseTopic}`);
-            new StreamHandler_1.StreamHandler(this.conf, consumerOptions, [this.responseTopic], (data) => this.handlerResponse(data), topicConf, () => this.readyState.setState(CONSUMER, true));
+            new StreamHandler_1.StreamHandler(this.conf, consumerOptions, [this.responseTopic], (data) => this.handlerResponse(data), topicConf, () => {
+                log_1.logger.info('response consumer ready', this.readyState);
+                this.readyState.setState(CONSUMER, true);
+            });
         }
     }
     sendRequestAsync(transactionId, topic, uri, data, timeout) {
