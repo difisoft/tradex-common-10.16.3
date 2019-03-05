@@ -8,6 +8,7 @@ const date_1 = require("./date");
 const StringUtils_1 = require("./StringUtils");
 const ObjectUtils_1 = require("./ObjectUtils");
 const MathUtils_1 = require("./MathUtils");
+const ArrayUtils_1 = require("./ArrayUtils");
 const token_1 = require("./token");
 const locale_1 = require("./locale");
 const template_1 = require("./template");
@@ -66,5 +67,6 @@ exports.default = {
     handlePromise: promise_1.handlePromise,
     RetryError: promise_1.RetryError,
     asyncWithRetry: promise_1.asyncWithRetry,
+    removeDuplicateObj: ArrayUtils_1.removeDuplicateObj
 };
 //# sourceMappingURL=index.js.map
