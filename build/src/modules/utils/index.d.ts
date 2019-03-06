@@ -55,6 +55,7 @@ declare const _default: {
     handlePromise: typeof handlePromise;
     RetryError: typeof RetryError;
     asyncWithRetry: typeof asyncWithRetry;
+    removeDuplicateObj: (arr: any[], fieldName: any) => any[];
 };
 export default _default;
 export { State, Resolve, Reject, PromiseFunction };

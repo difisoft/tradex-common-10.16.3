@@ -33,6 +33,7 @@ import {
 import { isEmpty } from './StringUtils';
 import { isNullOrUndefined } from './ObjectUtils';
 import { round } from './MathUtils';
+import { removeDuplicateObj } from './ArrayUtils';
 import { generateToken } from './token';
 import {
   getInstance as getI18nInstance,
@@ -46,15 +47,7 @@ import { getForwardUri } from './scope';
 import { processJwtKey, processJwtKeyByDomain, processJwtKeyObject, TRADEX_DOMAIN } from './keys';
 import container from './InstanceContainer';
 import State from './State';
-import {
-  promise,
-  handlePromise,
-  Resolve,
-  Reject,
-  PromiseFunction,
-  RetryError,
-  asyncWithRetry,
-} from './promise';
+import { promise, handlePromise, Resolve, Reject, PromiseFunction, RetryError, asyncWithRetry } from './promise';
 
 export default {
   validate,
@@ -105,6 +98,7 @@ export default {
   handlePromise,
   RetryError,
   asyncWithRetry,
+  removeDuplicateObj
 };
 
 export {
