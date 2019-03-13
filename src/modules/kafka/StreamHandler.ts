@@ -52,6 +52,10 @@ class StreamHandler {
       this.hasError = false;
       dataHandler(<IKafkaMessage>data, this);
     });
+
+    this.stream.on('throttle', (data: any) => {
+      logger.warn("kafka throttle happens", data);
+    });
   }
 
   public close() {
