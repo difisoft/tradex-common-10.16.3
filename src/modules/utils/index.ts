@@ -42,12 +42,33 @@ import {
   initInternal as initI18nInternal,
   translateErrorMessage
 } from './locale';
-import { compileTemplate, getTemplateResources, init as initTemplateResource } from './template';
-import { getForwardUri } from './scope';
-import { processJwtKey, processJwtKeyByDomain, processJwtKeyObject, TRADEX_DOMAIN } from './keys';
+import {
+  compileTemplate,
+  getTemplateResources,
+  init as initTemplateResource
+} from './template';
+import {
+  getForwardUri,
+} from './scope';
+import {
+  processJwtKey,
+  processJwtKeyByDomain,
+  processJwtKeyObject,
+  TRADEX_DOMAIN,
+  VCSC_DOMAIN,
+  DOMAINS,
+} from './keys';
 import container from './InstanceContainer';
 import State from './State';
-import { promise, handlePromise, Resolve, Reject, PromiseFunction, RetryError, asyncWithRetry } from './promise';
+import {
+  promise,
+  handlePromise,
+  Resolve,
+  Reject,
+  PromiseFunction,
+  RetryError,
+  asyncWithRetry,
+} from './promise';
 
 export default {
   validate,
@@ -98,12 +119,14 @@ export default {
   handlePromise,
   RetryError,
   asyncWithRetry,
-  removeDuplicateObj
+  removeDuplicateObj,
+  VCSC_DOMAIN,
+  DOMAINS,
 };
 
 export {
   State,
   Resolve,
   Reject,
-  PromiseFunction
+  PromiseFunction,
 }

@@ -2,6 +2,11 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const fs = require("fs");
 exports.TRADEX_DOMAIN = 'tradex';
+exports.VCSC_DOMAIN = 'vcsc';
+exports.DOMAINS = {
+    TRADEX_DOMAIN: exports.TRADEX_DOMAIN,
+    VCSC_DOMAIN: exports.VCSC_DOMAIN,
+};
 function processJwtKey(conf) {
     if (conf.domain === exports.TRADEX_DOMAIN) {
         processJwtKeyByDomain(conf);

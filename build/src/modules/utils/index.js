@@ -67,6 +67,8 @@ exports.default = {
     handlePromise: promise_1.handlePromise,
     RetryError: promise_1.RetryError,
     asyncWithRetry: promise_1.asyncWithRetry,
-    removeDuplicateObj: ArrayUtils_1.removeDuplicateObj
+    removeDuplicateObj: ArrayUtils_1.removeDuplicateObj,
+    VCSC_DOMAIN: keys_1.VCSC_DOMAIN,
+    DOMAINS: keys_1.DOMAINS,
 };
 //# sourceMappingURL=index.js.map

@@ -1,5 +1,10 @@
 import * as fs from 'fs';
 export const TRADEX_DOMAIN = 'tradex';
+export const VCSC_DOMAIN = 'vcsc';
+export const DOMAINS = {
+  TRADEX_DOMAIN,
+  VCSC_DOMAIN,
+};
 
 export function processJwtKey(conf: any) {
   if (conf.domain === TRADEX_DOMAIN) {

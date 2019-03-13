@@ -56,6 +56,11 @@ declare const _default: {
     RetryError: typeof RetryError;
     asyncWithRetry: typeof asyncWithRetry;
     removeDuplicateObj: (arr: any[], fieldName: any) => any[];
+    VCSC_DOMAIN: string;
+    DOMAINS: {
+        TRADEX_DOMAIN: string;
+        VCSC_DOMAIN: string;
+    };
 };
 export default _default;
-export { State, Resolve, Reject, PromiseFunction };
+export { State, Resolve, Reject, PromiseFunction, };
