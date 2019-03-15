@@ -71,6 +71,7 @@ import {
   allPromiseDone,
   IPromiseJoin,
 } from './promise';
+import * as Mongo from "./mongo";
 
 export default {
   validate,
@@ -125,6 +126,7 @@ export default {
   VCSC_DOMAIN,
   DOMAINS,
   allPromiseDone,
+  Mongo,
 };
 
 export {

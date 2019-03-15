@@ -6,6 +6,7 @@ import { getForwardUri } from './scope';
 import { processJwtKey, processJwtKeyByDomain, processJwtKeyObject } from './keys';
 import State from './State';
 import { promise, handlePromise, Resolve, Reject, PromiseFunction, RetryError, asyncWithRetry, allPromiseDone, IPromiseJoin } from './promise';
+import * as Mongo from "./mongo";
 declare const _default: {
     validate: typeof validate;
     validateEmail: typeof validateEmail;
@@ -62,6 +63,7 @@ declare const _default: {
         VCSC_DOMAIN: string;
     };
     allPromiseDone: typeof allPromiseDone;
+    Mongo: typeof Mongo;
 };
 export default _default;
 export { State, Resolve, Reject, PromiseFunction, IPromiseJoin };
