@@ -49,9 +49,9 @@ class PromiseJoinError<T> extends Error {
   }
 }
 
-async function allPromiseDone<T>(funcs: (() => Promise<T>)[], stopOnError: boolean = false): Promise<IPromiseJoin<T>[]> {
+async function allPromiseDone<T>(promises: Promise<T>[], stopOnError: boolean = false): Promise<IPromiseJoin<T>[]> {
   const data: IPromiseJoin<T>[] = [];
-  funcs.forEach(() => data.push({
+  promises.forEach(() => data.push({
     state: 0
   }));
   let finishCount: number = 0;
@@ -82,8 +82,8 @@ async function allPromiseDone<T>(funcs: (() => Promise<T>)[], stopOnError: boole
     }
   };
   return new Promise((resolve: (data: IPromiseJoin<T>[]) => void, reject: (err: Error) => void) => {
-    funcs.forEach((func: () => Promise<T>, index: number) => {
-      func()
+    promises.forEach((pro: Promise<T>, index: number) => {
+      pro
         .then((result: T) => handleResult(resolve, reject, result, index))
         .catch((err: Error) => handleResult(resolve, reject, err, index, true));
     });
