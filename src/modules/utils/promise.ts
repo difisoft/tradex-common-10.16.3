@@ -49,7 +49,7 @@ class PromiseJoinError<T> extends Error {
   }
 }
 
-async function allPromiseDone<T extends any[]>(funcs: (() => Promise<T>)[], stopOnError: boolean = false): Promise<IPromiseJoin<T>[]> {
+async function allPromiseDone<T>(funcs: (() => Promise<T>)[], stopOnError: boolean = false): Promise<IPromiseJoin<T>[]> {
   const data: IPromiseJoin<T>[] = [];
   funcs.forEach(() => data.push({
     state: 0
