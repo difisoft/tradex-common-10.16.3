@@ -68,6 +68,8 @@ import {
   PromiseFunction,
   RetryError,
   asyncWithRetry,
+  allPromiseDone,
+  IPromiseJoin,
 } from './promise';
 
 export default {
@@ -122,6 +124,7 @@ export default {
   removeDuplicateObj,
   VCSC_DOMAIN,
   DOMAINS,
+  allPromiseDone,
 };
 
 export {
@@ -129,4 +132,5 @@ export {
   Resolve,
   Reject,
   PromiseFunction,
+  IPromiseJoin
 }

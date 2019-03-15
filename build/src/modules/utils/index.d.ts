@@ -5,7 +5,7 @@ import { createFailFromError, createFailValidation, createSuccessValidation, val
 import { getForwardUri } from './scope';
 import { processJwtKey, processJwtKeyByDomain, processJwtKeyObject } from './keys';
 import State from './State';
-import { promise, handlePromise, Resolve, Reject, PromiseFunction, RetryError, asyncWithRetry } from './promise';
+import { promise, handlePromise, Resolve, Reject, PromiseFunction, RetryError, asyncWithRetry, allPromiseDone, IPromiseJoin } from './promise';
 declare const _default: {
     validate: typeof validate;
     validateEmail: typeof validateEmail;
@@ -61,6 +61,7 @@ declare const _default: {
         TRADEX_DOMAIN: string;
         VCSC_DOMAIN: string;
     };
+    allPromiseDone: typeof allPromiseDone;
 };
 export default _default;
-export { State, Resolve, Reject, PromiseFunction, };
+export { State, Resolve, Reject, PromiseFunction, IPromiseJoin };

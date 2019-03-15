@@ -70,5 +70,6 @@ exports.default = {
     removeDuplicateObj: ArrayUtils_1.removeDuplicateObj,
     VCSC_DOMAIN: keys_1.VCSC_DOMAIN,
     DOMAINS: keys_1.DOMAINS,
+    allPromiseDone: promise_1.allPromiseDone,
 };
 //# sourceMappingURL=index.js.map
