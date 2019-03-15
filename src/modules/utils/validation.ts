@@ -5,6 +5,7 @@ import { EMAIL_VALIDATION_FAILED } from '../errors';
 import InvalidFieldValueError from '../errors/InvalidFieldValueError';
 
 declare type CheckFunc = (value: any, name: string) => IValidationResult;
+declare type CheckFuncBool = (value: any, name: string) => boolean;
 
 declare interface IValidationResult {
   success: boolean,
@@ -37,6 +38,8 @@ function createSuccessValidation(data: any): IValidationResult {
   }
 }
 
+const INVALID_VALUE = 'INVALID_VALUE';
+
 export class Validate {
   private isRequired: boolean = false;
   private isFetchCount: boolean = false;
@@ -57,6 +60,16 @@ export class Validate {
 
   public add(func: CheckFunc): Validate {
     this.checks.push(func);
+    return this;
+  };
+
+  public addCheck(func: CheckFuncBool, code?: string, messageParams?: string[], paramName?: string): Validate {
+    this.checks.push(() => {
+      if (func(this.fieldName, this.fieldValue)) {
+        return null;
+      }
+      return createFailValidation(code ? code : INVALID_VALUE, messageParams, paramName ? paramName : this.fieldName);
+    });
     return this;
   };
 
