@@ -1,10 +1,51 @@
 export interface IAggregateCursor<T> {
   hasNext(): Promise<boolean>;
+
   next(): Promise<T | null>;
-  close(): Promise<any|void>;
+
+  close(): Promise<any | void>;
 }
 
-export function forEachAggCursor<T>(cursor: IAggregateCursor<T> | any, callback: (item: T) => boolean|void): Promise<any> {
+export interface IBulkResult {
+  ok: number;
+  nInserted: number;
+  nUpdated: number;
+  nUpserted: number;
+  nModified: number;
+  nRemoved: number;
+
+  getInsertedIds(): object[];
+
+  getLastOp(): object;
+
+  getRawResponse(): object;
+
+  getUpsertedIdAt(index: number): object;
+
+  getUpsertedIds(): object[];
+
+  getWriteConcernError(): any;
+
+  getWriteErrorAt(index: number): any;
+
+  getWriteErrorCount(): number;
+
+  getWriteErrors(): object[];
+
+  hasWriteErrors(): boolean;
+}
+
+export class BulkError extends Error {
+  constructor(public bulkResult: IBulkResult) {
+    super();
+  }
+
+  public getErrors() : object[] {
+    return this.bulkResult.getWriteErrors();
+  }
+}
+
+export function forEachAggCursor<T>(cursor: IAggregateCursor<T> | any, callback: (item: T) => boolean | void): Promise<any> {
   return new Promise((resolve: (data: T[]) => void, reject: (err: Error) => void) => {
     let process: () => void;
     const closeReject = (err: Error) => {
@@ -66,7 +107,6 @@ export function mapAggCursor<T, F>(cursor: IAggregateCursor<T> | any, transform:
   });
 
 
-
   return new Promise((resolve: (data: F[]) => void, reject: (err: Error) => void) => {
     const results: F[] = [];
     cursor.each((error: Error, result: T) => {
@@ -81,4 +121,10 @@ export function mapAggCursor<T, F>(cursor: IAggregateCursor<T> | any, transform:
       }
     });
   });
+}
+
+export function handleBulkResult(result: IBulkResult) {
+  if (result.hasWriteErrors()) {
+    throw new BulkError(result);
+  }
 }

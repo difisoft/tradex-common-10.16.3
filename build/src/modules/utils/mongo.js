@@ -1,5 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+class BulkError extends Error {
+    constructor(bulkResult) {
+        super();
+        this.bulkResult = bulkResult;
+    }
+    getErrors() {
+        return this.bulkResult.getWriteErrors();
+    }
+}
+exports.BulkError = BulkError;
 function forEachAggCursor(cursor, callback) {
     return new Promise((resolve, reject) => {
         let process;
@@ -83,4 +93,10 @@ function mapAggCursor(cursor, transform) {
     });
 }
 exports.mapAggCursor = mapAggCursor;
+function handleBulkResult(result) {
+    if (result.hasWriteErrors()) {
+        throw new BulkError(result);
+    }
+}
+exports.handleBulkResult = handleBulkResult;
 //# sourceMappingURL=mongo.js.map
