@@ -22,14 +22,30 @@ function forEachAggCursorPromise(cursor, callback) {
                 if (has) {
                     cursor.next().then((data) => {
                         try {
-                            callback(data).then((result) => {
-                                if (result === false) {
-                                    cursor.close().then(resolve).catch(reject);
-                                }
-                                else {
-                                    process();
-                                }
-                            }).catch(closeReject);
+                            let result;
+                            try {
+                                result = callback(data);
+                            }
+                            catch (e) {
+                                closeReject(e);
+                                return;
+                            }
+                            if (result === false) {
+                                cursor.close().then(resolve).catch(reject);
+                            }
+                            else if (result instanceof Promise) {
+                                result.then((res) => {
+                                    if (res === false) {
+                                        cursor.close().then(resolve).catch(reject);
+                                    }
+                                    else {
+                                        process();
+                                    }
+                                }).catch(closeReject);
+                            }
+                            else {
+                                process();
+                            }
                         }
                         catch (e) {
                             closeReject(e);
