@@ -10,6 +10,42 @@ class BulkError extends Error {
     }
 }
 exports.BulkError = BulkError;
+function forEachAggCursorPromise(cursor, callback) {
+    return new Promise((resolve, reject) => {
+        let process;
+        const closeReject = (err) => {
+            reject(err);
+            cursor.close().then().catch();
+        };
+        process = () => {
+            cursor.hasNext().then((has) => {
+                if (has) {
+                    cursor.next().then((data) => {
+                        try {
+                            callback(data).then((result) => {
+                                if (result === false) {
+                                    cursor.close().then(resolve).catch(reject);
+                                }
+                                else {
+                                    process();
+                                }
+                            }).catch(closeReject);
+                        }
+                        catch (e) {
+                            closeReject(e);
+                            return;
+                        }
+                    }).catch(closeReject);
+                }
+                else {
+                    cursor.close().then(resolve).catch(reject);
+                }
+            }).catch(closeReject);
+        };
+        process();
+    });
+}
+exports.forEachAggCursorPromise = forEachAggCursorPromise;
 function forEachAggCursor(cursor, callback) {
     return new Promise((resolve, reject) => {
         let process;

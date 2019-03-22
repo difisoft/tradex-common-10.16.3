@@ -26,6 +26,7 @@ export declare class BulkError extends Error {
     constructor(bulkResult: IBulkResult);
     getErrors(): object[];
 }
+export declare function forEachAggCursorPromise<T>(cursor: IAggregateCursor<T> | any, callback: (item: T) => Promise<any>): Promise<any>;
 export declare function forEachAggCursor<T>(cursor: IAggregateCursor<T> | any, callback: (item: T) => boolean | void): Promise<any>;
 export declare function mapAggCursor<T, F>(cursor: IAggregateCursor<T> | any, transform: (item: T) => F): Promise<F[]>;
 export declare function handleBulkResult(result: IBulkResult): void;

@@ -45,6 +45,41 @@ export class BulkError extends Error {
   }
 }
 
+
+
+export function forEachAggCursorPromise<T>(cursor: IAggregateCursor<T> | any, callback: (item: T) => Promise<any>): Promise<any> {
+  return new Promise((resolve: (data: T[]) => void, reject: (err: Error) => void) => {
+    let process: () => void;
+    const closeReject = (err: Error) => {
+      reject(err);
+      cursor.close().then().catch();
+    };
+    process = () => {
+      cursor.hasNext().then((has: boolean) => {
+        if (has) {
+          cursor.next().then((data: T) => {
+            try {
+              callback(data).then((result: boolean) => {
+                if (result === false) {
+                  cursor.close().then(resolve).catch(reject);
+                } else {
+                  process();
+                }
+              }).catch(closeReject);
+            } catch (e) {
+              closeReject(e);
+              return;
+            }
+          }).catch(closeReject);
+        } else {
+          cursor.close().then(resolve).catch(reject);
+        }
+      }).catch(closeReject);
+    };
+    process();
+  });
+}
+
 export function forEachAggCursor<T>(cursor: IAggregateCursor<T> | any, callback: (item: T) => boolean | void): Promise<any> {
   return new Promise((resolve: (data: T[]) => void, reject: (err: Error) => void) => {
     let process: () => void;
