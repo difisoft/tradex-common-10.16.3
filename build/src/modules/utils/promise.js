@@ -40,4 +40,55 @@ function asyncWithRetry(func, maxRetryTime) {
     });
 }
 exports.asyncWithRetry = asyncWithRetry;
+class PromiseJoinError extends Error {
+    constructor(results) {
+        super("");
+        this.results = results;
+    }
+}
+function allPromiseDone(promises, stopOnError = false) {
+    return tslib_1.__awaiter(this, void 0, void 0, function* () {
+        const data = [];
+        promises.forEach(() => data.push({
+            state: 0
+        }));
+        let finishCount = 0;
+        let errorCount = 0;
+        const handleResult = (resolve, reject, result, index, isError = false) => {
+            if (stopOnError && errorCount > 0) {
+                return;
+            }
+            if (isError) {
+                data[index].state = 2;
+                data[index].error = result;
+                errorCount++;
+                if (stopOnError) {
+                    reject(result);
+                    return;
+                }
+            }
+            else {
+                data[index].state = 1;
+                data[index].result = result;
+            }
+            finishCount++;
+            if (finishCount === data.length) {
+                if (errorCount === 0) {
+                    resolve(data);
+                }
+                else {
+                    reject(new PromiseJoinError(data));
+                }
+            }
+        };
+        return new Promise((resolve, reject) => {
+            promises.forEach((pro, index) => {
+                pro
+                    .then((result) => handleResult(resolve, reject, result, index))
+                    .catch((err) => handleResult(resolve, reject, err, index, true));
+            });
+        });
+    });
+}
+exports.allPromiseDone = allPromiseDone;
 //# sourceMappingURL=promise.js.map

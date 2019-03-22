@@ -1,6 +1,7 @@
 import InvalidParameterError from '../errors/InvalidParameterError';
 import IParamError from '../models/IParamError';
 declare type CheckFunc = (value: any, name: string) => IValidationResult;
+declare type CheckFuncBool = (value: any, name: string) => boolean;
 declare interface IValidationResult {
     success: boolean;
     data?: any;
@@ -19,6 +20,7 @@ export declare class Validate {
     setRequire(): Validate;
     setIsFetchCount(): Validate;
     add(func: CheckFunc): Validate;
+    addCheck(func: CheckFuncBool, code?: string, messageParams?: string[], paramName?: string): Validate;
     adds(funcs: CheckFunc[]): Validate;
     throwValid(invalidParameterError?: InvalidParameterError): void;
     valid(): IValidationResult;

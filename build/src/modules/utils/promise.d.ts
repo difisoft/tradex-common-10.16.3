@@ -8,4 +8,10 @@ declare class RetryError extends Error {
     constructor(errors: Error[], message?: string);
 }
 declare function asyncWithRetry<T>(func: () => Promise<T>, maxRetryTime: number): Promise<T>;
-export { promise, handlePromise, Resolve, Reject, PromiseFunction, RetryError, asyncWithRetry, };
+interface IPromiseJoin<T> {
+    state: 0 | 1 | 2;
+    result?: T;
+    error?: Error;
+}
+declare function allPromiseDone<T>(promises: Promise<T>[], stopOnError?: boolean): Promise<IPromiseJoin<T>[]>;
+export { promise, handlePromise, Resolve, Reject, PromiseFunction, RetryError, asyncWithRetry, IPromiseJoin, allPromiseDone, };

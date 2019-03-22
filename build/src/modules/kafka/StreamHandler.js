@@ -29,6 +29,9 @@ class StreamHandler {
             this.hasError = false;
             dataHandler(data, this);
         });
+        this.stream.on('throttle', (data) => {
+            log_1.logger.warn("kafka throttle happens", data);
+        });
     }
     close() {
         this.stream.close();

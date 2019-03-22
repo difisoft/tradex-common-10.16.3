@@ -18,4 +18,10 @@ export default class InvalidParameterError extends GeneralError {
     this.params = this.params.concat(params);
     return this;
   };
+
+  public throwErr = () => {
+    if (this.params != null && this.params.length > 0) {
+      throw this;
+    }
+  };
 }

@@ -29,6 +29,7 @@ function createSuccessValidation(data) {
     };
 }
 exports.createSuccessValidation = createSuccessValidation;
+const INVALID_VALUE = 'INVALID_VALUE';
 class Validate {
     constructor(fieldValue, fieldName) {
         this.fieldValue = fieldValue;
@@ -48,6 +49,16 @@ class Validate {
     }
     add(func) {
         this.checks.push(func);
+        return this;
+    }
+    ;
+    addCheck(func, code, messageParams, paramName) {
+        this.checks.push(() => {
+            if (func(this.fieldName, this.fieldValue)) {
+                return null;
+            }
+            return createFailValidation(code ? code : INVALID_VALUE, messageParams, paramName ? paramName : this.fieldName);
+        });
         return this;
     }
     ;

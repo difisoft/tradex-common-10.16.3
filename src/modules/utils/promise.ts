@@ -37,6 +37,59 @@ async function asyncWithRetry<T>(func: () => Promise<T>, maxRetryTime: number): 
   throw new RetryError(errors, `fail to retry with ${maxRetryTime} times`);
 }
 
+interface IPromiseJoin<T> {
+  state: 0 | 1 | 2; // not finished, done, error
+  result?: T;
+  error?: Error;
+}
+
+class PromiseJoinError<T> extends Error {
+  constructor(public results: IPromiseJoin<T>[]) {
+    super("")
+  }
+}
+
+async function allPromiseDone<T>(promises: Promise<T>[], stopOnError: boolean = false): Promise<IPromiseJoin<T>[]> {
+  const data: IPromiseJoin<T>[] = [];
+  promises.forEach(() => data.push({
+    state: 0
+  }));
+  let finishCount: number = 0;
+  let errorCount: number = 0;
+  const handleResult = (resolve: (data: IPromiseJoin<T>[]) => void, reject: (err: Error) => void, result: any, index: number, isError: boolean = false) => {
+    if(stopOnError && errorCount > 0) {
+      return;
+    }
+    if (isError) {
+      data[index].state = 2;
+      data[index].error = result;
+      errorCount++;
+      if (stopOnError) {
+        reject(result);
+        return;
+      }
+    } else {
+      data[index].state = 1;
+      data[index].result = result;
+    }
+    finishCount++;
+    if (finishCount === data.length) {
+      if (errorCount === 0) {
+        resolve(data);
+      } else {
+        reject(new PromiseJoinError(data));
+      }
+    }
+  };
+  return new Promise((resolve: (data: IPromiseJoin<T>[]) => void, reject: (err: Error) => void) => {
+    promises.forEach((pro: Promise<T>, index: number) => {
+      pro
+        .then((result: T) => handleResult(resolve, reject, result, index))
+        .catch((err: Error) => handleResult(resolve, reject, err, index, true));
+    });
+  });
+}
+
 export {
   promise,
   handlePromise,
@@ -45,4 +98,6 @@ export {
   PromiseFunction,
   RetryError,
   asyncWithRetry,
+  IPromiseJoin,
+  allPromiseDone,
 }
