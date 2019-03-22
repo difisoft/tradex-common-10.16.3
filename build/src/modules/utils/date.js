@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const moment = require("moment");
 const DATE_DISPLAY_FORMAT = 'YYYYMMDD';
 exports.DATE_DISPLAY_FORMAT = DATE_DISPLAY_FORMAT;
-const DATETIME_DISPLAY_FORMAT = 'YYYYMMDDkkmmss';
+const DATETIME_DISPLAY_FORMAT = 'YYYYMMDDhhmmss';
 exports.DATETIME_DISPLAY_FORMAT = DATETIME_DISPLAY_FORMAT;
 const formatDateToDisplay = (date, format = DATE_DISPLAY_FORMAT) => {
     try {
