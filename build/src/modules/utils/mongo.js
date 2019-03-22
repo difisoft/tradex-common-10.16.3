@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const tslib_1 = require("tslib");
 class BulkError extends Error {
     constructor(bulkResult) {
         super();
@@ -10,6 +11,83 @@ class BulkError extends Error {
     }
 }
 exports.BulkError = BulkError;
+function groupAggCursor(cursor, idGenerator, creator, updater, outCondition) {
+    return tslib_1.__awaiter(this, void 0, void 0, function* () {
+        const results = [];
+        const accumulator = new Map();
+        yield reduceAggCursor(cursor, accumulator, (item) => {
+            const id = idGenerator(item);
+            let isNewGroup = false;
+            if (accumulator.has(id)) {
+                updater(item, accumulator.get(id));
+            }
+            else {
+                isNewGroup = true;
+                const f = creator(item);
+                accumulator.set(id, f);
+                results.push(f);
+            }
+            if (outCondition) {
+                return outCondition(results, accumulator, item, isNewGroup);
+            }
+            return true;
+        });
+        return results;
+    });
+}
+exports.groupAggCursor = groupAggCursor;
+function reduceAggCursor(cursor, accumulator, callback) {
+    return new Promise((resolve, reject) => {
+        let process;
+        const closeReject = (err) => {
+            reject(err);
+            cursor.close().then().catch();
+        };
+        process = () => {
+            cursor.hasNext().then((has) => {
+                if (has) {
+                    cursor.next().then((data) => {
+                        try {
+                            let result;
+                            try {
+                                result = callback(data, accumulator);
+                            }
+                            catch (e) {
+                                closeReject(e);
+                                return;
+                            }
+                            if (result === false) {
+                                cursor.close().then(() => resolve(accumulator)).catch(reject);
+                            }
+                            else if (result instanceof Promise) {
+                                result.then((res) => {
+                                    if (res === false) {
+                                        cursor.close().then(() => resolve(accumulator)).catch(reject);
+                                    }
+                                    else {
+                                        process();
+                                    }
+                                }).catch(closeReject);
+                            }
+                            else {
+                                process();
+                            }
+                        }
+                        catch (e) {
+                            closeReject(e);
+                            return;
+                        }
+                    }).catch(closeReject);
+                }
+                else {
+                    cursor.close().then(resolve).catch(reject);
+                }
+            }).catch(closeReject);
+        };
+        process();
+    });
+}
+exports.reduceAggCursor = reduceAggCursor;
 function forEachAggCursorPromise(cursor, callback) {
     return new Promise((resolve, reject) => {
         let process;
