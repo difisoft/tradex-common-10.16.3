@@ -11,24 +11,25 @@ class BulkError extends Error {
     }
 }
 exports.BulkError = BulkError;
-function groupAggCursor(cursor, idGenerator, creator, updater, outCondition) {
+function groupAggCursor(cursor, idGenerator, creator, updater, outConditionNewGroup, outConditionSameGroup) {
     return tslib_1.__awaiter(this, void 0, void 0, function* () {
         const results = [];
         const accumulator = new Map();
         yield reduceAggCursor(cursor, accumulator, (item) => {
             const id = idGenerator(item);
-            let isNewGroup = false;
             if (accumulator.has(id)) {
+                if (outConditionSameGroup != null && outConditionSameGroup(results, accumulator, item) === true) {
+                    return false;
+                }
                 updater(item, accumulator.get(id));
             }
             else {
-                isNewGroup = true;
+                if (outConditionNewGroup != null && outConditionNewGroup(results, accumulator, item) === true) {
+                    return false;
+                }
                 const f = creator(item);
                 accumulator.set(id, f);
                 results.push(f);
-            }
-            if (outCondition) {
-                return outCondition(results, accumulator, item, isNewGroup);
             }
             return true;
         });

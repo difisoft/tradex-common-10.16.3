@@ -50,23 +50,25 @@ export async function groupAggCursor<T, F, I>(
   idGenerator: (item: T) => I,
   creator: (item: T) => F,
   updater: (item: T, current: F) => void,
-  outCondition?: (results?: F[], accumulator?: Map<I, F>, item?: T, newGroup?: boolean) => boolean
+  outConditionNewGroup?: (results?: F[], accumulator?: Map<I, F>, item?: T) => boolean,
+  outConditionSameGroup?: (results?: F[], accumulator?: Map<I, F>, item?: T) => boolean
 ): Promise<F[]> {
   const results: F[] = [];
   const accumulator: Map<I, F> = new Map();
   await reduceAggCursor(cursor, accumulator, (item: T) => {
     const id: I = idGenerator(item);
-    let isNewGroup: boolean = false;
     if (accumulator.has(id)) {
+      if (outConditionSameGroup != null && outConditionSameGroup(results, accumulator, item) === true) {
+        return false
+      }
       updater(item, accumulator.get(id));
     } else {
-      isNewGroup = true;
+      if (outConditionNewGroup != null && outConditionNewGroup(results, accumulator, item) === true) {
+        return false
+      }
       const f: F = creator(item);
       accumulator.set(id, f);
       results.push(f);
-    }
-    if (outCondition) {
-      return outCondition(results, accumulator, item, isNewGroup);
     }
     return true;
   });
