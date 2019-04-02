@@ -1,7 +1,7 @@
 import * as moment from 'moment';
 
 const DATE_DISPLAY_FORMAT = 'YYYYMMDD';
-const DATETIME_DISPLAY_FORMAT = 'YYYYMMDDhhmmss'
+const DATETIME_DISPLAY_FORMAT = 'YYYYMMDDhhmmss';
 
 
 const formatDateToDisplay = (date: Date, format: string = DATE_DISPLAY_FORMAT): string => {

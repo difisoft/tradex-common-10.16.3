@@ -43,5 +43,13 @@ declare interface IMessage {
     uri?: string;
     responseDestination?: IResponseDestination;
     data: any;
+    stream?: boolean;
+    streamState?: string;
+    streamIndex?: number;
 }
-export { IConf, MessageType, ISendMessage, IMessage, IResponseDestination, SEND_MESSAGE_TYPE, PromiseState, };
+declare const STREAM_STATE: {
+    NORMAL: string;
+    FINSISH: string;
+    ERROR: string;
+};
+export { IConf, MessageType, ISendMessage, IMessage, IResponseDestination, SEND_MESSAGE_TYPE, PromiseState, STREAM_STATE, };

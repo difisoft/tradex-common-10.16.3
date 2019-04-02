@@ -13,5 +13,6 @@ exports.SendRequest = SendRequest_1.SendRequest;
 exports.SendRequestCommon = SendRequest_1.SendRequestCommon;
 exports.getResponse = SendRequest_1.getResponse;
 const types_1 = require("./types");
+exports.STREAM_STATE = types_1.STREAM_STATE;
 exports.MessageType = types_1.MessageType;
 //# sourceMappingURL=index.js.map
