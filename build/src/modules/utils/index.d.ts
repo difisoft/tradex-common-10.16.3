@@ -2,6 +2,7 @@
 /// <reference types="rx-lite" />
 import { onError, onNext, transform, transformAsync, transformError, transformPromise, transformPromiseAsync, transformSingle, transformSingleAsync, transformSinglePromise } from './rx';
 import { createFailFromError, createFailValidation, createSuccessValidation, validate, Validate, validateEmail, validatePassword } from './validation';
+import { setObjKey } from './ObjectUtils';
 import { getForwardUri } from './scope';
 import { processJwtKey, processJwtKeyByDomain, processJwtKeyObject } from './keys';
 import State from './State';
@@ -64,6 +65,7 @@ declare const _default: {
     };
     allPromiseDone: typeof allPromiseDone;
     Mongo: typeof Mongo;
+    setObjKey: typeof setObjKey;
 };
 export default _default;
 export { State, Resolve, Reject, PromiseFunction, IPromiseJoin };

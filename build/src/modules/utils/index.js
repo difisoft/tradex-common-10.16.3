@@ -73,5 +73,6 @@ exports.default = {
     DOMAINS: keys_1.DOMAINS,
     allPromiseDone: promise_1.allPromiseDone,
     Mongo,
+    setObjKey: ObjectUtils_1.setObjKey,
 };
 //# sourceMappingURL=index.js.map
