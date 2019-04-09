@@ -4,8 +4,8 @@ export declare const defaultInterval: number;
 export declare const defaultTopic: string;
 export default class SendRegistration {
     private send;
-    private serviceRegistration;
-    private topic;
+    private readonly serviceRegistration;
+    private readonly topic;
     constructor(send: SendRequestCommon, conf: IConf);
     private doRegister;
 }
