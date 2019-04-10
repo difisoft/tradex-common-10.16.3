@@ -18,8 +18,9 @@ import {
 } from "./SendRequest";
 import { 
   IConf, 
-  IMessage, 
-  IResponseDestination, 
+  IMessage,
+  STREAM_STATE,
+  IResponseDestination,
   ISendMessage, 
   MessageType 
 } from "./types";
@@ -42,4 +43,5 @@ export {
   HandleResult,
   Handle,
   getResponse,
+  STREAM_STATE,
 };

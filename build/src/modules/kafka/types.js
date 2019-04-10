@@ -30,4 +30,10 @@ class PromiseState {
     }
 }
 exports.PromiseState = PromiseState;
+const STREAM_STATE = {
+    NORMAL: "NORMAL",
+    FINSISH: "FINSISH",
+    ERROR: "ERROR",
+};
+exports.STREAM_STATE = STREAM_STATE;
 //# sourceMappingURL=types.js.map

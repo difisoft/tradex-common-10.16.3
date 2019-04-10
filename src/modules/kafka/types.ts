@@ -66,7 +66,16 @@ declare interface IMessage {
   uri?: string,
   responseDestination?: IResponseDestination,
   data: any,
+  stream?: boolean,
+  streamState?: string;
+  streamIndex?: number;
 }
+
+const STREAM_STATE = {
+  NORMAL: "NORMAL",
+  FINSISH: "FINSISH",
+  ERROR: "ERROR",
+};
 
 export {
   IConf,
@@ -76,4 +85,5 @@ export {
   IResponseDestination,
   SEND_MESSAGE_TYPE,
   PromiseState,
+  STREAM_STATE,
 };

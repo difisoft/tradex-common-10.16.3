@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const ServiceRegistration_1 = require("./ServiceRegistration");
-exports.defaultInterval = 5000;
-exports.defaultTopic = 'service.register';
+exports.defaultInterval = 300000;
+exports.defaultTopic = "service.register";
 class SendRegistration {
     constructor(send, conf) {
         this.send = send;
@@ -13,7 +13,7 @@ class SendRegistration {
     }
     doRegister() {
         this.serviceRegistration.currentTime = new Date().getTime();
-        this.send.sendMessage('', this.topic, '', this.serviceRegistration);
+        this.send.sendMessage("", this.topic, "", this.serviceRegistration);
     }
 }
 exports.default = SendRegistration;

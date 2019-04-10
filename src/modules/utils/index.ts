@@ -31,7 +31,10 @@ import {
   getEndOfDate
 } from './date';
 import { isEmpty } from './StringUtils';
-import { isNullOrUndefined } from './ObjectUtils';
+import {
+  isNullOrUndefined,
+  setObjKey,
+} from './ObjectUtils';
 import { round } from './MathUtils';
 import { removeDuplicateObj } from './ArrayUtils';
 import { generateToken } from './token';
@@ -127,6 +130,7 @@ export default {
   DOMAINS,
   allPromiseDone,
   Mongo,
+  setObjKey,
 };
 
 export {

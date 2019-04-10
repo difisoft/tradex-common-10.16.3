@@ -17,20 +17,23 @@ class MessageHandler {
     }
     handle(message, func) {
         try {
-            log_1.logger.info('Got message');
+            const startTime = process.hrtime();
+            let diff = null;
             const msgString = message.value.toString();
-            log_1.logger.info(msgString);
             const msg = JSON.parse(msgString);
             const shouldResponse = this.shouldResponse(msg);
-            const startedHrTime = process.hrtime();
             const obs = func(msg, message);
             if (obs === false) {
                 if (shouldResponse) {
+                    diff = process.hrtime(startTime);
+                    __1.Logger.info(`process request ${msg.uri} took ${diff[0]} seconds and  ${diff[0]} nanoseconds`);
                     this.sendRequest.sendResponse(msg.transactionId, msg.messageId, msg.responseDestination.topic, msg.responseDestination.uri, this.getErrorMessage(new UriNotFound_1.default()));
                 }
                 return;
             }
             else if (obs === true) {
+                diff = process.hrtime(startTime);
+                __1.Logger.info(`forward request ${msg.uri} took ${diff[0]} seconds and  ${diff[0]} nanoseconds`);
                 return;
             }
             const handleError = (err) => {
@@ -38,14 +41,16 @@ class MessageHandler {
                 if (shouldResponse) {
                     this.sendRequest.sendResponse(msg.transactionId, msg.messageId, msg.responseDestination.topic, msg.responseDestination.uri, this.getErrorMessage(err));
                 }
+                diff = process.hrtime(startTime);
+                __1.Logger.info(`handle request ${msg.uri} took ${diff[0]} seconds and  ${diff[0]} nanoseconds`);
             };
             const handleData = (data) => {
                 try {
-                    const stopHrTime = process.hrtime();
-                    __1.Logger.info(`request ${msg.uri} took ${(stopHrTime[0] - startedHrTime[0]) * 1000 + (stopHrTime[1] - startedHrTime[1]) / 1000000} ms`);
                     if (shouldResponse) {
                         this.sendRequest.sendResponse(msg.transactionId, msg.messageId, msg.responseDestination.topic, msg.responseDestination.uri, { data: data });
                     }
+                    diff = process.hrtime(startTime);
+                    __1.Logger.info(`handle request ${msg.uri} took ${diff[0]} seconds and  ${diff[0]} nanoseconds`);
                 }
                 catch (err) {
                     handleError(err);

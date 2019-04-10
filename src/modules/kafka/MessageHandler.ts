@@ -21,15 +21,16 @@ class MessageHandler {
 
   public handle(message: IKafkaMessage, func: Handle): void {
     try {
-      logger.info('Got message');
+      const startTime: [number, number] = process.hrtime();
+      let diff: [number, number] = null;
       const msgString: string = message.value.toString();
-      logger.info(msgString);
       const msg: IMessage = JSON.parse(msgString);
       const shouldResponse = this.shouldResponse(msg);
-      const startedHrTime = process.hrtime();
       const obs: HandleResult = func(msg, message);
       if (obs === false) {
         if (shouldResponse) {
+          diff = process.hrtime(startTime);
+          Logger.info(`process request ${msg.uri} took ${diff[0]} seconds and  ${diff[0]} nanoseconds`);
           this.sendRequest.sendResponse(
             msg.transactionId,
             msg.messageId,
@@ -40,6 +41,8 @@ class MessageHandler {
         } 
         return;
       } else if (obs === true) {
+        diff = process.hrtime(startTime);
+        Logger.info(`forward request ${msg.uri} took ${diff[0]} seconds and  ${diff[0]} nanoseconds`);
         return; // forwarding. do nothing
       }
       const handleError = (err: Error) => {
@@ -53,11 +56,11 @@ class MessageHandler {
             this.getErrorMessage(err)
           );
         }
+        diff = process.hrtime(startTime);
+        Logger.info(`handle request ${msg.uri} took ${diff[0]} seconds and  ${diff[0]} nanoseconds`);
       };
       const handleData = (data: any) => {
         try {
-          const stopHrTime = process.hrtime();
-          Logger.info(`request ${msg.uri} took ${(stopHrTime[0] - startedHrTime[0]) * 1000 + (stopHrTime[1] - startedHrTime[1])/1000000} ms`);
           if (shouldResponse) {
             this.sendRequest.sendResponse(
               <string>msg.transactionId,
@@ -67,6 +70,8 @@ class MessageHandler {
               {data: data}
             );
           }
+          diff = process.hrtime(startTime);
+          Logger.info(`handle request ${msg.uri} took ${diff[0]} seconds and  ${diff[0]} nanoseconds`);
         } catch (err) {
           handleError(err);
         }
