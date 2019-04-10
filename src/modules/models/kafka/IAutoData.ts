@@ -4,7 +4,7 @@ export default interface IAutoData {
   open: number;
   high: number;
   low: number;
-  close: number;
+  last: number;
   change: number;
   rate: number;
   autoType: string;
