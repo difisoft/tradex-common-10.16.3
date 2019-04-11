@@ -39,6 +39,7 @@ function createSuccessValidation(data: any): IValidationResult {
 }
 
 const INVALID_VALUE = 'INVALID_VALUE';
+const NOT_GREATER_THAN_ERROR = 'NOT_GREATER_THAN_ERROR';
 
 export class Validate {
   private isRequired: boolean = false;
@@ -112,6 +113,17 @@ export class Validate {
       }
     }
     return result;
+  };
+
+  public checkGt(minPrice: number): Validate {
+    this.checks.push((fieldValue: number, fieldName: string) => {
+      if (fieldValue < minPrice) {
+        return createFailValidation(NOT_GREATER_THAN_ERROR, [`${fieldValue}`, `${minPrice}`], fieldName);
+      } else {
+        return createSuccessValidation(this.fieldValue);
+      }
+    });
+    return this;
   };
 }
 

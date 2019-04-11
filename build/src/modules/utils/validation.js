@@ -30,6 +30,7 @@ function createSuccessValidation(data) {
 }
 exports.createSuccessValidation = createSuccessValidation;
 const INVALID_VALUE = 'INVALID_VALUE';
+const NOT_GREATER_THAN_ERROR = 'NOT_GREATER_THAN_ERROR';
 class Validate {
     constructor(fieldValue, fieldName) {
         this.fieldValue = fieldValue;
@@ -102,6 +103,18 @@ class Validate {
             }
         }
         return result;
+    }
+    ;
+    checkGt(minPrice) {
+        this.checks.push((fieldValue, fieldName) => {
+            if (fieldValue < minPrice) {
+                return createFailValidation(NOT_GREATER_THAN_ERROR, [`${fieldValue}`, `${minPrice}`], fieldName);
+            }
+            else {
+                return createSuccessValidation(this.fieldValue);
+            }
+        });
+        return this;
     }
     ;
 }

@@ -24,6 +24,7 @@ export declare class Validate {
     adds(funcs: CheckFunc[]): Validate;
     throwValid(invalidParameterError?: InvalidParameterError): void;
     valid(): IValidationResult;
+    checkGt(minPrice: number): Validate;
 }
 declare function validate(fieldValue: any, fieldName: string): Validate;
 declare function validateEmail(fieldValue: string, paramName?: string): IValidationResult;

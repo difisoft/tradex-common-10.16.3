@@ -38,7 +38,7 @@ declare const _default: {
     initI18n: (msNames: string, namespaceList: string[], requestTopic?: string, uri?: string) => void;
     initI18nInternal: (msNames: string, namespaceList: string[], requestTopic?: string, uri?: string) => void;
     getI18nInstance: () => any;
-    translateErrorMessage: (errorObject: import("../models").IStatus, lang: string) => import("../models").IStatus;
+    translateErrorMessage: (errorObject: import("../models/IStatus").default, lang: string) => import("../models/IStatus").default;
     initTemplateResource: (msNames: string, requestTopic?: string, uri?: string) => void;
     getTemplateResources: () => any[];
     compileTemplate: (templateUrl: string, data: any) => Promise<string>;
