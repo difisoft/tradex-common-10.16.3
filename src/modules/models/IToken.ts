@@ -6,6 +6,7 @@ export declare interface IUserData {
   mngDeptCode?: string;
   deptCode?: string;
   agencyNumber?: string;
+  accountNumbers?: string[];
 }
 
 export default interface IToken {
