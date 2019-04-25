@@ -1,10 +1,10 @@
 import IConfiguration from './IConfiguration';
 import MethodEnum from './MethodEnum';
 
-export default class EmailConfiguration implements IConfiguration {
+export default class SocketClusterConfiguration implements IConfiguration {
   public channel: string;
 
   public getMethod(): MethodEnum {
-    return MethodEnum.EMAIL;
+    return MethodEnum.SOCKET_CLUSTER;
   }
 }
