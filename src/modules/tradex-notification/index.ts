@@ -18,6 +18,8 @@ import EmailVerificationData from './EmailVerificationData';
 import EmailResetPasswordData from './EmailResetPasswordData';
 import ITemplateData from './ITemplateData';
 import MethodEnum from './MethodEnum';
+import SocketClusterConfiguration from './SocketClusterConfiguration'
+import SocketClusterData from './SocketClusterData'
 
 export {
   IConfiguration,
@@ -40,5 +42,7 @@ export {
   IAndroidBackgroundLayout,
   IButton,
   IosBadgeType,
-  IFilter
+  IFilter,
+  SocketClusterConfiguration,
+  SocketClusterData
 };

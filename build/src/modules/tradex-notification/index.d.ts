@@ -11,4 +11,6 @@ import EmailVerificationData from './EmailVerificationData';
 import EmailResetPasswordData from './EmailResetPasswordData';
 import ITemplateData from './ITemplateData';
 import MethodEnum from './MethodEnum';
-export { IConfiguration, EmailConfiguration, OneSignalConfiguration, KakaoConfiguration, ITemplateData, AlarmNotificationData, OrderResultNotificationData, DisconnectNotificationData, EmailVerificationData, EmailResetPasswordData, MethodEnum, NotificationRequest, SendNotification, getInstance, create, AndroidVisibility, DelayedOption, IAndroidBackgroundLayout, IButton, IosBadgeType, IFilter };
+import SocketClusterConfiguration from './SocketClusterConfiguration';
+import SocketClusterData from './SocketClusterData';
+export { IConfiguration, EmailConfiguration, OneSignalConfiguration, KakaoConfiguration, ITemplateData, AlarmNotificationData, OrderResultNotificationData, DisconnectNotificationData, EmailVerificationData, EmailResetPasswordData, MethodEnum, NotificationRequest, SendNotification, getInstance, create, AndroidVisibility, DelayedOption, IAndroidBackgroundLayout, IButton, IosBadgeType, IFilter, SocketClusterConfiguration, SocketClusterData };
