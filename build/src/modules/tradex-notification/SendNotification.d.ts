@@ -2,6 +2,7 @@ import { SendRequestCommon } from '../kafka';
 import EmailConfiguration from './EmailConfiguration';
 import EmailVerificationData from './EmailVerificationData';
 import OneSignalConfiguration from './OneSignalConfiguration';
+import SocketClusterConfiguration from './SocketClusterConfiguration';
 import ITemplateData from './ITemplateData';
 import EmailResetPasswordData from './EmailResetPasswordData';
 export default class SendNotification {
@@ -12,6 +13,7 @@ export default class SendNotification {
     sendVerificationEmail(txId: string, conf: EmailConfiguration, locale: string, data: EmailVerificationData): void;
     sendResetPasswordEmail(txId: string, conf: EmailConfiguration, locale: string, data: EmailResetPasswordData): void;
     sendPushNotification(txId: string, conf: OneSignalConfiguration, data: ITemplateData): void;
+    sendSocketCluser(txId: string, conf: SocketClusterConfiguration, data: ITemplateData): void;
 }
 export declare function create(send: SendRequestCommon, notificationListenningTopic?: string): void;
 export declare function getInstance(): SendNotification;

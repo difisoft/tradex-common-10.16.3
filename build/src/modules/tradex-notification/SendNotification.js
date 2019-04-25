@@ -33,6 +33,12 @@ class SendNotification {
         request.add(data.getTemplate(), data);
         this.send.sendMessage(txId, this.notificationListenningTopic, '', request.toJson());
     }
+    sendSocketCluser(txId, conf, data) {
+        const request = new NotificationRequest_1.default();
+        request.setConfiguration(conf);
+        request.add(data.getTemplate(), data);
+        this.send.sendMessage(txId, this.notificationListenningTopic, '', request.toJson());
+    }
 }
 exports.default = SendNotification;
 let instance = null;

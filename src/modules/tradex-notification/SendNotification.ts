@@ -3,6 +3,7 @@ import EmailConfiguration from './EmailConfiguration';
 import NotificationRequest from './NotificationRequest';
 import EmailVerificationData from './EmailVerificationData';
 import OneSignalConfiguration from './OneSignalConfiguration';
+import SocketClusterConfiguration from './SocketClusterConfiguration';
 import ITemplateData from './ITemplateData';
 import EmailResetPasswordData from './EmailResetPasswordData';
 
@@ -41,6 +42,14 @@ export default class SendNotification {
     request.add(data.getTemplate(), data);
     this.send.sendMessage(txId, this.notificationListenningTopic, '', request.toJson());
   }
+
+  public sendSocketCluser(txId: string, conf: SocketClusterConfiguration, data: ITemplateData) {
+    const request: NotificationRequest = new NotificationRequest();
+    request.setConfiguration(conf);
+    request.add(data.getTemplate(), data)
+    this.send.sendMessage(txId, this.notificationListenningTopic, '', request.toJson());
+  }
+
 }
 let instance: SendNotification = null;
 

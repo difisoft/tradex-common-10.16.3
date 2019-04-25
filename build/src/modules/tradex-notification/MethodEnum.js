@@ -5,6 +5,7 @@ var MethodEnum;
     MethodEnum["EMAIL"] = "EMAIL";
     MethodEnum["KAKAO"] = "KAKAO";
     MethodEnum["ONESIGNAL"] = "ONESIGNAL";
+    MethodEnum["SOCKET_CLUSTER"] = "SOCKET_CLUSTER";
 })(MethodEnum || (MethodEnum = {}));
 exports.default = MethodEnum;
 //# sourceMappingURL=MethodEnum.js.map
