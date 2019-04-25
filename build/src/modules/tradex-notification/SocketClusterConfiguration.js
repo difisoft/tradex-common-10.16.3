@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const MethodEnum_1 = require("./MethodEnum");
-class EmailConfiguration {
+class SocketClusterConfiguration {
     getMethod() {
-        return MethodEnum_1.default.EMAIL;
+        return MethodEnum_1.default.SOCKET_CLUSTER;
     }
 }
-exports.default = EmailConfiguration;
+exports.default = SocketClusterConfiguration;
 //# sourceMappingURL=SocketClusterConfiguration.js.map
