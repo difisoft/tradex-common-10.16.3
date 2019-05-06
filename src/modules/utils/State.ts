@@ -6,14 +6,14 @@ export default class State<T> {
   private completed: Subject<boolean> = null;
   constructor(public fields: string[], public completedStateValue: T, private getDefaultValue: () => T) {
     fields.forEach((field: string) => {
-      this.stateData[field] = getDefaultValue();
+      this.stateData.set(field, getDefaultValue());
     });
   }
 
   public addField(fields: string[]) {
     this.fields.push(...fields);
     fields.forEach((field: string) => {
-      this.stateData[field] = this.getDefaultValue();
+      this.stateData.set(field, this.getDefaultValue());
     });
   }
 
@@ -26,7 +26,7 @@ export default class State<T> {
   }
 
   public setState(field: string, value: T) {
-    this.stateData[field] = value;
+    this.stateData.set(field, value);
     if (this.completed != null) {
       if (value === this.completedStateValue) {
         this.checkCompleted();
@@ -38,7 +38,7 @@ export default class State<T> {
 
   private checkCompleted() {
     for(let i = 0; i < this.fields.length; i++) {
-      if (this.stateData[this.fields[i]] !== this.completedStateValue) {
+      if (this.stateData.get(this.fields[i]) !== this.completedStateValue) {
         return;
       }
     }

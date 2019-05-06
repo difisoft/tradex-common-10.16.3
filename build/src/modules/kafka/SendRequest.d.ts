@@ -8,8 +8,8 @@
 /// <reference types="rx-lite-joinpatterns" />
 /// <reference types="rx-lite-time" />
 import { IConf, IMessage, ISendMessage, MessageType, PromiseState } from "./types";
-import Rx = require('rx');
 import State from "../utils/State";
+import Rx = require("rx");
 declare class SendRequestCommon {
     protected conf: IConf;
     protected handleSendError?: (e: Error) => boolean;
@@ -22,7 +22,7 @@ declare class SendRequestCommon {
     protected isReady: boolean;
     protected isHighLatencyReady: boolean;
     protected readyState: State<boolean>;
-    constructor(conf: IConf, handleSendError?: (e: Error) => boolean, producerOptions?: any, topicOptions?: any, readyCallback?: () => void);
+    constructor(conf: IConf, handleSendError?: (e: Error) => boolean, producerOptions?: any, topicOptions?: any, readyCallback?: () => void, moreReadyStateFields?: string[]);
     getResponseTopic(): string;
     sendMessage(transactionId: string, topic: string, uri: string, data: any, highLatency?: boolean): void;
     sendForwardMessage(originMessage: any, newTopic: string, newUri: string): void;
@@ -49,4 +49,4 @@ declare class SendRequest extends SendRequestCommon {
 declare function create(conf: IConf, consumerOptions: any, initResponseListener?: boolean, topicConf?: any, producerOptions?: any, readyCallback?: () => void): void;
 declare function getInstance(): SendRequest;
 declare function getResponse<T>(msg: IMessage): T;
-export { SendRequest, SendRequestCommon, create, getInstance, getResponse, };
+export { SendRequest, SendRequestCommon, create, getInstance, getResponse };

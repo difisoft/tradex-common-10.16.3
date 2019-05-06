@@ -10,13 +10,13 @@ class State {
         this.stateData = new Map();
         this.completed = null;
         fields.forEach((field) => {
-            this.stateData[field] = getDefaultValue();
+            this.stateData.set(field, getDefaultValue());
         });
     }
     addField(fields) {
         this.fields.push(...fields);
         fields.forEach((field) => {
-            this.stateData[field] = this.getDefaultValue();
+            this.stateData.set(field, this.getDefaultValue());
         });
     }
     subscribeCompleted() {
@@ -27,7 +27,7 @@ class State {
         return this.completed;
     }
     setState(field, value) {
-        this.stateData[field] = value;
+        this.stateData.set(field, value);
         if (this.completed != null) {
             if (value === this.completedStateValue) {
                 this.checkCompleted();
@@ -39,7 +39,7 @@ class State {
     }
     checkCompleted() {
         for (let i = 0; i < this.fields.length; i++) {
-            if (this.stateData[this.fields[i]] !== this.completedStateValue) {
+            if (this.stateData.get(this.fields[i]) !== this.completedStateValue) {
                 return;
             }
         }
