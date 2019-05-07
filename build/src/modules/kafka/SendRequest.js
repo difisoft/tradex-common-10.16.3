@@ -205,8 +205,10 @@ class SendRequest extends SendRequestCommon {
             log_1.logger.info(`init response listener ${this.responseTopic}`);
             const topicOps = Object.assign({}, topicConf, { "auto.offset.reset": "earliest" });
             new StreamHandler_1.StreamHandler(this.conf, consumerOptions, [this.responseTopic], (data) => this.handlerResponse(data), topicOps, () => {
-                log_1.logger.info("response consumer ready", this.readyState);
-                this.readyState.setState(CONSUMER, true);
+                if (this.readyState != null) {
+                    log_1.logger.info("response consumer ready", this.readyState);
+                    this.readyState.setState(CONSUMER, true);
+                }
             });
         }
     }
