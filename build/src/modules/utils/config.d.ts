@@ -1,0 +1,4 @@
+export declare function getEnvStr(name: string, defaultValue?: string): string;
+export declare function getEnvArr(name: string, defaultValue?: string[]): string[];
+export declare function getEnvNum(name: string, defaultValue?: number): number;
+export declare function createJwtConfig(conf: any, domain: string, domains: string[], keyDir: string, serviceName: string, publicKeyFileName?: string, privateKeyFileName?: string): void;

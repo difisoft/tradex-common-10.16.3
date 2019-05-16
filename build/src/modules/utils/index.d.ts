@@ -8,6 +8,7 @@ import { processJwtKey, processJwtKeyByDomain, processJwtKeyObject } from './key
 import State from './State';
 import { promise, handlePromise, Resolve, Reject, PromiseFunction, RetryError, asyncWithRetry, allPromiseDone, IPromiseJoin } from './promise';
 import * as Mongo from "./mongo";
+import { createJwtConfig, getEnvArr, getEnvNum, getEnvStr } from './config';
 declare const _default: {
     validate: typeof validate;
     validateEmail: typeof validateEmail;
@@ -66,6 +67,10 @@ declare const _default: {
     allPromiseDone: typeof allPromiseDone;
     Mongo: typeof Mongo;
     setObjKey: typeof setObjKey;
+    createJwtConfig: typeof createJwtConfig;
+    getEnvArr: typeof getEnvArr;
+    getEnvNum: typeof getEnvNum;
+    getEnvStr: typeof getEnvStr;
 };
 export default _default;
 export { State, Resolve, Reject, PromiseFunction, IPromiseJoin };

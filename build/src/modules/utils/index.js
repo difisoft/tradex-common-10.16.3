@@ -19,6 +19,7 @@ const State_1 = require("./State");
 exports.State = State_1.default;
 const promise_1 = require("./promise");
 const Mongo = require("./mongo");
+const config_1 = require("./config");
 exports.default = {
     validate: validation_1.validate,
     validateEmail: validation_1.validateEmail,
@@ -74,5 +75,9 @@ exports.default = {
     allPromiseDone: promise_1.allPromiseDone,
     Mongo,
     setObjKey: ObjectUtils_1.setObjKey,
+    createJwtConfig: config_1.createJwtConfig,
+    getEnvArr: config_1.getEnvArr,
+    getEnvNum: config_1.getEnvNum,
+    getEnvStr: config_1.getEnvStr,
 };
 //# sourceMappingURL=index.js.map
