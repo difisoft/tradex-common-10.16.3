@@ -81,6 +81,7 @@ import {
   getEnvArr,
   getEnvNum,
   getEnvStr,
+  getEnvJson,
 } from './config';
 
 export default {
@@ -142,6 +143,7 @@ export default {
   getEnvArr,
   getEnvNum,
   getEnvStr,
+  getEnvJson,
 };
 
 export {
