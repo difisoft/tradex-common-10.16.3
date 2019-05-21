@@ -1,17 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 function getEnvStr(name, defaultValue = "") {
-    const result = process.env.name;
+    const result = process.env[name];
     return (result == null || result === "") ? defaultValue : result;
 }
 exports.getEnvStr = getEnvStr;
 function getEnvArr(name, defaultValue = []) {
-    const result = process.env.name;
+    const result = process.env[name];
     return (result == null || result === "") ? defaultValue : result.split(";");
 }
 exports.getEnvArr = getEnvArr;
 function getEnvNum(name, defaultValue = 0) {
-    const result = process.env.name;
+    const result = process.env[name];
     return (result == null || result === "") ? defaultValue : Number(result);
 }
 exports.getEnvNum = getEnvNum;
