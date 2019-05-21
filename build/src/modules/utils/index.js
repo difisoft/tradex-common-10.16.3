@@ -79,5 +79,6 @@ exports.default = {
     getEnvArr: config_1.getEnvArr,
     getEnvNum: config_1.getEnvNum,
     getEnvStr: config_1.getEnvStr,
+    getEnvJson: config_1.getEnvJson,
 };
 //# sourceMappingURL=index.js.map
