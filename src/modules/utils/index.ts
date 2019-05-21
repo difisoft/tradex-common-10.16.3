@@ -76,6 +76,13 @@ import {
 } from './promise';
 import * as Mongo from "./mongo";
 
+import {
+  createJwtConfig,
+  getEnvArr,
+  getEnvNum,
+  getEnvStr,
+} from './config';
+
 export default {
   validate,
   validateEmail,
@@ -131,6 +138,10 @@ export default {
   allPromiseDone,
   Mongo,
   setObjKey,
+  createJwtConfig,
+  getEnvArr,
+  getEnvNum,
+  getEnvStr,
 };
 
 export {
