@@ -15,6 +15,11 @@ function getEnvNum(name, defaultValue = 0) {
     return (result == null || result === "") ? defaultValue : Number(result);
 }
 exports.getEnvNum = getEnvNum;
+function getEnvJson(name, defaultValue) {
+    const result = process.env[name];
+    return (result == null || result === "") ? defaultValue : JSON.parse(result);
+}
+exports.getEnvJson = getEnvJson;
 function createJwtConfig(conf, domain, domains, keyDir, serviceName, publicKeyFileName, privateKeyFileName) {
     conf.jwt = {};
     const domainConfig = {};

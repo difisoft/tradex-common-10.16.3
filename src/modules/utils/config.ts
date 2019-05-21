@@ -13,6 +13,11 @@ export function getEnvNum(name: string, defaultValue: number = 0): number {
   return (result == null || result === "") ? defaultValue : Number(result);
 }
 
+export function getEnvJson<T>(name: string, defaultValue?: T): T {
+  const result: string = process.env[name];
+  return (result == null || result === "") ? defaultValue : JSON.parse(result);
+}
+
 export function createJwtConfig(conf: any, domain: string, domains: string[], keyDir: string, serviceName: string,
                                 publicKeyFileName?: string, privateKeyFileName?: string): void {
   conf.jwt = {};
