@@ -84,6 +84,10 @@ import {
   getEnvJson,
 } from './config';
 
+import {
+  diffMsTime
+} from "./mstime";
+
 export default {
   validate,
   validateEmail,
@@ -144,6 +148,7 @@ export default {
   getEnvNum,
   getEnvStr,
   getEnvJson,
+  diffMsTime,
 };
 
 export {

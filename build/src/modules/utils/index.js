@@ -20,6 +20,7 @@ exports.State = State_1.default;
 const promise_1 = require("./promise");
 const Mongo = require("./mongo");
 const config_1 = require("./config");
+const mstime_1 = require("./mstime");
 exports.default = {
     validate: validation_1.validate,
     validateEmail: validation_1.validateEmail,
@@ -80,5 +81,6 @@ exports.default = {
     getEnvNum: config_1.getEnvNum,
     getEnvStr: config_1.getEnvStr,
     getEnvJson: config_1.getEnvJson,
+    diffMsTime: mstime_1.diffMsTime,
 };
 //# sourceMappingURL=index.js.map

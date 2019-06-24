@@ -1,4 +1,4 @@
-import { StreamHandler } from "./StreamHandler";
+import { IKafkaMessage, StreamHandler } from "./StreamHandler";
 import { logger } from "../log";
 import { IConf, IMessage, ISendMessage, MessageType, PromiseState, SEND_MESSAGE_TYPE } from "./types";
 import { createFromStatus, TimeoutError } from "../errors";
@@ -7,6 +7,7 @@ import IResponse from "../models/IResponse";
 import State from "../utils/State";
 import Rx = require("rx");
 import Kafka = require("node-rdkafka");
+import { diffMsTime } from "../utils/mstime";
 
 const LOW_PRODUCER_READY = "LOW_PRODUCER_READY";
 const HIGH_PRODUCER_READY = "HIGH_PRODUCER_READY";
@@ -213,6 +214,7 @@ class SendRequestCommon {
 
 class SendRequest extends SendRequestCommon {
   private requestedMessages: Map<string | number, ISendMessage> = new Map<string | number, ISendMessage>();
+  private readonly expiredIn: number = 0;
 
   constructor(
     conf: IConf,
@@ -221,14 +223,16 @@ class SendRequest extends SendRequestCommon {
     topicConf: any = {},
     handleSendError?: (e: Error) => boolean,
     producerOptions?: any,
-    readyCallback?: () => void
+    readyCallback?: () => void,
+    expiredIn?: number
   ) {
     super(conf, handleSendError, producerOptions, topicConf, readyCallback, initListener ? [CONSUMER] : null);
+    this.expiredIn = expiredIn ? expiredIn : 10000;
     if (initListener) {
       logger.info(`init response listener ${this.responseTopic}`);
       const topicOps = {...topicConf, "auto.offset.reset": "earliest"};
       new StreamHandler(this.conf, consumerOptions, [this.responseTopic]
-        , (data: any) => this.handlerResponse(data), topicOps, () => {
+        , (data: IKafkaMessage) => this.handlerResponse(data), topicOps, () => {
           if (this.readyState != null) {
             logger.info("response consumer ready", this.readyState);
             this.readyState.setState(CONSUMER, true);
@@ -302,8 +306,16 @@ class SendRequest extends SendRequestCommon {
     }
   }
 
-  private handlerResponse(message: any) {
+  private handlerResponse(message: IKafkaMessage) {
     const msgStr = message.value.toString();
+    try {
+      if (message.timestamp != null && message.timestamp > 0 && this.expiredIn > 0 && diffMsTime(message.timestamp) > this.expiredIn) {
+        logger.warn("ignore this request since it's expired %s", msgStr);
+        return;
+      }
+    } catch (e) {
+      logger.error("fail to handle message time", e);
+    }
     const msg: IMessage = JSON.parse(msgStr);
     if (this.requestedMessages[msg.messageId]) {
       this.respondData(this.requestedMessages[msg.messageId], msg);

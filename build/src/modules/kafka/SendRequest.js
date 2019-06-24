@@ -9,6 +9,7 @@ const GeneralError_1 = require("../errors/GeneralError");
 const State_1 = require("../utils/State");
 const Rx = require("rx");
 const Kafka = require("node-rdkafka");
+const mstime_1 = require("../utils/mstime");
 const LOW_PRODUCER_READY = "LOW_PRODUCER_READY";
 const HIGH_PRODUCER_READY = "HIGH_PRODUCER_READY";
 const LOW_PRODUCER_CONNECT = "LOW_PRODUCER_CONNECT";
@@ -192,15 +193,17 @@ class SendRequestCommon {
 }
 exports.SendRequestCommon = SendRequestCommon;
 class SendRequest extends SendRequestCommon {
-    constructor(conf, consumerOptions, initListener = true, topicConf = {}, handleSendError, producerOptions, readyCallback) {
+    constructor(conf, consumerOptions, initListener = true, topicConf = {}, handleSendError, producerOptions, readyCallback, expiredIn) {
         super(conf, handleSendError, producerOptions, topicConf, readyCallback, initListener ? [CONSUMER] : null);
         this.requestedMessages = new Map();
+        this.expiredIn = 0;
         this.reallySendMessage = (message) => {
             if (message.subject) {
                 this.requestedMessages[message.message.messageId] = message;
             }
             super.doReallySendMessage(message);
         };
+        this.expiredIn = expiredIn ? expiredIn : 10000;
         if (initListener) {
             log_1.logger.info(`init response listener ${this.responseTopic}`);
             const topicOps = Object.assign({}, topicConf, { "auto.offset.reset": "earliest" });
@@ -271,6 +274,15 @@ class SendRequest extends SendRequestCommon {
     }
     handlerResponse(message) {
         const msgStr = message.value.toString();
+        try {
+            if (message.timestamp != null && message.timestamp > 0 && this.expiredIn > 0 && mstime_1.diffMsTime(message.timestamp) > this.expiredIn) {
+                log_1.logger.warn("ignore this request since it's expired %s", msgStr);
+                return;
+            }
+        }
+        catch (e) {
+            log_1.logger.error("fail to handle message time", e);
+        }
         const msg = JSON.parse(msgStr);
         if (this.requestedMessages[msg.messageId]) {
             this.respondData(this.requestedMessages[msg.messageId], msg);
