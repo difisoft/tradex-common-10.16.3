@@ -1,4 +1,4 @@
-import { doSafe } from './arrowFunctions';
+import { doSafe } from "./arrowFunctions";
 import {
   onError,
   onNext,
@@ -10,7 +10,7 @@ import {
   transformSingle,
   transformSingleAsync,
   transformSinglePromise
-} from './rx';
+} from "./rx";
 import {
   createFailFromError,
   createFailValidation,
@@ -19,74 +19,50 @@ import {
   Validate,
   validateEmail,
   validatePassword
-} from './validation';
-import { singleton } from './Singleton';
+} from "./validation";
+import { singleton } from "./Singleton";
 import {
   compareDateOnly,
   convertStringToDate,
-  DATETIME_DISPLAY_FORMAT,
   DATE_DISPLAY_FORMAT,
+  DATETIME_DISPLAY_FORMAT,
   formatDateToDisplay,
-  getStartOfDate,
-  getEndOfDate
-} from './date';
-import { isEmpty } from './StringUtils';
-import {
-  isNullOrUndefined,
-  setObjKey,
-} from './ObjectUtils';
-import { round } from './MathUtils';
-import { removeDuplicateObj } from './ArrayUtils';
-import { generateToken } from './token';
+  getEndOfDate,
+  getStartOfDate
+} from "./date";
+import { isEmpty, leftPad, rightPad } from "./StringUtils";
+import { isNullOrUndefined, setObjKey } from "./ObjectUtils";
+import { round } from "./MathUtils";
+import { removeDuplicateObj } from "./ArrayUtils";
+import { generateToken } from "./token";
 import {
   getInstance as getI18nInstance,
   getLanguageCode,
   init as initI18n,
   initInternal as initI18nInternal,
   translateErrorMessage
-} from './locale';
+} from "./locale";
+import { compileTemplate, getTemplateResources, init as initTemplateResource } from "./template";
+import { getForwardUri } from "./scope";
+import { DOMAINS, processJwtKey, processJwtKeyByDomain, processJwtKeyObject, TRADEX_DOMAIN, VCSC_DOMAIN } from "./keys";
+import container from "./InstanceContainer";
+import State from "./State";
 import {
-  compileTemplate,
-  getTemplateResources,
-  init as initTemplateResource
-} from './template';
-import {
-  getForwardUri,
-} from './scope';
-import {
-  processJwtKey,
-  processJwtKeyByDomain,
-  processJwtKeyObject,
-  TRADEX_DOMAIN,
-  VCSC_DOMAIN,
-  DOMAINS,
-} from './keys';
-import container from './InstanceContainer';
-import State from './State';
-import {
-  promise,
-  handlePromise,
-  Resolve,
-  Reject,
-  PromiseFunction,
-  RetryError,
-  asyncWithRetry,
   allPromiseDone,
+  asyncWithRetry,
+  handlePromise,
   IPromiseJoin,
-} from './promise';
+  promise,
+  PromiseFunction,
+  Reject,
+  Resolve,
+  RetryError
+} from "./promise";
 import * as Mongo from "./mongo";
 
-import {
-  createJwtConfig,
-  getEnvArr,
-  getEnvNum,
-  getEnvStr,
-  getEnvJson,
-} from './config';
+import { createJwtConfig, getEnvArr, getEnvJson, getEnvNum, getEnvStr } from "./config";
 
-import {
-  diffMsTime
-} from "./mstime";
+import { diffMsTime } from "./mstime";
 
 export default {
   validate,
@@ -124,6 +100,8 @@ export default {
   compileTemplate,
   getForwardUri,
   isEmpty,
+  rightPad,
+  leftPad,
   isNullOrUndefined,
   getStartOfDate,
   getEndOfDate,
@@ -148,7 +126,7 @@ export default {
   getEnvNum,
   getEnvStr,
   getEnvJson,
-  diffMsTime,
+  diffMsTime
 };
 
 export {
@@ -157,4 +135,4 @@ export {
   Reject,
   PromiseFunction,
   IPromiseJoin
-}
+};

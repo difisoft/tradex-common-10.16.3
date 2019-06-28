@@ -1,14 +1,14 @@
 /// <reference types="rx-core" />
 /// <reference types="rx-lite" />
-import { onError, onNext, transform, transformAsync, transformError, transformPromise, transformPromiseAsync, transformSingle, transformSingleAsync, transformSinglePromise } from './rx';
-import { createFailFromError, createFailValidation, createSuccessValidation, validate, Validate, validateEmail, validatePassword } from './validation';
-import { setObjKey } from './ObjectUtils';
-import { getForwardUri } from './scope';
-import { processJwtKey, processJwtKeyByDomain, processJwtKeyObject } from './keys';
-import State from './State';
-import { promise, handlePromise, Resolve, Reject, PromiseFunction, RetryError, asyncWithRetry, allPromiseDone, IPromiseJoin } from './promise';
+import { onError, onNext, transform, transformAsync, transformError, transformPromise, transformPromiseAsync, transformSingle, transformSingleAsync, transformSinglePromise } from "./rx";
+import { createFailFromError, createFailValidation, createSuccessValidation, validate, Validate, validateEmail, validatePassword } from "./validation";
+import { setObjKey } from "./ObjectUtils";
+import { getForwardUri } from "./scope";
+import { processJwtKey, processJwtKeyByDomain, processJwtKeyObject } from "./keys";
+import State from "./State";
+import { allPromiseDone, asyncWithRetry, handlePromise, IPromiseJoin, promise, PromiseFunction, Reject, Resolve, RetryError } from "./promise";
 import * as Mongo from "./mongo";
-import { createJwtConfig, getEnvArr, getEnvNum, getEnvStr, getEnvJson } from './config';
+import { createJwtConfig, getEnvArr, getEnvJson, getEnvNum, getEnvStr } from "./config";
 import { diffMsTime } from "./mstime";
 declare const _default: {
     validate: typeof validate;
@@ -46,6 +46,8 @@ declare const _default: {
     compileTemplate: (templateUrl: string, data: any) => Promise<string>;
     getForwardUri: typeof getForwardUri;
     isEmpty: (input: string) => boolean;
+    rightPad: (str: string, size: number, padString: string) => string;
+    leftPad: (str: string, size: number, padString: string) => string;
     isNullOrUndefined: (input: any) => boolean;
     getStartOfDate: (date: Date) => Date;
     getEndOfDate: (date: Date) => Date;
