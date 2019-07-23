@@ -57,6 +57,8 @@ exports.default = {
     compileTemplate: template_1.compileTemplate,
     getForwardUri: scope_1.getForwardUri,
     isEmpty: StringUtils_1.isEmpty,
+    rightPad: StringUtils_1.rightPad,
+    leftPad: StringUtils_1.leftPad,
     isNullOrUndefined: ObjectUtils_1.isNullOrUndefined,
     getStartOfDate: date_1.getStartOfDate,
     getEndOfDate: date_1.getEndOfDate,
@@ -81,6 +83,6 @@ exports.default = {
     getEnvNum: config_1.getEnvNum,
     getEnvStr: config_1.getEnvStr,
     getEnvJson: config_1.getEnvJson,
-    diffMsTime: mstime_1.diffMsTime,
+    diffMsTime: mstime_1.diffMsTime
 };
 //# sourceMappingURL=index.js.map
