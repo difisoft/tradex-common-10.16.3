@@ -160,10 +160,10 @@ class SendRequestCommon {
       const msgContent = JSON.stringify(message.message);
       if (message.highLatency === true) {
         logger.info(`send message ${msgContent} to topic ${message.topic}`);
-        this.highLatencyProducer.produce(message.topic, null, new Buffer(msgContent), this.conf.clientId, Date.now());
+        this.highLatencyProducer.produce(message.topic, null, new Buffer(msgContent), null, Date.now());
       } else {
         logger.info(`send low latency message ${msgContent} to topic ${message.topic}`);
-        this.producer.produce(message.topic, null, new Buffer(msgContent), this.conf.clientId, Date.now());
+        this.producer.produce(message.topic, null, new Buffer(msgContent), null, Date.now());
       }
       if (message.timeout) {
         setTimeout(() => this.timeout(message), message.timeout);
