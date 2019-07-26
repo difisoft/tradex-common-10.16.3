@@ -60,9 +60,18 @@ import {
 } from "./promise";
 import * as Mongo from "./mongo";
 
-import { createJwtConfig, getEnvArr, getEnvJson, getEnvNum, getEnvStr } from "./config";
+import { 
+  createJwtConfig, 
+  getEnvArr, 
+  getEnvJson, 
+  getEnvNum, 
+  getEnvStr 
+} from "./config";
 
-import { diffMsTime } from "./mstime";
+import { 
+  diffMsTime,
+  getMsTime,
+} from "./mstime";
 
 export default {
   validate,
@@ -126,7 +135,8 @@ export default {
   getEnvNum,
   getEnvStr,
   getEnvJson,
-  diffMsTime
+  diffMsTime,
+  getMsTime,
 };
 
 export {

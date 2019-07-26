@@ -83,6 +83,7 @@ exports.default = {
     getEnvNum: config_1.getEnvNum,
     getEnvStr: config_1.getEnvStr,
     getEnvJson: config_1.getEnvJson,
-    diffMsTime: mstime_1.diffMsTime
+    diffMsTime: mstime_1.diffMsTime,
+    getMsTime: mstime_1.getMsTime,
 };
 //# sourceMappingURL=index.js.map

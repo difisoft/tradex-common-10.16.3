@@ -9,7 +9,7 @@ import State from "./State";
 import { allPromiseDone, asyncWithRetry, handlePromise, IPromiseJoin, promise, PromiseFunction, Reject, Resolve, RetryError } from "./promise";
 import * as Mongo from "./mongo";
 import { createJwtConfig, getEnvArr, getEnvJson, getEnvNum, getEnvStr } from "./config";
-import { diffMsTime } from "./mstime";
+import { diffMsTime, getMsTime } from "./mstime";
 declare const _default: {
     validate: typeof validate;
     validateEmail: typeof validateEmail;
@@ -76,6 +76,7 @@ declare const _default: {
     getEnvStr: typeof getEnvStr;
     getEnvJson: typeof getEnvJson;
     diffMsTime: typeof diffMsTime;
+    getMsTime: typeof getMsTime;
 };
 export default _default;
 export { State, Resolve, Reject, PromiseFunction, IPromiseJoin };

@@ -5,4 +5,9 @@ function diffMsTime(time) {
     return currentTime[0] * 1000 + currentTime[1] / 1000000 - time;
 }
 exports.diffMsTime = diffMsTime;
+function getMsTime(hrTime = null) {
+    const currentTime = hrTime == null ? process.hrtime() : hrTime;
+    return currentTime[0] * 1000 + currentTime[1] / 1000000;
+}
+exports.getMsTime = getMsTime;
 //# sourceMappingURL=mstime.js.map
