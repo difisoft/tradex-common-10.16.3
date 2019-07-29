@@ -7,6 +7,7 @@ export declare interface IUserData {
     deptCode?: string;
     agencyNumber?: string;
     accountNumbers?: string[];
+    fssTokenId?: string;
 }
 export default interface IToken {
     domain?: string;
