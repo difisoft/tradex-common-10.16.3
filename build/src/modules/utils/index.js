@@ -62,6 +62,7 @@ exports.default = {
     isNullOrUndefined: ObjectUtils_1.isNullOrUndefined,
     getStartOfDate: date_1.getStartOfDate,
     getEndOfDate: date_1.getEndOfDate,
+    countDayBetween: date_1.countDayBetween,
     round: MathUtils_1.round,
     processJwtKey: keys_1.processJwtKey,
     processJwtKeyByDomain: keys_1.processJwtKeyByDomain,

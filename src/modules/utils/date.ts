@@ -1,7 +1,22 @@
 import * as moment from 'moment';
+import InvalidParameterError from '../errors/InvalidParameterError';
+import { logger as Logger } from '../../modules/log';
 
 const DATE_DISPLAY_FORMAT = 'YYYYMMDD';
 const DATETIME_DISPLAY_FORMAT = 'YYYYMMDDhhmmss';
+
+
+const countDayBetween = (dateFrom: Date, dateTo: Date): number => {
+  try {
+    const momentFrom = moment(dateFrom);
+    const momentTo = moment(dateTo);
+    return Math.ceil(momentTo.diff(momentFrom, 'days', true));
+  } catch (e) {
+    Logger.error(
+        `error on countDateBetween from: ${dateFrom} - to: ${dateTo} - error: ${e}`);
+    throw new InvalidParameterError();
+  }
+};
 
 
 const formatDateToDisplay = (date: Date, format: string = DATE_DISPLAY_FORMAT): string => {
@@ -65,5 +80,6 @@ export {
   DATE_DISPLAY_FORMAT,
   compareDateOnly,
   getEndOfDate,
-  getStartOfDate
+  getStartOfDate,
+  countDayBetween
 }

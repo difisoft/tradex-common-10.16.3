@@ -1,10 +1,24 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const moment = require("moment");
+const InvalidParameterError_1 = require("../errors/InvalidParameterError");
+const log_1 = require("../../modules/log");
 const DATE_DISPLAY_FORMAT = 'YYYYMMDD';
 exports.DATE_DISPLAY_FORMAT = DATE_DISPLAY_FORMAT;
 const DATETIME_DISPLAY_FORMAT = 'YYYYMMDDhhmmss';
 exports.DATETIME_DISPLAY_FORMAT = DATETIME_DISPLAY_FORMAT;
+const countDayBetween = (dateFrom, dateTo) => {
+    try {
+        const momentFrom = moment(dateFrom);
+        const momentTo = moment(dateTo);
+        return Math.ceil(momentTo.diff(momentFrom, 'days', true));
+    }
+    catch (e) {
+        log_1.logger.error(`error on countDateBetween from: ${dateFrom} - to: ${dateTo} - error: ${e}`);
+        throw new InvalidParameterError_1.default();
+    }
+};
+exports.countDayBetween = countDayBetween;
 const formatDateToDisplay = (date, format = DATE_DISPLAY_FORMAT) => {
     try {
         if (date == null) {

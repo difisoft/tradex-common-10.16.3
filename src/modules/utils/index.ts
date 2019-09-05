@@ -27,6 +27,7 @@ import {
   DATE_DISPLAY_FORMAT,
   DATETIME_DISPLAY_FORMAT,
   formatDateToDisplay,
+  countDayBetween,
   getEndOfDate,
   getStartOfDate
 } from "./date";
@@ -114,6 +115,7 @@ export default {
   isNullOrUndefined,
   getStartOfDate,
   getEndOfDate,
+  countDayBetween,
   round,
   processJwtKey,
   processJwtKeyByDomain,

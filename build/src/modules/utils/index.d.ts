@@ -51,6 +51,7 @@ declare const _default: {
     isNullOrUndefined: (input: any) => boolean;
     getStartOfDate: (date: Date) => Date;
     getEndOfDate: (date: Date) => Date;
+    countDayBetween: (dateFrom: Date, dateTo: Date) => number;
     round: (input: number, scale?: number) => number;
     processJwtKey: typeof processJwtKey;
     processJwtKeyByDomain: typeof processJwtKeyByDomain;
