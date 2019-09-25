@@ -270,16 +270,16 @@ class SendRequest extends SendRequestCommon {
 
   protected reallySendMessage: (message: ISendMessage) => void = (message: ISendMessage) => {
     if (message.subject) {
-      this.requestedMessages[message.message.messageId] = message;
+      this.requestedMessages.set(message.message.messageId, message);
     }
     super.doReallySendMessage(message);
   };
 
   protected timeout(message: ISendMessage) {
     const msgId: string = <string>message.message.messageId;
-    if (this.requestedMessages[msgId]) {
+    if (this.requestedMessages.has(msgId)) {
       this.respondError(message, new TimeoutError());
-      delete this.requestedMessages[msgId];
+      this.requestedMessages.delete(msgId);
     }
   }
 
@@ -317,9 +317,10 @@ class SendRequest extends SendRequestCommon {
       logger.error("fail to handle message time", e);
     }
     const msg: IMessage = JSON.parse(msgStr);
-    if (this.requestedMessages[msg.messageId]) {
-      this.respondData(this.requestedMessages[msg.messageId], msg);
-      delete this.requestedMessages[msg.messageId];
+    const data =  this.requestedMessages.get(msg.messageId);
+    if (data != null) {
+      this.respondData(data, msg);
+      this.requestedMessages.delete(msg.messageId);
     } else {
       logger.warn(`cannot find where to response (probably timeout happen) "${msgStr}"`);
     }
