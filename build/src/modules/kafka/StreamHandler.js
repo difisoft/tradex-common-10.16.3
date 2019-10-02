@@ -16,7 +16,7 @@ class StreamHandler {
             this.stream.consumer.on('ready', readyCallback);
         }
         this.stream.on('error', (err) => {
-            log_1.logger.logError('error on kafka', err);
+            log_1.logger.error('error on kafka', topics, err);
             this.hasError = true;
             setTimeout(() => {
                 if (this.hasError) {

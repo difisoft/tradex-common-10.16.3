@@ -199,7 +199,7 @@ class SendRequest extends SendRequestCommon {
         this.expiredIn = 0;
         this.reallySendMessage = (message) => {
             if (message.subject) {
-                this.requestedMessages[message.message.messageId] = message;
+                this.requestedMessages.set(message.message.messageId, message);
             }
             super.doReallySendMessage(message);
         };
@@ -244,9 +244,9 @@ class SendRequest extends SendRequestCommon {
     ;
     timeout(message) {
         const msgId = message.message.messageId;
-        if (this.requestedMessages[msgId]) {
+        if (this.requestedMessages.has(msgId)) {
             this.respondError(message, new errors_1.TimeoutError());
-            delete this.requestedMessages[msgId];
+            this.requestedMessages.delete(msgId);
         }
     }
     respondData(message, data) {
@@ -284,9 +284,10 @@ class SendRequest extends SendRequestCommon {
             log_1.logger.error("fail to handle message time", e);
         }
         const msg = JSON.parse(msgStr);
-        if (this.requestedMessages[msg.messageId]) {
-            this.respondData(this.requestedMessages[msg.messageId], msg);
-            delete this.requestedMessages[msg.messageId];
+        const data = this.requestedMessages.get(msg.messageId);
+        if (data != null) {
+            this.respondData(data, msg);
+            this.requestedMessages.delete(msg.messageId);
         }
         else {
             log_1.logger.warn(`cannot find where to response (probably timeout happen) "${msgStr}"`);
