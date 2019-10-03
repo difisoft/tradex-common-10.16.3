@@ -325,7 +325,6 @@ class SendRequest extends SendRequestCommon {
       logger.warn(`cannot find where to response (probably timeout happen) "${msgStr}"`);
     }
   }
-
 }
 
 let instance: SendRequest = null;

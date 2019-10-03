@@ -26,6 +26,17 @@ class MessageHandler {
       const msgString: string = message.value.toString();
       const msg: IMessage = JSON.parse(msgString);
       const shouldResponse = this.shouldResponse(msg);
+      if (shouldResponse && msg.uri === "/healthcheck") {
+        this.sendRequest.sendResponse(
+          msg.transactionId,
+          msg.messageId,
+          msg.responseDestination.topic,
+          msg.responseDestination.uri,
+          {
+            status: "ON",
+          }
+        );
+      }
       const obs: HandleResult = func(msg, message);
       if (obs === false) {
         if (shouldResponse) {
