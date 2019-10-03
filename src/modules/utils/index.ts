@@ -29,7 +29,8 @@ import {
   formatDateToDisplay,
   countDayBetween,
   getEndOfDate,
-  getStartOfDate
+  getStartOfDate,
+  countDaysOfAYear
 } from "./date";
 import { isEmpty, leftPad, rightPad } from "./StringUtils";
 import { isNullOrUndefined, setObjKey } from "./ObjectUtils";
@@ -113,6 +114,7 @@ export default {
   rightPad,
   leftPad,
   isNullOrUndefined,
+  countDaysOfAYear,
   getStartOfDate,
   getEndOfDate,
   countDayBetween,

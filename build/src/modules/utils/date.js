@@ -72,4 +72,11 @@ const getStartOfDate = (date) => {
     return temp;
 };
 exports.getStartOfDate = getStartOfDate;
+const countDaysOfAYear = (year) => {
+    return isLeapYear(year) ? 366 : 365;
+};
+exports.countDaysOfAYear = countDaysOfAYear;
+const isLeapYear = (year) => {
+    return year % 400 === 0 || (year % 100 !== 0 && year % 4 === 0);
+};
 //# sourceMappingURL=date.js.map

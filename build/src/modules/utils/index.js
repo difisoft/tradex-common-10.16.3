@@ -60,6 +60,7 @@ exports.default = {
     rightPad: StringUtils_1.rightPad,
     leftPad: StringUtils_1.leftPad,
     isNullOrUndefined: ObjectUtils_1.isNullOrUndefined,
+    countDaysOfAYear: date_1.countDaysOfAYear,
     getStartOfDate: date_1.getStartOfDate,
     getEndOfDate: date_1.getEndOfDate,
     countDayBetween: date_1.countDayBetween,

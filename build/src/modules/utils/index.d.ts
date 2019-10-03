@@ -49,6 +49,7 @@ declare const _default: {
     rightPad: (str: string, size: number, padString: string) => string;
     leftPad: (str: string, size: number, padString: string) => string;
     isNullOrUndefined: (input: any) => boolean;
+    countDaysOfAYear: (year: number) => number;
     getStartOfDate: (date: Date) => Date;
     getEndOfDate: (date: Date) => Date;
     countDayBetween: (dateFrom: Date, dateTo: Date) => number;

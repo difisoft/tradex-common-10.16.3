@@ -72,6 +72,13 @@ const getStartOfDate = (date: Date): Date => {
   return temp;
 };
 
+const countDaysOfAYear = (year: number): number => {
+  return isLeapYear(year) ? 366 : 365;
+};
+
+const isLeapYear = (year: number): boolean => {
+  return year % 400 === 0 || (year % 100 !== 0 && year % 4 === 0);
+};
 
 export {
   formatDateToDisplay,
@@ -81,5 +88,6 @@ export {
   compareDateOnly,
   getEndOfDate,
   getStartOfDate,
-  countDayBetween
+  countDayBetween,
+  countDaysOfAYear
 }
