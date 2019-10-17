@@ -62,7 +62,7 @@ const compareDateOnly = (date1, date2) => {
 exports.compareDateOnly = compareDateOnly;
 const getEndOfDate = (date) => {
     const temp = new Date(date.getTime());
-    temp.setHours(23, 59, 59, 999);
+    temp.setHours(23, 59, 59, 0);
     return temp;
 };
 exports.getEndOfDate = getEndOfDate;
@@ -72,6 +72,33 @@ const getStartOfDate = (date) => {
     return temp;
 };
 exports.getStartOfDate = getStartOfDate;
+const getStartOfWeek = (date) => {
+    const diff = date.getDate() - date.getDay() + (date.getDay() === 0 ? -6 : 1);
+    const temp = new Date(date.setDate(diff));
+    temp.setHours(0, 0, 0, 0);
+    return temp;
+};
+exports.getStartOfWeek = getStartOfWeek;
+const getEndOfWeek = (date) => {
+    const temp = getStartOfWeek(date);
+    temp.setDate(temp.getDate() + 6);
+    temp.setHours(23, 59, 59, 0);
+    return temp;
+};
+exports.getEndOfWeek = getEndOfWeek;
+const getStartOfMonth = (date) => {
+    const temp = new Date(date.getTime());
+    temp.setDate(1);
+    temp.setHours(0, 0, 0, 0);
+    return temp;
+};
+exports.getStartOfMonth = getStartOfMonth;
+const getEndOfMonth = (date) => {
+    const temp = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+    temp.setHours(23, 59, 59, 0);
+    return temp;
+};
+exports.getEndOfMonth = getEndOfMonth;
 const countDaysOfAYear = (year) => {
     return isLeapYear(year) ? 366 : 365;
 };

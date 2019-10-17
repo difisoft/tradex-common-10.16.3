@@ -61,7 +61,7 @@ const compareDateOnly = (date1: Date, date2: Date): number => {
 
 const getEndOfDate = (date: Date): Date => {
   const temp: Date = new Date(date.getTime());
-  temp.setHours(23, 59, 59, 999);
+  temp.setHours(23, 59, 59, 0);
   return temp;
 };
 
@@ -69,6 +69,33 @@ const getEndOfDate = (date: Date): Date => {
 const getStartOfDate = (date: Date): Date => {
   const temp: Date = new Date(date.getTime());
   temp.setHours(0, 0, 0, 0);
+  return temp;
+};
+
+const getStartOfWeek = (date: Date): Date => {
+  const diff = date.getDate() - date.getDay() + (date.getDay() === 0 ? -6 : 1);
+  const temp: Date = new Date(date.setDate(diff));
+  temp.setHours(0, 0, 0, 0);
+  return temp;
+};
+
+const getEndOfWeek = (date: Date): Date => {
+  const temp: Date = getStartOfWeek(date);
+  temp.setDate(temp.getDate() + 6);
+  temp.setHours(23, 59, 59, 0);
+  return temp;
+};
+
+const getStartOfMonth = (date: Date): Date => {
+  const temp: Date = new Date(date.getTime());
+  temp.setDate(1);
+  temp.setHours(0, 0, 0, 0);
+  return temp;
+};
+
+const getEndOfMonth = (date: Date): Date => {
+  const temp: Date = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+  temp.setHours(23, 59, 59, 0);
   return temp;
 };
 
@@ -89,5 +116,9 @@ export {
   getEndOfDate,
   getStartOfDate,
   countDayBetween,
-  countDaysOfAYear
+  countDaysOfAYear,
+  getStartOfWeek,
+  getEndOfWeek,
+  getStartOfMonth,
+  getEndOfMonth
 }

@@ -30,7 +30,11 @@ import {
   countDayBetween,
   getEndOfDate,
   getStartOfDate,
-  countDaysOfAYear
+  countDaysOfAYear,
+  getStartOfWeek,
+  getEndOfWeek,
+  getStartOfMonth,
+  getEndOfMonth
 } from "./date";
 import { isEmpty, leftPad, rightPad } from "./StringUtils";
 import { isNullOrUndefined, setObjKey } from "./ObjectUtils";
@@ -118,6 +122,10 @@ export default {
   getStartOfDate,
   getEndOfDate,
   countDayBetween,
+  getStartOfWeek,
+  getEndOfWeek,
+  getStartOfMonth,
+  getEndOfMonth,
   round,
   processJwtKey,
   processJwtKeyByDomain,
