@@ -4,6 +4,7 @@ import { logger as Logger } from '../../modules/log';
 
 const DATE_DISPLAY_FORMAT = 'YYYYMMDD';
 const DATETIME_DISPLAY_FORMAT = 'YYYYMMDDhhmmss';
+const TIME_DISPLAY_FORMAT = 'hhmmss';
 
 
 const countDayBetween = (dateFrom: Date, dateTo: Date): number => {
@@ -112,6 +113,7 @@ export {
   convertStringToDate,
   DATETIME_DISPLAY_FORMAT,
   DATE_DISPLAY_FORMAT,
+  TIME_DISPLAY_FORMAT,
   compareDateOnly,
   getEndOfDate,
   getStartOfDate,

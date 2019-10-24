@@ -7,6 +7,8 @@ const DATE_DISPLAY_FORMAT = 'YYYYMMDD';
 exports.DATE_DISPLAY_FORMAT = DATE_DISPLAY_FORMAT;
 const DATETIME_DISPLAY_FORMAT = 'YYYYMMDDhhmmss';
 exports.DATETIME_DISPLAY_FORMAT = DATETIME_DISPLAY_FORMAT;
+const TIME_DISPLAY_FORMAT = 'hhmmss';
+exports.TIME_DISPLAY_FORMAT = TIME_DISPLAY_FORMAT;
 const countDayBetween = (dateFrom, dateTo) => {
     try {
         const momentFrom = moment(dateFrom);

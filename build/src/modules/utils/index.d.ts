@@ -35,12 +35,13 @@ declare const _default: {
     convertStringToDate: (data: string, format?: string) => Date;
     DATETIME_DISPLAY_FORMAT: string;
     DATE_DISPLAY_FORMAT: string;
+    TIME_DISPLAY_FORMAT: string;
     generateToken: (length?: number, onlyDigit?: boolean) => string;
     getLanguageCode: (acceptLanguageHeader: string) => string;
     initI18n: (msNames: string, namespaceList: string[], requestTopic?: string, uri?: string) => void;
     initI18nInternal: (msNames: string, namespaceList: string[], requestTopic?: string, uri?: string) => void;
     getI18nInstance: () => any;
-    translateErrorMessage: (errorObject: import("../models/IStatus").default, lang: string) => import("../models/IStatus").default;
+    translateErrorMessage: (errorObject: import("../models").IStatus, lang: string) => import("../models").IStatus;
     initTemplateResource: (msNames: string, requestTopic?: string, uri?: string) => void;
     getTemplateResources: () => any[];
     compileTemplate: (templateUrl: string, data: any) => Promise<string>;
