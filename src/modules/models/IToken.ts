@@ -8,6 +8,7 @@ export declare interface IUserData {
   agencyNumber?: string;
   accountNumbers?: string[];
   fssTokenId?: string;
+  userLevel?: string;
 }
 
 export default interface IToken {
