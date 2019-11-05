@@ -36,6 +36,7 @@ export declare enum DelayedOption {
     LAST_ACTIVE = "last-active"
 }
 export default class OneSignalConfiguration implements IConfiguration {
+    domain: string;
     id: string;
     included_segments: string[];
     excluded_segments: string[];
