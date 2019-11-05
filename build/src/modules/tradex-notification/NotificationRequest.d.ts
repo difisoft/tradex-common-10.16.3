@@ -6,6 +6,7 @@ export default class NotificationRequest {
     locale: string;
     private configuration;
     private configurationData;
+    private domain;
     add(templateKey: string, data: any): void;
     setConfiguration(configurationData: IConfiguration): void;
     getConfiguration<T extends IConfiguration>(): T;

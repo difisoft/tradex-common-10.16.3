@@ -11,6 +11,7 @@ class NotificationRequest {
         this.configurationData = configurationData;
         this.configuration = JSON.stringify(configurationData);
         this.method = configurationData.getMethod();
+        this.domain = configurationData.domain;
     }
     getConfiguration() {
         if (!this.configurationData && this.configuration) {
@@ -24,6 +25,7 @@ class NotificationRequest {
             template: this.template,
             locale: this.locale,
             configuration: this.configuration,
+            domain: this.domain,
         };
     }
     fromJson(json) {
@@ -32,6 +34,7 @@ class NotificationRequest {
         this.template = data.template;
         this.locale = data.locale;
         this.configuration = data.configuration;
+        this.domain = data.domain;
     }
 }
 exports.default = NotificationRequest;

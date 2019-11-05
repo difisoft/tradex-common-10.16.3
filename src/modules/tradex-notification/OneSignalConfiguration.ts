@@ -83,7 +83,6 @@ export enum DelayedOption {
  * look at here for more information {@link https://github.com/CurrencyFair/OneSignal-Java-SDK/blob/master/src/main/java/com/currencyfair/onesignal/model/notification/Notification.java}
  */
 export default class OneSignalConfiguration implements IConfiguration {
-  public domain: string;
   public id: string;
   public included_segments: string[];
   public excluded_segments: string[];

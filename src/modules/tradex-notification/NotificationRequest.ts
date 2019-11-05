@@ -7,6 +7,7 @@ export default class NotificationRequest {
   public locale: string;
   private configuration: string;
   private configurationData: any;
+  private domain: string;
 
   public add(templateKey: string, data: any): void {
     this.template[templateKey] = data;
@@ -16,6 +17,7 @@ export default class NotificationRequest {
     this.configurationData = configurationData;
     this.configuration = JSON.stringify(configurationData);
     this.method = configurationData.getMethod();
+    this.domain = configurationData.domain;
   }
 
   public getConfiguration<T extends IConfiguration>(): T {
@@ -31,6 +33,7 @@ export default class NotificationRequest {
       template: this.template,
       locale: this.locale,
       configuration: this.configuration,
+      domain: this.domain,
     };
   }
 
@@ -40,5 +43,6 @@ export default class NotificationRequest {
     this.template = data.template;
     this.locale = data.locale;
     this.configuration = data.configuration;
+    this.domain = data.domain;
   }
 }
