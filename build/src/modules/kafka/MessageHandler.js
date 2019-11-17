@@ -20,6 +20,7 @@ class MessageHandler {
             const startTime = process.hrtime();
             let diff = null;
             const msgString = message.value.toString();
+            __1.Logger.info(`receive msg: ${msgString}`);
             const msg = JSON.parse(msgString);
             const shouldResponse = this.shouldResponse(msg);
             if (shouldResponse && msg.uri === "/healthcheck") {
@@ -31,14 +32,14 @@ class MessageHandler {
             if (obs === false) {
                 if (shouldResponse) {
                     diff = process.hrtime(startTime);
-                    __1.Logger.info(`process request ${msg.uri} took ${diff[0]} seconds and  ${diff[0]} nanoseconds`);
+                    __1.Logger.info(`process request ${msg.uri} took ${diff[0]}.${diff[1]} seconds`);
                     this.sendRequest.sendResponse(msg.transactionId, msg.messageId, msg.responseDestination.topic, msg.responseDestination.uri, this.getErrorMessage(new UriNotFound_1.default()));
                 }
                 return;
             }
             else if (obs === true) {
                 diff = process.hrtime(startTime);
-                __1.Logger.info(`forward request ${msg.uri} took ${diff[0]} seconds and  ${diff[0]} nanoseconds`);
+                __1.Logger.info(`forward request ${msg.uri} took ${diff[0]}.${diff[1]} seconds`);
                 return;
             }
             const handleError = (err) => {
@@ -47,7 +48,7 @@ class MessageHandler {
                     this.sendRequest.sendResponse(msg.transactionId, msg.messageId, msg.responseDestination.topic, msg.responseDestination.uri, this.getErrorMessage(err));
                 }
                 diff = process.hrtime(startTime);
-                __1.Logger.info(`handle request ${msg.uri} took ${diff[0]} seconds and  ${diff[0]} nanoseconds`);
+                __1.Logger.info(`handle request ${msg.uri} took ${diff[0]}.${diff[1]} seconds`);
             };
             const handleData = (data) => {
                 try {
@@ -55,7 +56,7 @@ class MessageHandler {
                         this.sendRequest.sendResponse(msg.transactionId, msg.messageId, msg.responseDestination.topic, msg.responseDestination.uri, { data: data });
                     }
                     diff = process.hrtime(startTime);
-                    __1.Logger.info(`handle request ${msg.uri} took ${diff[0]} seconds and  ${diff[0]} nanoseconds`);
+                    __1.Logger.info(`handle request ${msg.uri} took ${diff[0]}.${diff[1]} seconds`);
                 }
                 catch (err) {
                     handleError(err);

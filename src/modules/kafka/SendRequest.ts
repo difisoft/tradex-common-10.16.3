@@ -130,7 +130,7 @@ class SendRequestCommon {
     this.sendMessageCheckReady(message, false);
   };
 
-  public sendResponse(transactionId: string | number, messageId: string | number, topic: string, uri: string, data: any): void {
+  public sendResponse(transactionId: string | number, messageId: string, topic: string, uri: string, data: any): void {
     const message: ISendMessage = this.createMessage(transactionId, topic, uri, data, MessageType.RESPONSE,
       undefined, undefined, messageId);
     this.sendMessageCheckReady(message, false);
@@ -184,14 +184,14 @@ class SendRequestCommon {
     this.doReallySendMessage(message);
   };
 
-  protected getMessageId(): number {
+  protected getMessageId(): string {
     this.messageId++;
-    return this.messageId;
+    return `${this.messageId}`;
   }
 
   protected createMessage(transactionId: string | number, topic: string, uri: string
     , data: any, messageType: MessageType = MessageType.MESSAGE
-    , responseTopic?: string, responseUri?: string, messageId?: string | number): ISendMessage {
+    , responseTopic?: string, responseUri?: string, messageId?: string): ISendMessage {
     return {
       topic: topic,
       message: {
@@ -213,7 +213,7 @@ class SendRequestCommon {
 }
 
 class SendRequest extends SendRequestCommon {
-  private requestedMessages: Map<string | number, ISendMessage> = new Map<string | number, ISendMessage>();
+  private requestedMessages: Map<string, ISendMessage> = new Map<string, ISendMessage>();
   private readonly expiredIn: number = 0;
 
   constructor(
@@ -276,7 +276,7 @@ class SendRequest extends SendRequestCommon {
   };
 
   protected timeout(message: ISendMessage) {
-    const msgId: string = <string>message.message.messageId;
+    const msgId: string = message.message.messageId;
     if (this.requestedMessages.has(msgId)) {
       this.respondError(message, new TimeoutError());
       this.requestedMessages.delete(msgId);

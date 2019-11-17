@@ -24,6 +24,7 @@ class MessageHandler {
       const startTime: [number, number] = process.hrtime();
       let diff: [number, number] = null;
       const msgString: string = message.value.toString();
+      Logger.info(`receive msg: ${msgString}`);
       const msg: IMessage = JSON.parse(msgString);
       const shouldResponse = this.shouldResponse(msg);
       if (shouldResponse && msg.uri === "/healthcheck") {
@@ -41,7 +42,7 @@ class MessageHandler {
       if (obs === false) {
         if (shouldResponse) {
           diff = process.hrtime(startTime);
-          Logger.info(`process request ${msg.uri} took ${diff[0]} seconds and  ${diff[0]} nanoseconds`);
+          Logger.info(`process request ${msg.uri} took ${diff[0]}.${diff[1]} seconds`);
           this.sendRequest.sendResponse(
             msg.transactionId,
             msg.messageId,
@@ -53,7 +54,7 @@ class MessageHandler {
         return;
       } else if (obs === true) {
         diff = process.hrtime(startTime);
-        Logger.info(`forward request ${msg.uri} took ${diff[0]} seconds and  ${diff[0]} nanoseconds`);
+        Logger.info(`forward request ${msg.uri} took ${diff[0]}.${diff[1]} seconds`);
         return; // forwarding. do nothing
       }
       const handleError = (err: Error) => {
@@ -68,7 +69,7 @@ class MessageHandler {
           );
         }
         diff = process.hrtime(startTime);
-        Logger.info(`handle request ${msg.uri} took ${diff[0]} seconds and  ${diff[0]} nanoseconds`);
+        Logger.info(`handle request ${msg.uri} took ${diff[0]}.${diff[1]} seconds`);
       };
       const handleData = (data: any) => {
         try {
@@ -82,7 +83,7 @@ class MessageHandler {
             );
           }
           diff = process.hrtime(startTime);
-          Logger.info(`handle request ${msg.uri} took ${diff[0]} seconds and  ${diff[0]} nanoseconds`);
+          Logger.info(`handle request ${msg.uri} took ${diff[0]}.${diff[1]} seconds`);
         } catch (err) {
           handleError(err);
         }

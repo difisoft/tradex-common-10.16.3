@@ -168,7 +168,7 @@ class SendRequestCommon {
     }
     getMessageId() {
         this.messageId++;
-        return this.messageId;
+        return `${this.messageId}`;
     }
     createMessage(transactionId, topic, uri, data, messageType = types_1.MessageType.MESSAGE, responseTopic, responseUri, messageId) {
         return {

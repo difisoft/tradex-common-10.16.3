@@ -26,13 +26,13 @@ declare class SendRequestCommon {
     getResponseTopic(): string;
     sendMessage(transactionId: string, topic: string, uri: string, data: any, highLatency?: boolean): void;
     sendForwardMessage(originMessage: any, newTopic: string, newUri: string): void;
-    sendResponse(transactionId: string | number, messageId: string | number, topic: string, uri: string, data: any): void;
+    sendResponse(transactionId: string | number, messageId: string, topic: string, uri: string, data: any): void;
     sendMessageCheckReady(message: ISendMessage, highLatency: boolean): void;
     protected timeout(message: ISendMessage): void;
     protected doReallySendMessage(message: ISendMessage): void;
     protected reallySendMessage: (message: ISendMessage) => void;
-    protected getMessageId(): number;
-    protected createMessage(transactionId: string | number, topic: string, uri: string, data: any, messageType?: MessageType, responseTopic?: string, responseUri?: string, messageId?: string | number): ISendMessage;
+    protected getMessageId(): string;
+    protected createMessage(transactionId: string | number, topic: string, uri: string, data: any, messageType?: MessageType, responseTopic?: string, responseUri?: string, messageId?: string): ISendMessage;
 }
 declare class SendRequest extends SendRequestCommon {
     private requestedMessages;

@@ -38,7 +38,7 @@ declare interface IResponseDestination {
 declare interface IMessage {
     messageType: MessageType;
     sourceId?: string;
-    messageId: string | number;
+    messageId: string;
     transactionId: string | number;
     uri?: string;
     responseDestination?: IResponseDestination;
