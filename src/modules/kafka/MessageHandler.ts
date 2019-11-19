@@ -20,10 +20,13 @@ class MessageHandler {
   }
 
   public handle(message: IKafkaMessage, func: Handle): void {
+    if (message.value == null) {
+      return;
+    }
+    const msgString: string = message.value.toString();
     try {
       const startTime: [number, number] = process.hrtime();
       let diff: [number, number] = null;
-      const msgString: string = message.value.toString();
       Logger.info(`receive msg: ${msgString}`);
       const msg: IMessage = JSON.parse(msgString);
       const shouldResponse = this.shouldResponse(msg);
@@ -54,11 +57,11 @@ class MessageHandler {
         return;
       } else if (obs === true) {
         diff = process.hrtime(startTime);
-        Logger.info(`forward request ${msg.uri} took ${diff[0]}.${diff[1]} seconds`);
+        Logger.info(`forward request ${msg.transactionId} ${msg.messageId} ${msg.uri} took ${diff[0]}.${diff[1]} seconds`);
         return; // forwarding. do nothing
       }
       const handleError = (err: Error) => {
-        logger.logError('error while processing request', err);
+        logger.logError(`error while processing request ${msg.transactionId} ${msg.messageId} ${msg.uri}`, err);
         if (shouldResponse) {
           this.sendRequest.sendResponse(
             msg.transactionId,
@@ -69,7 +72,7 @@ class MessageHandler {
           );
         }
         diff = process.hrtime(startTime);
-        Logger.info(`handle request ${msg.uri} took ${diff[0]}.${diff[1]} seconds`);
+        Logger.info(`handle request ${msg.transactionId} ${msg.messageId} ${msg.uri} took ${diff[0]}.${diff[1]} seconds`);
       };
       const handleData = (data: any) => {
         try {
@@ -94,7 +97,7 @@ class MessageHandler {
         obs.subscribe(handleData, handleError);
       }
     } catch (e) {
-      logger.logError('error while processing message', e);
+      logger.logError(`error while processing message ${message.topic} ${message.value} ${msgString}`, e);
     }
   }
 

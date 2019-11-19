@@ -16,10 +16,13 @@ class MessageHandler {
         }
     }
     handle(message, func) {
+        if (message.value == null) {
+            return;
+        }
+        const msgString = message.value.toString();
         try {
             const startTime = process.hrtime();
             let diff = null;
-            const msgString = message.value.toString();
             __1.Logger.info(`receive msg: ${msgString}`);
             const msg = JSON.parse(msgString);
             const shouldResponse = this.shouldResponse(msg);
@@ -39,16 +42,16 @@ class MessageHandler {
             }
             else if (obs === true) {
                 diff = process.hrtime(startTime);
-                __1.Logger.info(`forward request ${msg.uri} took ${diff[0]}.${diff[1]} seconds`);
+                __1.Logger.info(`forward request ${msg.transactionId} ${msg.messageId} ${msg.uri} took ${diff[0]}.${diff[1]} seconds`);
                 return;
             }
             const handleError = (err) => {
-                log_1.logger.logError('error while processing request', err);
+                log_1.logger.logError(`error while processing request ${msg.transactionId} ${msg.messageId} ${msg.uri}`, err);
                 if (shouldResponse) {
                     this.sendRequest.sendResponse(msg.transactionId, msg.messageId, msg.responseDestination.topic, msg.responseDestination.uri, this.getErrorMessage(err));
                 }
                 diff = process.hrtime(startTime);
-                __1.Logger.info(`handle request ${msg.uri} took ${diff[0]}.${diff[1]} seconds`);
+                __1.Logger.info(`handle request ${msg.transactionId} ${msg.messageId} ${msg.uri} took ${diff[0]}.${diff[1]} seconds`);
             };
             const handleData = (data) => {
                 try {
@@ -70,7 +73,7 @@ class MessageHandler {
             }
         }
         catch (e) {
-            log_1.logger.logError('error while processing message', e);
+            log_1.logger.logError(`error while processing message ${message.topic} ${message.value} ${msgString}`, e);
         }
     }
     shouldResponse(msg) {
