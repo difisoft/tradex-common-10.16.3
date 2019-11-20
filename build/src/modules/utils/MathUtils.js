@@ -7,7 +7,13 @@ exports.round = (input, scale = 2) => {
         return input;
     }
     else {
-        return Number(input.toFixed(scale));
+        try {
+            return Number(input.toFixed(scale));
+        }
+        catch (e) {
+            log_1.logger.error(`Error while round data: ${input}`);
+            return 0;
+        }
     }
 };
 //# sourceMappingURL=MathUtils.js.map

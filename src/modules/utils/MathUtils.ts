@@ -5,6 +5,11 @@ export const round = (input: number, scale: number = 2): number => {
     Logger.warn('Warning rounding undefined/null number');
     return input;
   } else {
-    return Number(input.toFixed(scale));
+    try {
+      return Number(input.toFixed(scale));
+    }catch (e) {
+      Logger.error(`Error while round data: ${input}`);
+      return 0;
+    }
   }
 };
