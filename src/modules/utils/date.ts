@@ -74,8 +74,9 @@ const getStartOfDate = (date: Date): Date => {
 };
 
 const getStartOfWeek = (date: Date): Date => {
+  const temp: Date = new Date(date.getTime());
   const diff = date.getDate() - date.getDay() + (date.getDay() === 0 ? -6 : 1);
-  const temp: Date = new Date(date.setDate(diff));
+  temp.setDate(diff);
   temp.setHours(0, 0, 0, 0);
   return temp;
 };
