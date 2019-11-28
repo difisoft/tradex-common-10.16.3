@@ -23,5 +23,6 @@ export default interface IToken {
     refreshTokenId?: number;
     scopeGroupIds?: number[];
     serviceUsername?: string;
+    platform?: string;
     userData?: IUserData;
 }
