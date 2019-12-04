@@ -46,7 +46,7 @@ class PromiseJoinError extends Error {
         this.results = results;
     }
 }
-function allPromiseDone(promises, stopOnError = false) {
+function allPromiseDone(promises, stopOnError = false, returnError = true) {
     return tslib_1.__awaiter(this, void 0, void 0, function* () {
         const data = [];
         promises.forEach(() => data.push({
@@ -73,11 +73,16 @@ function allPromiseDone(promises, stopOnError = false) {
             }
             finishCount++;
             if (finishCount === data.length) {
-                if (errorCount === 0) {
-                    resolve(data);
+                if (returnError) {
+                    if (errorCount === 0) {
+                        resolve(data);
+                    }
+                    else {
+                        reject(new PromiseJoinError(data));
+                    }
                 }
                 else {
-                    reject(new PromiseJoinError(data));
+                    resolve(data);
                 }
             }
         };

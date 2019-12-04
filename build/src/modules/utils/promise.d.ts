@@ -13,5 +13,5 @@ interface IPromiseJoin<T> {
     result?: T;
     error?: Error;
 }
-declare function allPromiseDone<T>(promises: Promise<T>[], stopOnError?: boolean): Promise<IPromiseJoin<T>[]>;
+declare function allPromiseDone<T>(promises: Promise<T>[], stopOnError?: boolean, returnError?: boolean): Promise<IPromiseJoin<T>[]>;
 export { promise, handlePromise, Resolve, Reject, PromiseFunction, RetryError, asyncWithRetry, IPromiseJoin, allPromiseDone, };

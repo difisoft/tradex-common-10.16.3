@@ -49,7 +49,7 @@ class PromiseJoinError<T> extends Error {
   }
 }
 
-async function allPromiseDone<T>(promises: Promise<T>[], stopOnError: boolean = false): Promise<IPromiseJoin<T>[]> {
+async function allPromiseDone<T>(promises: Promise<T>[], stopOnError: boolean = false, returnError: boolean = true): Promise<IPromiseJoin<T>[]> {
   const data: IPromiseJoin<T>[] = [];
   promises.forEach(() => data.push({
     state: 0
@@ -74,10 +74,14 @@ async function allPromiseDone<T>(promises: Promise<T>[], stopOnError: boolean = 
     }
     finishCount++;
     if (finishCount === data.length) {
-      if (errorCount === 0) {
-        resolve(data);
+      if (returnError) {
+        if (errorCount === 0) {
+          resolve(data);
+        } else {
+          reject(new PromiseJoinError(data));
+        }
       } else {
-        reject(new PromiseJoinError(data));
+        resolve(data);
       }
     }
   };
