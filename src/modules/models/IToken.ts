@@ -25,5 +25,7 @@ export default interface IToken {
   scopeGroupIds?: number[];
   serviceUsername?: string;
   platform?: string;
+  osVersion?: string;
+  appVersion?: string;
   userData?: IUserData;
 }
