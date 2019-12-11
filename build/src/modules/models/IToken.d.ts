@@ -23,6 +23,7 @@ export default interface IToken {
     refreshTokenId?: number;
     scopeGroupIds?: number[];
     serviceUsername?: string;
+    registerMobileOtp?: boolean;
     platform?: string;
     osVersion?: string;
     appVersion?: string;
