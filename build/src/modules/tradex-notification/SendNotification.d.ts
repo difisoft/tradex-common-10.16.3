@@ -15,7 +15,7 @@ export default class SendNotification {
     sendResetPasswordEmail(txId: string, conf: EmailConfiguration, locale: string, data: EmailResetPasswordData): void;
     sendPushNotification(txId: string, conf: OneSignalConfiguration, data: ITemplateData): void;
     sendSocketCluser(txId: string, conf: SocketClusterConfiguration, data: ITemplateData): void;
-    sendSms(txId: string, conf: SmsConfiguration, data: ITemplateData): void;
+    sendSms(txId: string, conf: SmsConfiguration, data: ITemplateData, locale: string, domain: string): void;
 }
 export declare function create(send: SendRequestCommon, notificationListenningTopic?: string): void;
 export declare function getInstance(): SendNotification;

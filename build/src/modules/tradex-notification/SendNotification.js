@@ -39,9 +39,10 @@ class SendNotification {
         request.add(data.getTemplate(), data);
         this.send.sendMessage(txId, this.notificationListenningTopic, '', request.toJson());
     }
-    sendSms(txId, conf, data) {
+    sendSms(txId, conf, data, locale, domain) {
         const request = new NotificationRequest_1.default();
         request.setConfiguration(conf);
+        request.locale = locale;
         request.add(data.getTemplate(), data);
         this.send.sendMessage(txId, this.notificationListenningTopic, '', request.toJson());
     }
