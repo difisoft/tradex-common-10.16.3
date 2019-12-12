@@ -3,6 +3,7 @@ enum MethodEnum {
   KAKAO = 'KAKAO',
   ONESIGNAL = 'ONESIGNAL',
   SOCKET_CLUSTER = 'SOCKET_CLUSTER',
+  SMS = 'SMS',
 }
 
 export default MethodEnum;
