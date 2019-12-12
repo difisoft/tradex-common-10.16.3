@@ -51,7 +51,7 @@ export default class SendNotification {
     this.send.sendMessage(txId, this.notificationListenningTopic, '', request.toJson());
   }
 
-  public sendSms(txId: string, conf: SmsConfiguration, data: ITemplateData, locale: string, domain: string) {
+  public sendSms(txId: string, conf: SmsConfiguration, data: ITemplateData, locale: string) {
     const request: NotificationRequest = new NotificationRequest();
     request.setConfiguration(conf);
     request.locale = locale;
