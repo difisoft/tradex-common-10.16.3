@@ -10,6 +10,7 @@ import OneSignalConfiguration, {
   IosBadgeType
 } from './OneSignalConfiguration';
 import EmailConfiguration from './EmailConfiguration';
+import SmsConfiguration from './SmsConfiguration';
 import KakaoConfiguration from './KakaoConfiguration';
 import AlarmNotificationData from './AlarmNotificationData';
 import OrderResultNotificationData from './OrderResultNotificationData';
@@ -24,6 +25,7 @@ import SocketClusterData from './SocketClusterData'
 export {
   IConfiguration,
   EmailConfiguration,
+  SmsConfiguration,
   OneSignalConfiguration,
   KakaoConfiguration,
   ITemplateData,
