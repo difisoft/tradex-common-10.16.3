@@ -24,6 +24,11 @@ import {
   ISendMessage, 
   MessageType 
 } from "./types";
+import {
+  IConsumerProcess,
+  IRawProcessor,
+  ConsumerHub,
+} from "./ConsumerHub";
 
 export {
   StreamHandler,
@@ -44,4 +49,7 @@ export {
   Handle,
   getResponse,
   STREAM_STATE,
+  IConsumerProcess,
+  IRawProcessor,
+  ConsumerHub,
 };

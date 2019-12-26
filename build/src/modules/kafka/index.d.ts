@@ -2,4 +2,5 @@ import { StreamHandler, IKafkaMessage, createBroadcastListener } from "./StreamH
 import { Handle, HandleResult, MessageHandler, getErrorMessage } from "./MessageHandler";
 import { create, getInstance, SendRequest, SendRequestCommon, getResponse } from "./SendRequest";
 import { IConf, IMessage, STREAM_STATE, IResponseDestination, ISendMessage, MessageType } from "./types";
-export { StreamHandler, IKafkaMessage, createBroadcastListener, SendRequest, SendRequestCommon, create, getInstance, MessageType, MessageHandler, getErrorMessage, IConf, ISendMessage, IMessage, IResponseDestination, HandleResult, Handle, getResponse, STREAM_STATE, };
+import { IConsumerProcess, IRawProcessor, ConsumerHub } from "./ConsumerHub";
+export { StreamHandler, IKafkaMessage, createBroadcastListener, SendRequest, SendRequestCommon, create, getInstance, MessageType, MessageHandler, getErrorMessage, IConf, ISendMessage, IMessage, IResponseDestination, HandleResult, Handle, getResponse, STREAM_STATE, IConsumerProcess, IRawProcessor, ConsumerHub, };

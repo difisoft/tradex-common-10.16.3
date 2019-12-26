@@ -15,4 +15,6 @@ exports.getResponse = SendRequest_1.getResponse;
 const types_1 = require("./types");
 exports.STREAM_STATE = types_1.STREAM_STATE;
 exports.MessageType = types_1.MessageType;
+const ConsumerHub_1 = require("./ConsumerHub");
+exports.ConsumerHub = ConsumerHub_1.ConsumerHub;
 //# sourceMappingURL=index.js.map
