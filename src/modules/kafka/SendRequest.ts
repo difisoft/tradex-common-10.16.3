@@ -121,6 +121,16 @@ class SendRequestCommon {
     this.sendMessageCheckReady(message, highLatency);
   };
 
+  public sendRaw(topic: string, data: any, highLatency: boolean = true): void {
+    const message: ISendMessage = {
+      raw: true,
+      message: data,
+      topic: topic,
+      highLatency: highLatency,
+    };
+    this.sendMessageCheckReady(message, highLatency);
+  };
+
   public sendForwardMessage(originMessage: any, newTopic: string, newUri: string): void {
     const message: ISendMessage = {
       topic: newTopic,

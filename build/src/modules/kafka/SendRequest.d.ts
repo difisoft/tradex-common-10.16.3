@@ -25,6 +25,7 @@ declare class SendRequestCommon {
     constructor(conf: IConf, handleSendError?: (e: Error) => boolean, producerOptions?: any, topicOptions?: any, readyCallback?: () => void, moreReadyStateFields?: string[]);
     getResponseTopic(): string;
     sendMessage(transactionId: string, topic: string, uri: string, data: any, highLatency?: boolean): void;
+    sendRaw(topic: string, data: any, highLatency?: boolean): void;
     sendForwardMessage(originMessage: any, newTopic: string, newUri: string): void;
     sendResponse(transactionId: string | number, messageId: string, topic: string, uri: string, data: any): void;
     sendMessageCheckReady(message: ISendMessage, highLatency: boolean): void;

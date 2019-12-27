@@ -26,10 +26,11 @@ declare class PromiseState<T> {
 declare interface ISendMessage {
     topic: string;
     subject?: Rx.Subject<IMessage> | PromiseState<IMessage>;
-    message: IMessage;
+    message: IMessage | any;
     highLatency?: boolean;
     timeout?: number;
     sendType?: number;
+    raw?: boolean;
 }
 declare interface IResponseDestination {
     topic: string;

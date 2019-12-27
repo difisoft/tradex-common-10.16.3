@@ -108,6 +108,16 @@ class SendRequestCommon {
         this.sendMessageCheckReady(message, highLatency);
     }
     ;
+    sendRaw(topic, data, highLatency = true) {
+        const message = {
+            raw: true,
+            message: data,
+            topic: topic,
+            highLatency: highLatency,
+        };
+        this.sendMessageCheckReady(message, highLatency);
+    }
+    ;
     sendForwardMessage(originMessage, newTopic, newUri) {
         const message = {
             topic: newTopic,
