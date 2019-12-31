@@ -85,6 +85,8 @@ declare const _default: {
     getEnvJson: typeof getEnvJson;
     diffMsTime: typeof diffMsTime;
     getMsTime: typeof getMsTime;
+    convertISO8601StringToDate: (data: string) => Date;
+    formatISO8601StringToDate: (data: Date) => string;
 };
 export default _default;
 export { State, Resolve, Reject, PromiseFunction, IPromiseJoin };

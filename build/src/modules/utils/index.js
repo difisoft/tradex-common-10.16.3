@@ -93,5 +93,7 @@ exports.default = {
     getEnvJson: config_1.getEnvJson,
     diffMsTime: mstime_1.diffMsTime,
     getMsTime: mstime_1.getMsTime,
+    convertISO8601StringToDate: date_1.convertISO8601StringToDate,
+    formatISO8601StringToDate: date_1.formatISO8601StringToDate,
 };
 //# sourceMappingURL=index.js.map

@@ -36,7 +36,9 @@ import {
   getStartOfWeek,
   getEndOfWeek,
   getStartOfMonth,
-  getEndOfMonth
+  getEndOfMonth,
+  convertISO8601StringToDate,
+  formatISO8601StringToDate,
 } from "./date";
 import { isEmpty, leftPad, rightPad } from "./StringUtils";
 import { isNullOrUndefined, setObjKey } from "./ObjectUtils";
@@ -153,6 +155,8 @@ export default {
   getEnvJson,
   diffMsTime,
   getMsTime,
+  convertISO8601StringToDate,
+  formatISO8601StringToDate,
 };
 
 export {

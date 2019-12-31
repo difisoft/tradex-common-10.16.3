@@ -56,6 +56,30 @@ const convertStringToDate = (data, format = DATE_DISPLAY_FORMAT) => {
     }
 };
 exports.convertStringToDate = convertStringToDate;
+const convertISO8601StringToDate = (data) => {
+    try {
+        const obj = moment(data);
+        if (obj.isValid()) {
+            return obj.toDate();
+        }
+        else {
+            return null;
+        }
+    }
+    catch (e) {
+        return null;
+    }
+};
+exports.convertISO8601StringToDate = convertISO8601StringToDate;
+const formatISO8601StringToDate = (data) => {
+    try {
+        return moment(data).toISOString();
+    }
+    catch (e) {
+        return null;
+    }
+};
+exports.formatISO8601StringToDate = formatISO8601StringToDate;
 const compareDateOnly = (date1, date2) => {
     const temp1 = new Date(date1.getTime());
     const temp2 = new Date(date2.getTime());

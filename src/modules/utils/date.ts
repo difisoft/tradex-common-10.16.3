@@ -51,6 +51,27 @@ const convertStringToDate = (data: string, format: string = DATE_DISPLAY_FORMAT)
   }
 };
 
+const convertISO8601StringToDate = (data: string): Date => {
+  try {
+    const obj = moment(data);
+    if (obj.isValid()) {
+      return obj.toDate();
+    } else {
+      return null;
+    }
+  } catch (e) {
+    return null;
+  }
+};
+
+const formatISO8601StringToDate = (data: Date): string=> {
+  try {
+    return moment(data).toISOString();
+  } catch (e) {
+    return null;
+  }
+};
+
 
 const compareDateOnly = (date1: Date, date2: Date): number => {
   const temp1 = new Date(date1.getTime());
@@ -125,5 +146,7 @@ export {
   getStartOfWeek,
   getEndOfWeek,
   getStartOfMonth,
-  getEndOfMonth
+  getEndOfMonth,
+  convertISO8601StringToDate,
+  formatISO8601StringToDate,
 }
