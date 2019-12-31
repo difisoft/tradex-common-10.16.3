@@ -33,6 +33,7 @@ declare const _default: {
     formatDateToDisplay: (date: Date, format?: string) => string;
     compareDateOnly: (date1: Date, date2: Date) => number;
     convertStringToDate: (data: string, format?: string) => Date;
+    MINUTE_DATE_DISPLAY_FORMAT: string;
     DATETIME_DISPLAY_FORMAT: string;
     DATE_DISPLAY_FORMAT: string;
     TIME_DISPLAY_FORMAT: string;

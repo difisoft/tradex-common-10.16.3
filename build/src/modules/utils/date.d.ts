@@ -1,3 +1,4 @@
+declare const MINUTE_DATE_DISPLAY_FORMAT = "YYYY-MM-DD";
 declare const DATE_DISPLAY_FORMAT = "YYYYMMDD";
 declare const DATETIME_DISPLAY_FORMAT = "YYYYMMDDhhmmss";
 declare const TIME_DISPLAY_FORMAT = "hhmmss";
@@ -12,4 +13,4 @@ declare const getEndOfWeek: (date: Date) => Date;
 declare const getStartOfMonth: (date: Date) => Date;
 declare const getEndOfMonth: (date: Date) => Date;
 declare const countDaysOfAYear: (year: number) => number;
-export { formatDateToDisplay, convertStringToDate, DATETIME_DISPLAY_FORMAT, DATE_DISPLAY_FORMAT, TIME_DISPLAY_FORMAT, compareDateOnly, getEndOfDate, getStartOfDate, countDayBetween, countDaysOfAYear, getStartOfWeek, getEndOfWeek, getStartOfMonth, getEndOfMonth };
+export { formatDateToDisplay, convertStringToDate, MINUTE_DATE_DISPLAY_FORMAT, DATETIME_DISPLAY_FORMAT, DATE_DISPLAY_FORMAT, TIME_DISPLAY_FORMAT, compareDateOnly, getEndOfDate, getStartOfDate, countDayBetween, countDaysOfAYear, getStartOfWeek, getEndOfWeek, getStartOfMonth, getEndOfMonth };

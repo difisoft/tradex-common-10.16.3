@@ -44,6 +44,7 @@ exports.default = {
     formatDateToDisplay: date_1.formatDateToDisplay,
     compareDateOnly: date_1.compareDateOnly,
     convertStringToDate: date_1.convertStringToDate,
+    MINUTE_DATE_DISPLAY_FORMAT: date_1.MINUTE_DATE_DISPLAY_FORMAT,
     DATETIME_DISPLAY_FORMAT: date_1.DATETIME_DISPLAY_FORMAT,
     DATE_DISPLAY_FORMAT: date_1.DATE_DISPLAY_FORMAT,
     TIME_DISPLAY_FORMAT: date_1.TIME_DISPLAY_FORMAT,

@@ -24,6 +24,7 @@ import { singleton } from "./Singleton";
 import {
   compareDateOnly,
   convertStringToDate,
+  MINUTE_DATE_DISPLAY_FORMAT,
   DATE_DISPLAY_FORMAT,
   DATETIME_DISPLAY_FORMAT,
   TIME_DISPLAY_FORMAT,
@@ -103,6 +104,7 @@ export default {
   formatDateToDisplay,
   compareDateOnly,
   convertStringToDate,
+  MINUTE_DATE_DISPLAY_FORMAT,
   DATETIME_DISPLAY_FORMAT,
   DATE_DISPLAY_FORMAT,
   TIME_DISPLAY_FORMAT,

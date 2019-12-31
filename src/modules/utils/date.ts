@@ -2,6 +2,7 @@ import * as moment from 'moment';
 import InvalidParameterError from '../errors/InvalidParameterError';
 import { logger as Logger } from '../../modules/log';
 
+const MINUTE_DATE_DISPLAY_FORMAT = 'YYYY-MM-DD';
 const DATE_DISPLAY_FORMAT = 'YYYYMMDD';
 const DATETIME_DISPLAY_FORMAT = 'YYYYMMDDhhmmss';
 const TIME_DISPLAY_FORMAT = 'hhmmss';
@@ -112,6 +113,7 @@ const isLeapYear = (year: number): boolean => {
 export {
   formatDateToDisplay,
   convertStringToDate,
+  MINUTE_DATE_DISPLAY_FORMAT,
   DATETIME_DISPLAY_FORMAT,
   DATE_DISPLAY_FORMAT,
   TIME_DISPLAY_FORMAT,

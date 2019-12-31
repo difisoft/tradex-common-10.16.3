@@ -3,6 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const moment = require("moment");
 const InvalidParameterError_1 = require("../errors/InvalidParameterError");
 const log_1 = require("../../modules/log");
+const MINUTE_DATE_DISPLAY_FORMAT = 'YYYY-MM-DD';
+exports.MINUTE_DATE_DISPLAY_FORMAT = MINUTE_DATE_DISPLAY_FORMAT;
 const DATE_DISPLAY_FORMAT = 'YYYYMMDD';
 exports.DATE_DISPLAY_FORMAT = DATE_DISPLAY_FORMAT;
 const DATETIME_DISPLAY_FORMAT = 'YYYYMMDDhhmmss';
