@@ -3,6 +3,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 class GeneralError extends Error {
     constructor(code = 'INTERNAL_SERVER_ERROR', params = null, source, messageParams) {
         super();
+        this.toStatus = () => {
+            return {
+                code: this.code,
+                params: this.params,
+                messageParams: this.messageParams,
+            };
+        };
         this.code = code;
         this.messageParams = messageParams;
         this.source = source;

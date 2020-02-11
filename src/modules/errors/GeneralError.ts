@@ -15,6 +15,14 @@ export default class GeneralError extends Error {
     this.params = params;
     this.isSystemError = true;
   }
+
+  public toStatus: () => IStatus = () => {
+    return {
+      code: this.code,
+      params: this.params,
+      messageParams: this.messageParams,
+    };
+  }
 }
 
 function createFromStatus(status: IStatus): GeneralError {

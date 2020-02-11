@@ -6,6 +6,7 @@ export default class GeneralError extends Error {
     params: any;
     isSystemError: boolean;
     constructor(code?: string, params?: any[], source?: any, messageParams?: any);
+    toStatus: () => IStatus;
 }
 declare function createFromStatus(status: IStatus): GeneralError;
 export { createFromStatus, };
