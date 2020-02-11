@@ -44,7 +44,11 @@ import { isEmpty, leftPad, rightPad } from "./StringUtils";
 import { isNullOrUndefined, setObjKey } from "./ObjectUtils";
 import { round } from "./MathUtils";
 import { removeDuplicateObj } from "./ArrayUtils";
-import { generateToken } from "./token";
+import {
+  generateToken,
+  convertToken,
+  undefinedOr,
+} from "./token";
 import {
   getInstance as getI18nInstance,
   getLanguageCode,
@@ -111,6 +115,8 @@ export default {
   DATE_DISPLAY_FORMAT,
   TIME_DISPLAY_FORMAT,
   generateToken,
+  convertToken,
+  undefinedOr,
   getLanguageCode,
   initI18n,
   initI18nInternal,

@@ -3,6 +3,7 @@
 import { onError, onNext, transform, transformAsync, transformError, transformPromise, transformPromiseAsync, transformSingle, transformSingleAsync, transformSinglePromise } from "./rx";
 import { createFailFromError, createFailValidation, createSuccessValidation, validate, Validate, validateEmail, validatePassword } from "./validation";
 import { setObjKey } from "./ObjectUtils";
+import { convertToken, undefinedOr } from "./token";
 import { getForwardUri } from "./scope";
 import { processJwtKey, processJwtKeyByDomain, processJwtKeyObject } from "./keys";
 import State from "./State";
@@ -38,6 +39,8 @@ declare const _default: {
     DATE_DISPLAY_FORMAT: string;
     TIME_DISPLAY_FORMAT: string;
     generateToken: (length?: number, onlyDigit?: boolean) => string;
+    convertToken: typeof convertToken;
+    undefinedOr: typeof undefinedOr;
     getLanguageCode: (acceptLanguageHeader: string) => string;
     initI18n: (msNames: string, namespaceList: string[], requestTopic?: string, uri?: string) => void;
     initI18nInternal: (msNames: string, namespaceList: string[], requestTopic?: string, uri?: string) => void;

@@ -1,3 +1,4 @@
+import IConnectionIdentifier from "./IConnectionIdentifier";
 export declare interface IUserData {
     username?: string;
     orderKeys?: string;
@@ -27,4 +28,23 @@ export default interface IToken {
     osVersion?: string;
     appVersion?: string;
     userData?: IUserData;
+}
+export interface IAccessTokenExtendData {
+    sgIds: number[];
+    conId?: IConnectionIdentifier;
+    sc?: string;
+    su?: string;
+    ud?: IUserData;
+    pl?: string;
+    osV?: string;
+    appV?: string;
+}
+export interface IAccessToken extends IAccessTokenExtendData {
+    dm?: string;
+    uId?: number;
+    cId: number;
+    suId?: number;
+    lm: number;
+    rId: number;
+    rls?: string[];
 }
