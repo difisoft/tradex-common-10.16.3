@@ -1,11 +1,11 @@
 import { IScope, ICommonForward, ForwardType, IForwardConnection, ForwardDataType, IForwardService } from '../models/aaa';
 import { IToken, IForwardUriResult } from '../models';
-import { IMessage } from '../kafka';
 
 type CheckService = (serviceName: string, nodeId?: string) => boolean;
 
-function getForwardUriWithSetting(msg: IMessage, forwardConfig: ICommonForward, token: IToken, isServiceAlive: CheckService, transformUriMap?: any): IForwardUriResult {
+function getForwardUriWithSetting(msg: IInputUri | string, forwardConfig: ICommonForward, token: IToken, isServiceAlive: CheckService, transformUriMap?: any): IForwardUriResult {
   const result: IForwardUriResult = {};
+  const uri: string = (typeof msg === 'string') ? msg : msg.uri;
   if (forwardConfig.forwardType === ForwardType.CONNECTION) {
     const forwardData: IForwardConnection = <IForwardConnection>forwardConfig;
     if (forwardData.type.toString() === ForwardDataType.SERVICE_STRING_MAPPING) {
@@ -14,14 +14,14 @@ function getForwardUriWithSetting(msg: IMessage, forwardConfig: ICommonForward, 
       }
     } else if (forwardData.type.toString() === ForwardDataType.SERVICE_STRING_MAPPING) {
       if (token.serviceName in forwardData.uri_mapping) {
-        result.uri = transformUriMap[forwardData.uri_mapping[token.serviceName]](msg.uri);
+        result.uri = transformUriMap[forwardData.uri_mapping[token.serviceName]](uri);
       }
     }
     result.conId = {
       connectionId: token.connectionId,
       serviceId: token.serviceId, 
       serviceName: token.serviceName,
-    }
+    };
     const serviceName: string = token.serviceName;
     const serviceId: string = token.serviceId;
     if (isServiceAlive(serviceName, serviceId)) {
@@ -44,6 +44,10 @@ function getForwardUriWithSetting(msg: IMessage, forwardConfig: ICommonForward, 
   return result;
 }
 
-export function getForwardUri(msg: IMessage, matchedScope: IScope, token: IToken, isServiceAlive: CheckService, transformUriMap?: any): IForwardUriResult {
+export interface IInputUri {
+  uri: string;
+}
+
+export function getForwardUri(msg: IInputUri | string, matchedScope: IScope, token: IToken, isServiceAlive: CheckService, transformUriMap?: any): IForwardUriResult {
   return getForwardUriWithSetting(msg, matchedScope.forwardData, token, isServiceAlive, transformUriMap);
 }

@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const aaa_1 = require("../models/aaa");
 function getForwardUriWithSetting(msg, forwardConfig, token, isServiceAlive, transformUriMap) {
     const result = {};
+    const uri = (typeof msg === 'string') ? msg : msg.uri;
     if (forwardConfig.forwardType === aaa_1.ForwardType.CONNECTION) {
         const forwardData = forwardConfig;
         if (forwardData.type.toString() === aaa_1.ForwardDataType.SERVICE_STRING_MAPPING) {
@@ -12,7 +13,7 @@ function getForwardUriWithSetting(msg, forwardConfig, token, isServiceAlive, tra
         }
         else if (forwardData.type.toString() === aaa_1.ForwardDataType.SERVICE_STRING_MAPPING) {
             if (token.serviceName in forwardData.uri_mapping) {
-                result.uri = transformUriMap[forwardData.uri_mapping[token.serviceName]](msg.uri);
+                result.uri = transformUriMap[forwardData.uri_mapping[token.serviceName]](uri);
             }
         }
         result.conId = {
