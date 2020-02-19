@@ -11,6 +11,16 @@ const DATETIME_DISPLAY_FORMAT = 'YYYYMMDDhhmmss';
 exports.DATETIME_DISPLAY_FORMAT = DATETIME_DISPLAY_FORMAT;
 const TIME_DISPLAY_FORMAT = 'hhmmss';
 exports.TIME_DISPLAY_FORMAT = TIME_DISPLAY_FORMAT;
+const isWeekend = (date) => {
+    try {
+        return (date.getDay() === 6 || date.getDay() === 0);
+    }
+    catch (e) {
+        log_1.logger.error(`error on check isWeekend: ${date} - error: ${e}`);
+        throw new InvalidParameterError_1.default();
+    }
+};
+exports.isWeekend = isWeekend;
 const countDayBetween = (dateFrom, dateTo) => {
     try {
         const momentFrom = moment(dateFrom);

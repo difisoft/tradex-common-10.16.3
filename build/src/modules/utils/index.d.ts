@@ -58,6 +58,7 @@ declare const _default: {
     getStartOfDate: (date: Date) => Date;
     getEndOfDate: (date: Date) => Date;
     countDayBetween: (dateFrom: Date, dateTo: Date) => number;
+    isWeekend: (date: Date) => boolean;
     getStartOfWeek: (date: Date) => Date;
     getEndOfWeek: (date: Date) => Date;
     getStartOfMonth: (date: Date) => Date;

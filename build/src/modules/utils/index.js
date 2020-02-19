@@ -68,6 +68,7 @@ exports.default = {
     getStartOfDate: date_1.getStartOfDate,
     getEndOfDate: date_1.getEndOfDate,
     countDayBetween: date_1.countDayBetween,
+    isWeekend: date_1.isWeekend,
     getStartOfWeek: date_1.getStartOfWeek,
     getEndOfWeek: date_1.getEndOfWeek,
     getStartOfMonth: date_1.getStartOfMonth,

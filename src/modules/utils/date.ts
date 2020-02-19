@@ -8,6 +8,15 @@ const DATETIME_DISPLAY_FORMAT = 'YYYYMMDDhhmmss';
 const TIME_DISPLAY_FORMAT = 'hhmmss';
 
 
+const isWeekend = (date: Date): boolean => {
+  try {
+    return (date.getDay() === 6 || date.getDay() === 0); // 6 = Saturday, 0 = Sunday
+  } catch (e) {
+    Logger.error(`error on check isWeekend: ${date} - error: ${e}`);
+    throw new InvalidParameterError();
+  }
+};
+
 const countDayBetween = (dateFrom: Date, dateTo: Date): number => {
   try {
     const momentFrom = moment(dateFrom);
@@ -149,4 +158,5 @@ export {
   getEndOfMonth,
   convertISO8601StringToDate,
   formatISO8601StringToDate,
+  isWeekend
 }
