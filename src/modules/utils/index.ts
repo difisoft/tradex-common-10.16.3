@@ -41,6 +41,7 @@ import {
   convertISO8601StringToDate,
   formatISO8601StringToDate,
 } from "./date";
+import {rsaEncrypt, rsaDecrypt} from './rsa';
 import { isEmpty, leftPad, rightPad } from "./StringUtils";
 import { isNullOrUndefined, setObjKey } from "./ObjectUtils";
 import { round } from "./MathUtils";
@@ -165,6 +166,8 @@ export default {
   getMsTime,
   convertISO8601StringToDate,
   formatISO8601StringToDate,
+  rsaEncrypt,
+  rsaDecrypt,
 };
 
 export {
