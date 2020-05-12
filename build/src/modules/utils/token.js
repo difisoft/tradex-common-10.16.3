@@ -31,6 +31,7 @@ function convertToken(token) {
         loginMethod: undefinedOr(token.lm),
         osVersion: undefinedOr(token.osV),
         platform: undefinedOr(token.pl),
+        grantType: undefinedOr(token.gt),
         refreshTokenId: undefinedOr(token.rId),
         scopeGroupIds: undefinedOr(token.sgIds),
         serviceCode: undefinedOr(token.sc),

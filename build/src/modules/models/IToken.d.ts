@@ -27,6 +27,7 @@ export default interface IToken {
     platform?: string;
     osVersion?: string;
     appVersion?: string;
+    grantType?: string;
     userData?: IUserData;
 }
 export interface IAccessTokenExtendData {
@@ -36,6 +37,7 @@ export interface IAccessTokenExtendData {
     su?: string;
     ud?: IUserData;
     pl?: string;
+    gt?: string;
     osV?: string;
     appV?: string;
 }

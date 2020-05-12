@@ -38,7 +38,7 @@ export interface IAccessTokenExtendData {
   conId?: IConnectionIdentifier; // connectionId
   sc?: string; // serviceCode
   su?: string; // serviceUser
-  ud?: IUserData; // userdata
+  ud?: IUserData; // userData
   pl?: string; // platform: web/mobile
   gt?: string; // grant_type
   osV?: string;
