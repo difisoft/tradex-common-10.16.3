@@ -91,6 +91,8 @@ declare const _default: {
     getMsTime: typeof getMsTime;
     convertISO8601StringToDate: (data: string) => Date;
     formatISO8601StringToDate: (data: Date) => string;
+    rsaEncrypt: (data: string, publicKey: string) => string;
+    rsaDecrypt: (data: string, privateKey: string) => string;
 };
 export default _default;
 export { State, Resolve, Reject, PromiseFunction, IPromiseJoin };

@@ -5,6 +5,7 @@ const rx_1 = require("./rx");
 const validation_1 = require("./validation");
 const Singleton_1 = require("./Singleton");
 const date_1 = require("./date");
+const rsa_1 = require("./rsa");
 const StringUtils_1 = require("./StringUtils");
 const ObjectUtils_1 = require("./ObjectUtils");
 const MathUtils_1 = require("./MathUtils");
@@ -98,5 +99,7 @@ exports.default = {
     getMsTime: mstime_1.getMsTime,
     convertISO8601StringToDate: date_1.convertISO8601StringToDate,
     formatISO8601StringToDate: date_1.formatISO8601StringToDate,
+    rsaEncrypt: rsa_1.rsaEncrypt,
+    rsaDecrypt: rsa_1.rsaDecrypt,
 };
 //# sourceMappingURL=index.js.map
