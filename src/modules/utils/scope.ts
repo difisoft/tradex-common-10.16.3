@@ -1,8 +1,6 @@
 import { IScope, ICommonForward, ForwardType, IForwardConnection, ForwardDataType, IForwardService } from '../models/aaa';
 import { IToken, IForwardUriResult } from '../models';
 
-type CheckService = (serviceName: string, nodeId?: string) => boolean;
-
 function getForwardUriWithSetting(msg: IInputUri | string, forwardConfig: ICommonForward, token: IToken, transformUriMap?: any): IForwardUriResult {
   const result: IForwardUriResult = {};
   const uri: string = (typeof msg === 'string') ? msg : msg.uri;
@@ -37,6 +35,6 @@ export interface IInputUri {
   uri: string;
 }
 
-export function getForwardUri(msg: IInputUri | string, matchedScope: IScope, token: IToken, isServiceAlive: CheckService, transformUriMap?: any): IForwardUriResult {
+export function getForwardUri(msg: IInputUri | string, matchedScope: IScope, token: IToken, transformUriMap?: any): IForwardUriResult {
   return getForwardUriWithSetting(msg, matchedScope.forwardData, token, transformUriMap);
 }

@@ -32,7 +32,7 @@ function getForwardUriWithSetting(msg, forwardConfig, token, transformUriMap) {
     }
     return result;
 }
-function getForwardUri(msg, matchedScope, token, isServiceAlive, transformUriMap) {
+function getForwardUri(msg, matchedScope, token, transformUriMap) {
     return getForwardUriWithSetting(msg, matchedScope.forwardData, token, transformUriMap);
 }
 exports.getForwardUri = getForwardUri;
