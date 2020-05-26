@@ -3,7 +3,7 @@ import { IToken, IForwardUriResult } from '../models';
 
 type CheckService = (serviceName: string, nodeId?: string) => boolean;
 
-function getForwardUriWithSetting(msg: IInputUri | string, forwardConfig: ICommonForward, token: IToken, isServiceAlive: CheckService, transformUriMap?: any): IForwardUriResult {
+function getForwardUriWithSetting(msg: IInputUri | string, forwardConfig: ICommonForward, token: IToken, transformUriMap?: any): IForwardUriResult {
   const result: IForwardUriResult = {};
   const uri: string = (typeof msg === 'string') ? msg : msg.uri;
   if (forwardConfig.forwardType === ForwardType.CONNECTION) {
@@ -24,20 +24,9 @@ function getForwardUriWithSetting(msg: IInputUri | string, forwardConfig: ICommo
     };
     const serviceName: string = token.serviceName;
     const serviceId: string = token.serviceId;
-    if (isServiceAlive(serviceName, serviceId)) {
-      result.topic = `${serviceName}.${serviceId}`;
-    } else {
-      if (forwardData.backup) {
-        return getForwardUriWithSetting(msg, forwardData.backup, token, isServiceAlive, transformUriMap);
-      }
-      result.topic = "ERROR";
-      result.uri = "SERVICE_DOWN";
-    }
+    result.topic = `${serviceName}.${serviceId}`;
   } else if (forwardConfig.forwardType === ForwardType.SERVICE) {
     const forwardData: IForwardService = <IForwardService>forwardConfig;
-    if (forwardData.backup && !isServiceAlive(forwardData.service)) {
-      return getForwardUriWithSetting(msg, forwardData.backup, token, isServiceAlive, transformUriMap);
-    }
     result.topic = forwardData.service;
     result.uri = forwardData.uri;
   }
@@ -49,5 +38,5 @@ export interface IInputUri {
 }
 
 export function getForwardUri(msg: IInputUri | string, matchedScope: IScope, token: IToken, isServiceAlive: CheckService, transformUriMap?: any): IForwardUriResult {
-  return getForwardUriWithSetting(msg, matchedScope.forwardData, token, isServiceAlive, transformUriMap);
+  return getForwardUriWithSetting(msg, matchedScope.forwardData, token, transformUriMap);
 }

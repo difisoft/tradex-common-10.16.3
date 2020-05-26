@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const aaa_1 = require("../models/aaa");
-function getForwardUriWithSetting(msg, forwardConfig, token, isServiceAlive, transformUriMap) {
+function getForwardUriWithSetting(msg, forwardConfig, token, transformUriMap) {
     const result = {};
     const uri = (typeof msg === 'string') ? msg : msg.uri;
     if (forwardConfig.forwardType === aaa_1.ForwardType.CONNECTION) {
@@ -23,29 +23,17 @@ function getForwardUriWithSetting(msg, forwardConfig, token, isServiceAlive, tra
         };
         const serviceName = token.serviceName;
         const serviceId = token.serviceId;
-        if (isServiceAlive(serviceName, serviceId)) {
-            result.topic = `${serviceName}.${serviceId}`;
-        }
-        else {
-            if (forwardData.backup) {
-                return getForwardUriWithSetting(msg, forwardData.backup, token, isServiceAlive, transformUriMap);
-            }
-            result.topic = "ERROR";
-            result.uri = "SERVICE_DOWN";
-        }
+        result.topic = `${serviceName}.${serviceId}`;
     }
     else if (forwardConfig.forwardType === aaa_1.ForwardType.SERVICE) {
         const forwardData = forwardConfig;
-        if (forwardData.backup && !isServiceAlive(forwardData.service)) {
-            return getForwardUriWithSetting(msg, forwardData.backup, token, isServiceAlive, transformUriMap);
-        }
         result.topic = forwardData.service;
         result.uri = forwardData.uri;
     }
     return result;
 }
 function getForwardUri(msg, matchedScope, token, isServiceAlive, transformUriMap) {
-    return getForwardUriWithSetting(msg, matchedScope.forwardData, token, isServiceAlive, transformUriMap);
+    return getForwardUriWithSetting(msg, matchedScope.forwardData, token, transformUriMap);
 }
 exports.getForwardUri = getForwardUri;
 //# sourceMappingURL=scope.js.map

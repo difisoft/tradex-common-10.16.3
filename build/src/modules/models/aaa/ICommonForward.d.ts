@@ -1,4 +1,5 @@
 export default interface ICommonForward {
     forwardType: string;
-    backup: ICommonForward;
+    service: string;
+    uri: string;
 }
