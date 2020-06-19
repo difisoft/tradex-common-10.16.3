@@ -13,6 +13,7 @@ export declare interface IUserData {
 }
 export default interface IToken {
     domain?: string;
+    sessionId?: string;
     userId?: number;
     serviceCode?: string;
     connectionId?: any;
@@ -40,6 +41,7 @@ export interface IAccessTokenExtendData {
     gt?: string;
     osV?: string;
     appV?: string;
+    sId?: string;
 }
 export interface IAccessToken extends IAccessTokenExtendData {
     dm?: string;

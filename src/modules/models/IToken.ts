@@ -15,6 +15,7 @@ export declare interface IUserData {
 
 export default interface IToken {
   domain?: string;
+  sessionId?: string;
   userId?: number;
   serviceCode?: string;
   connectionId?: any;
@@ -43,6 +44,7 @@ export interface IAccessTokenExtendData {
   gt?: string; // grant_type
   osV?: string;
   appV?: string;
+  sId?: string; // sessionId for lotte-rest-bridge
 }
 
 export interface IAccessToken extends IAccessTokenExtendData {
