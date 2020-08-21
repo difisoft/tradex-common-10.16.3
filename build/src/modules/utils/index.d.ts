@@ -64,6 +64,7 @@ declare const _default: {
     getStartOfMonth: (date: Date) => Date;
     getEndOfMonth: (date: Date) => Date;
     round: (input: number, scale?: number) => number;
+    roundInt: (input: number, scale?: number) => number;
     processJwtKey: typeof processJwtKey;
     processJwtKeyByDomain: typeof processJwtKeyByDomain;
     processJwtKeyObject: typeof processJwtKeyObject;

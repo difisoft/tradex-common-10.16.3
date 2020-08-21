@@ -75,6 +75,7 @@ exports.default = {
     getStartOfMonth: date_1.getStartOfMonth,
     getEndOfMonth: date_1.getEndOfMonth,
     round: MathUtils_1.round,
+    roundInt: MathUtils_1.roundInt,
     processJwtKey: keys_1.processJwtKey,
     processJwtKeyByDomain: keys_1.processJwtKeyByDomain,
     processJwtKeyObject: keys_1.processJwtKeyObject,

@@ -16,4 +16,14 @@ exports.round = (input, scale = 2) => {
         }
     }
 };
+exports.roundInt = (input, scale = 1) => {
+    if (input == null) {
+        log_1.logger.warn('Warning rounding undefined/null number');
+        return input;
+    }
+    else {
+        const roundNumber = Math.pow(10, scale);
+        return Math.round(input / roundNumber) * roundNumber;
+    }
+};
 //# sourceMappingURL=MathUtils.js.map

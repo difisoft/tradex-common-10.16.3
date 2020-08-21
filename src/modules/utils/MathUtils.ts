@@ -13,3 +13,14 @@ export const round = (input: number, scale: number = 2): number => {
     }
   }
 };
+
+
+export const roundInt = (input: number, scale: number = 1): number => {
+  if (input == null) {
+    Logger.warn('Warning rounding undefined/null number');
+    return input;
+  } else {
+    const roundNumber = Math.pow(10, scale);
+    return Math.round(input / roundNumber) * roundNumber;
+  }
+};

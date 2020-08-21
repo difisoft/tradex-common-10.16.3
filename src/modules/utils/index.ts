@@ -44,7 +44,7 @@ import {
 import {rsaEncrypt, rsaDecrypt} from './rsa';
 import { isEmpty, leftPad, rightPad } from "./StringUtils";
 import { isNullOrUndefined, setObjKey } from "./ObjectUtils";
-import { round } from "./MathUtils";
+import { round, roundInt } from "./MathUtils";
 import { removeDuplicateObj } from "./ArrayUtils";
 import {
   generateToken,
@@ -142,6 +142,7 @@ export default {
   getStartOfMonth,
   getEndOfMonth,
   round,
+  roundInt,
   processJwtKey,
   processJwtKeyByDomain,
   processJwtKeyObject,
