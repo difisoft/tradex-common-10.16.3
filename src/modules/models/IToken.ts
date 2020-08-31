@@ -32,6 +32,8 @@ export default interface IToken {
   appVersion?: string;
   grantType?: string;
   userData?: IUserData;
+  masEquityTokenId?: string;
+  masDrTokenId?: string;
 }
 
 export interface IAccessTokenExtendData {
