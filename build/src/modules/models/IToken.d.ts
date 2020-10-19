@@ -9,6 +9,8 @@ export declare interface IUserData {
     agencyNumber?: string;
     accountNumbers?: string[];
     fssTokenId?: string;
+    masEquityTokenId?: string;
+    masDrTokenId?: string;
     userLevel?: string;
 }
 export default interface IToken {
@@ -30,8 +32,6 @@ export default interface IToken {
     appVersion?: string;
     grantType?: string;
     userData?: IUserData;
-    masEquityTokenId?: string;
-    masDrTokenId?: string;
 }
 export interface IAccessTokenExtendData {
     sgIds: number[];
