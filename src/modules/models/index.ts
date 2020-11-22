@@ -2,6 +2,7 @@ import IResponse, { createFailResponse, createSuccessResponse } from './IRespons
 import IStatus from './IStatus';
 import IParamError from './IParamError';
 import IDataRequest from './IDataRequest';
+import ICommonRequest from './ICommonRequest';
 import IHeaders from './IHeaders';
 import IToken, { IUserData, IAccessToken, IAccessTokenExtendData } from './IToken';
 import IConnectionIdentifier from './IConnectionIdentifier';
@@ -18,8 +19,9 @@ export {
   createSuccessResponse,
   IParamError, 
   IStatus, 
-  IDataRequest, 
-  IHeaders, 
+  IDataRequest,
+  ICommonRequest,
+  IHeaders,
   IToken,
   IAccessToken,
   IAccessTokenExtendData,
