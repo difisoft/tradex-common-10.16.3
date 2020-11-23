@@ -1,5 +1,6 @@
 import IHeaders from './IHeaders';
-import ICommonRequest from "./ICommonRequest";
-export default interface IDataRequest extends ICommonRequest {
+export default interface IDataRequest {
     headers?: IHeaders;
+    sourceIp?: string;
+    deviceType?: string;
 }
