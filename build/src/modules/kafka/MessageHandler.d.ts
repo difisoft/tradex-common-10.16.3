@@ -16,7 +16,8 @@ declare type HandleResult = Observable<any> | Promise<any> | boolean;
 declare type Handle = (msg: IMessage, originalMessage?: IKafkaMessage) => HandleResult;
 declare class MessageHandler {
     private sendRequest;
-    constructor(sendRequest?: SendRequest);
+    private timeoutinMs?;
+    constructor(sendRequest?: SendRequest, timeoutinMs?: number);
     handle(message: IKafkaMessage, func: Handle): void;
     getErrorMessage: (error: Error) => IResponse;
     private shouldResponse;

@@ -44,6 +44,8 @@ declare interface IMessage {
     uri?: string;
     responseDestination?: IResponseDestination;
     data: any;
+    t?: number;
+    et?: number;
     stream?: boolean;
     streamState?: string;
     streamIndex?: number;

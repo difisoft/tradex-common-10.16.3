@@ -13,9 +13,18 @@ declare type HandleResult = Observable<any> | Promise<any> | boolean;
 declare type Handle = (msg: IMessage, originalMessage?: IKafkaMessage) => HandleResult;
 
 class MessageHandler {
-  constructor(private sendRequest: SendRequest = null) {
+  private timeoutinMs?: number;
+  constructor(private sendRequest: SendRequest = null, timeoutinMs?: number) {
     if (this.sendRequest == null) {
       this.sendRequest = getInstance();
+    }
+    this.timeoutinMs = timeoutinMs;
+    if (this.timeoutinMs == null && process.env.TRADEX_ENV_DEFAULT_REQUEST_TIMEOUT != null  && process.env.TRADEX_ENV_DEFAULT_REQUEST_TIMEOUT !== '') {
+      try {
+        this.timeoutinMs = parseInt(process.env.TRADEX_ENV_DEFAULT_REQUEST_TIMEOUT, 10);
+      } catch (e) {
+        Logger.error("wrong timeout setting", process.env.TRADEX_ENV_DEFAULT_REQUEST_TIMEOUT);
+      }
     }
   }
 
@@ -29,6 +38,14 @@ class MessageHandler {
       let diff: [number, number] = null;
       Logger.info(`receive msg: ${msgString}`);
       const msg: IMessage = JSON.parse(msgString);
+      if (msg.t != null && this.timeoutinMs != null && new Date().getTime() - msg.t > this.timeoutinMs) {
+        Logger.warn(`ignore ${msg.uri} ${msg.transactionId} - ${msg.messageId} since it's time out`);
+        return;
+      }
+      if (msg.et != null && new Date().getTime() > msg.et) {
+        Logger.warn(`ignore ${msg.uri} ${msg.transactionId} - ${msg.messageId} since it's time out`);
+        return;
+      }
       const shouldResponse = this.shouldResponse(msg);
       if (shouldResponse && msg.uri === "/healthcheck") {
         this.sendRequest.sendResponse(

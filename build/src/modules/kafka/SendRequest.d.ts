@@ -33,7 +33,7 @@ declare class SendRequestCommon {
     protected doReallySendMessage(message: ISendMessage): void;
     protected reallySendMessage: (message: ISendMessage) => void;
     protected getMessageId(): string;
-    protected createMessage(transactionId: string | number, topic: string, uri: string, data: any, messageType?: MessageType, responseTopic?: string, responseUri?: string, messageId?: string): ISendMessage;
+    protected createMessage(transactionId: string | number, topic: string, uri: string, data: any, messageType?: MessageType, responseTopic?: string, responseUri?: string, messageId?: string, timeout?: number): ISendMessage;
 }
 declare class SendRequest extends SendRequestCommon {
     private requestedMessages;

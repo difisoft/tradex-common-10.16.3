@@ -201,7 +201,7 @@ class SendRequestCommon {
 
   protected createMessage(transactionId: string | number, topic: string, uri: string
     , data: any, messageType: MessageType = MessageType.MESSAGE
-    , responseTopic?: string, responseUri?: string, messageId?: string): ISendMessage {
+    , responseTopic?: string, responseUri?: string, messageId?: string, timeout?: number): ISendMessage {
     return {
       topic: topic,
       message: {
@@ -216,7 +216,9 @@ class SendRequestCommon {
           }
           :
           undefined,
-        data: data
+        data: data,
+        t: timeout != null ? undefined : new Date().getTime(),
+        et: timeout == null ? undefined : new Date().getTime() + timeout,
       }
     };
   };
@@ -267,7 +269,7 @@ class SendRequest extends SendRequestCommon {
 
   public sendRequestBase(transactionId: string, topic: string, uri: string, data: any, subject: Rx.Subject<IMessage> | PromiseState<IMessage>, sendType?: number, timeout?: number) {
     const message: ISendMessage = this.createMessage(transactionId, topic, uri, data, MessageType.REQUEST
-      , this.responseTopic, "REQUEST_RESPONSE");
+      , this.responseTopic, "REQUEST_RESPONSE", null, timeout);
     message.subject = subject;
     message.timeout = timeout;
     message.sendType = sendType;

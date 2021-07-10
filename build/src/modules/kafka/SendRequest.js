@@ -180,7 +180,7 @@ class SendRequestCommon {
         this.messageId++;
         return `${this.messageId}`;
     }
-    createMessage(transactionId, topic, uri, data, messageType = types_1.MessageType.MESSAGE, responseTopic, responseUri, messageId) {
+    createMessage(transactionId, topic, uri, data, messageType = types_1.MessageType.MESSAGE, responseTopic, responseUri, messageId, timeout) {
         return {
             topic: topic,
             message: {
@@ -195,7 +195,9 @@ class SendRequestCommon {
                 }
                     :
                         undefined,
-                data: data
+                data: data,
+                t: timeout != null ? undefined : new Date().getTime(),
+                et: timeout == null ? undefined : new Date().getTime() + timeout,
             }
         };
     }
@@ -240,7 +242,7 @@ class SendRequest extends SendRequestCommon {
     }
     ;
     sendRequestBase(transactionId, topic, uri, data, subject, sendType, timeout) {
-        const message = this.createMessage(transactionId, topic, uri, data, types_1.MessageType.REQUEST, this.responseTopic, "REQUEST_RESPONSE");
+        const message = this.createMessage(transactionId, topic, uri, data, types_1.MessageType.REQUEST, this.responseTopic, "REQUEST_RESPONSE", null, timeout);
         message.subject = subject;
         message.timeout = timeout;
         message.sendType = sendType;

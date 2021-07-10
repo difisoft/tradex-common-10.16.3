@@ -67,6 +67,8 @@ declare interface IMessage {
   uri?: string,
   responseDestination?: IResponseDestination,
   data: any,
+  t?: number, // time message is sent
+  et?: number, // time message is expired
   stream?: boolean,
   streamState?: string;
   streamIndex?: number;
