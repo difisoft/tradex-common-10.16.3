@@ -20,6 +20,20 @@ function getEnvJson(name, defaultValue) {
     return (result == null || result === "") ? defaultValue : JSON.parse(result);
 }
 exports.getEnvJson = getEnvJson;
+function getEnvBool(name, defaultValue) {
+    const result = process.env[name];
+    if (result == null || result === "") {
+        return defaultValue;
+    }
+    if (result.toLowerCase() === 'y' || result.toLowerCase() === 'yes' || result.toLowerCase() === 'true') {
+        return true;
+    }
+    if (result.toLowerCase() === 'n' || result.toLowerCase() === 'no' || result.toLowerCase() === 'false') {
+        return false;
+    }
+    throw Error(`Config env is not a boolean type: ${name}. Result is ${result}`);
+}
+exports.getEnvBool = getEnvBool;
 function createJwtConfig(conf, domain, domains, keyDir, serviceName, publicKeyFileName, privateKeyFileName) {
     conf.jwt = {};
     const domainConfig = {};

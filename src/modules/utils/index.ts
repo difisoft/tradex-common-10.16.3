@@ -81,7 +81,8 @@ import {
   getEnvArr, 
   getEnvJson, 
   getEnvNum, 
-  getEnvStr 
+  getEnvStr,
+  getEnvBool 
 } from "./config";
 
 import { 
@@ -163,6 +164,7 @@ export default {
   getEnvNum,
   getEnvStr,
   getEnvJson,
+  getEnvBool,
   diffMsTime,
   getMsTime,
   convertISO8601StringToDate,
