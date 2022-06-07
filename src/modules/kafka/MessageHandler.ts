@@ -30,6 +30,10 @@ class MessageHandler {
     }
   }
 
+  public getActiveMessage(msgId: string): IMessage | undefined {
+    return this.activeRequestMap[msgId];
+  }
+
   public handle(message: IKafkaMessage, func: Handle): void {
     if (message.value == null) {
       return;

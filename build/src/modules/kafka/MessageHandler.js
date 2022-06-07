@@ -27,6 +27,9 @@ class MessageHandler {
             }
         }
     }
+    getActiveMessage(msgId) {
+        return this.activeRequestMap[msgId];
+    }
     handle(message, func) {
         if (message.value == null) {
             return;
