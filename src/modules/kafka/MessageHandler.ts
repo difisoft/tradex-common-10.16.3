@@ -64,6 +64,7 @@ class MessageHandler {
           }
         );
       }
+      this.requestId += 1;
       msg.msgHandlerUniqueId = `${msg.transactionId}_${msg.messageId}_${this.requestId}`;
       this.activeRequestMap[msg.msgHandlerUniqueId] = msg;
       try {
