@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.getResponse = exports.getInstance = exports.create = exports.SendRequestCommon = exports.SendRequest = void 0;
 const tslib_1 = require("tslib");
 const StreamHandler_1 = require("./StreamHandler");
 const log_1 = require("../log");
@@ -218,7 +219,7 @@ class SendRequest extends SendRequestCommon {
         this.expiredIn = expiredIn ? expiredIn : 10000;
         if (initListener) {
             log_1.logger.info(`init response listener ${this.responseTopic}`);
-            const topicOps = Object.assign({}, topicConf, { "auto.offset.reset": "earliest" });
+            const topicOps = Object.assign(Object.assign({}, topicConf), { "auto.offset.reset": "earliest" });
             new StreamHandler_1.StreamHandler(this.conf, consumerOptions, [this.responseTopic], (data) => this.handlerResponse(data), topicOps, () => {
                 if (this.readyState != null) {
                     log_1.logger.info("response consumer ready", this.readyState);

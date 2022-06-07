@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.ConsoleLogger = exports.logger = void 0;
 const winston_1 = require("winston");
 const log4js_1 = require("log4js");
 const LOG_FORMAT = {

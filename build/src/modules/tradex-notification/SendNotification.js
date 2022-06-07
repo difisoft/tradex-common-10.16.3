@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.getInstance = exports.create = void 0;
 const NotificationRequest_1 = require("./NotificationRequest");
 class SendNotification {
     constructor(send, notificationListenningTopic) {

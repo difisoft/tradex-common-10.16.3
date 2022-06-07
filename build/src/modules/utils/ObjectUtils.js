@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.setObjKey = exports.isNullOrUndefined = void 0;
 exports.isNullOrUndefined = (input) => {
     return (input === undefined || input === null) ? true : false;
 };

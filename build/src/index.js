@@ -1,12 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.Constants = exports.Tests = exports.ServiceRegistration = exports.TradexNotification = exports.Models = exports.AWS = exports.Errors = exports.Kafka = exports.ConsoleLogger = exports.Logger = exports.UtilClasses = exports.Utils = exports.Zookeeper = void 0;
 const Errors = require("./modules/errors");
 exports.Errors = Errors;
 const Kafka = require("./modules/kafka");
 exports.Kafka = Kafka;
 const log_1 = require("./modules/log");
-exports.Logger = log_1.logger;
-exports.ConsoleLogger = log_1.ConsoleLogger;
+Object.defineProperty(exports, "Logger", { enumerable: true, get: function () { return log_1.logger; } });
+Object.defineProperty(exports, "ConsoleLogger", { enumerable: true, get: function () { return log_1.ConsoleLogger; } });
 const utils_1 = require("./modules/utils"), UtilClasses = utils_1;
 exports.Utils = utils_1.default;
 exports.UtilClasses = UtilClasses;

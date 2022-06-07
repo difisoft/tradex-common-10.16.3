@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.singleton = exports.Singleton = void 0;
 class Singleton {
     constructor() {
         this.map = new Map();

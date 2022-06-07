@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.ConsumerHub = void 0;
 const MessageHandler_1 = require("./MessageHandler");
 const StreamHandler_1 = require("./StreamHandler");
 const log_1 = require("../log");

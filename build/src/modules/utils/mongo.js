@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.handleBulkResult = exports.mapAggCursor = exports.forEachAggCursor = exports.forEachAggCursorPromise = exports.reduceAggCursor = exports.groupAggCursor = exports.BulkError = void 0;
 const tslib_1 = require("tslib");
 class BulkError extends Error {
     constructor(bulkResult) {

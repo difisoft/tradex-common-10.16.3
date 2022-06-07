@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.ForwardDataType = void 0;
 var ForwardDataType;
 (function (ForwardDataType) {
     ForwardDataType["SERVICE_STRING_MAPPING"] = "SERVICE_STRING_MAPPING";

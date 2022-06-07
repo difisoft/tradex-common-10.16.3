@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.createFromStatus = void 0;
 class GeneralError extends Error {
     constructor(code = 'INTERNAL_SERVER_ERROR', params = null, source, messageParams) {
         super();

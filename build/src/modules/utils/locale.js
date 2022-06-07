@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.translateErrorMessage = exports.getInstance = exports.initInternal = exports.init = exports.getLanguageCode = void 0;
 const acceptLanguage = require("accept-language");
 const i18n = require("i18next");
 const uuid_1 = require("uuid");

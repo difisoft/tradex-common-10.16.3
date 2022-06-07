@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.getForwardUri = void 0;
 const aaa_1 = require("../models/aaa");
 function getForwardUriWithSetting(msg, forwardConfig, token, transformUriMap) {
     const result = {};

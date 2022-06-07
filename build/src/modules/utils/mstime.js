@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.getMsTime = exports.diffMsTime = void 0;
 function diffMsTime(time) {
     const currentTime = process.hrtime();
     return currentTime[0] * 1000 + currentTime[1] / 1000000 - time;

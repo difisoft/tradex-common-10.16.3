@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.generateSignedDataForUpload = exports.getTempCredentials = exports.loadCredentials = void 0;
 const AWS = require("aws-sdk");
 const loadCredentials = (conf) => {
     AWS.config.credentials = new AWS.Credentials({

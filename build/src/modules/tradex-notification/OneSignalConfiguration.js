@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.DelayedOption = exports.IosBadgeType = exports.AndroidVisibility = void 0;
 const MethodEnum_1 = require("./MethodEnum");
 var AndroidVisibility;
 (function (AndroidVisibility) {

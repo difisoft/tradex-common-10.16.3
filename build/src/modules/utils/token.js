@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.undefinedOr = exports.convertToken = exports.generateToken = void 0;
 const generateToken = (length = 6, onlyDigit = true) => {
     let possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     if (onlyDigit) {

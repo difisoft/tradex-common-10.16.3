@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.compileTemplate = exports.getTemplateResources = exports.init = void 0;
 const uuid_1 = require("uuid");
 const Handlebars = require("handlebars");
 const __1 = require("../..");

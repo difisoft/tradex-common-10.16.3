@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.getInstance = exports.create = exports.defaultTopic = exports.defaultInterval = void 0;
 const ServiceRegistration_1 = require("./ServiceRegistration");
 exports.defaultInterval = 300000;
 exports.defaultTopic = "service.register";
