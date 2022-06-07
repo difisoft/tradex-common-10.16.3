@@ -8,6 +8,8 @@ const __1 = require("../..");
 class MessageHandler {
     constructor(sendRequest = null, timeoutinMs) {
         this.sendRequest = sendRequest;
+        this.activeRequestMap = {};
+        this.requestId = new Date().getTime();
         this.getErrorMessage = (error) => {
             return getErrorMessage(error);
         };
@@ -48,45 +50,56 @@ class MessageHandler {
                     status: "ON",
                 });
             }
-            const obs = func(msg, message);
-            if (obs === false) {
-                if (shouldResponse) {
-                    diff = process.hrtime(startTime);
-                    __1.Logger.info(`process request ${msg.uri} took ${diff[0]}.${diff[1]} seconds`);
-                    this.sendRequest.sendResponse(msg.transactionId, msg.messageId, msg.responseDestination.topic, msg.responseDestination.uri, this.getErrorMessage(new UriNotFound_1.default()));
-                }
-                return;
-            }
-            else if (obs === true) {
-                diff = process.hrtime(startTime);
-                __1.Logger.info(`forward request ${msg.transactionId} ${msg.messageId} ${msg.uri} took ${diff[0]}.${diff[1]} seconds`);
-                return;
-            }
-            const handleError = (err) => {
-                log_1.logger.logError(`error while processing request ${msg.transactionId} ${msg.messageId} ${msg.uri}`, err);
-                if (shouldResponse) {
-                    this.sendRequest.sendResponse(msg.transactionId, msg.messageId, msg.responseDestination.topic, msg.responseDestination.uri, this.getErrorMessage(err));
-                }
-                diff = process.hrtime(startTime);
-                __1.Logger.info(`handle request ${msg.transactionId} ${msg.messageId} ${msg.uri} took ${diff[0]}.${diff[1]} seconds`);
-            };
-            const handleData = (data) => {
-                try {
+            msg.msgHandlerUniqueId = `${msg.transactionId}_${msg.messageId}_${this.requestId}`;
+            this.activeRequestMap[msg.msgHandlerUniqueId] = msg;
+            try {
+                const obs = func(msg, message);
+                if (obs === false) {
                     if (shouldResponse) {
-                        this.sendRequest.sendResponse(msg.transactionId, msg.messageId, msg.responseDestination.topic, msg.responseDestination.uri, { data: data });
+                        diff = process.hrtime(startTime);
+                        __1.Logger.info(`process request ${msg.uri} took ${diff[0]}.${diff[1]} seconds`);
+                        this.sendRequest.sendResponse(msg.transactionId, msg.messageId, msg.responseDestination.topic, msg.responseDestination.uri, this.getErrorMessage(new UriNotFound_1.default()));
+                    }
+                    delete this.activeRequestMap[msg.msgHandlerUniqueId];
+                    return;
+                }
+                else if (obs === true) {
+                    diff = process.hrtime(startTime);
+                    __1.Logger.info(`forward request ${msg.transactionId} ${msg.messageId} ${msg.uri} took ${diff[0]}.${diff[1]} seconds`);
+                    delete this.activeRequestMap[msg.msgHandlerUniqueId];
+                    return;
+                }
+                const handleError = (err) => {
+                    log_1.logger.logError(`error while processing request ${msg.transactionId} ${msg.messageId} ${msg.uri}`, err);
+                    delete this.activeRequestMap[msg.msgHandlerUniqueId];
+                    if (shouldResponse) {
+                        this.sendRequest.sendResponse(msg.transactionId, msg.messageId, msg.responseDestination.topic, msg.responseDestination.uri, this.getErrorMessage(err));
                     }
                     diff = process.hrtime(startTime);
-                    __1.Logger.info(`handle request ${msg.uri} took ${diff[0]}.${diff[1]} seconds`);
+                    __1.Logger.info(`handle request ${msg.transactionId} ${msg.messageId} ${msg.uri} took ${diff[0]}.${diff[1]} seconds`);
+                };
+                const handleData = (data) => {
+                    delete this.activeRequestMap[msg.msgHandlerUniqueId];
+                    try {
+                        if (shouldResponse) {
+                            this.sendRequest.sendResponse(msg.transactionId, msg.messageId, msg.responseDestination.topic, msg.responseDestination.uri, { data: data });
+                        }
+                        diff = process.hrtime(startTime);
+                        __1.Logger.info(`handle request ${msg.uri} took ${diff[0]}.${diff[1]} seconds`);
+                    }
+                    catch (err) {
+                        handleError(err);
+                    }
+                };
+                if (obs instanceof Promise) {
+                    obs.then(handleData).catch(handleError);
                 }
-                catch (err) {
-                    handleError(err);
+                else {
+                    obs.subscribe(handleData, handleError);
                 }
-            };
-            if (obs instanceof Promise) {
-                obs.then(handleData).catch(handleError);
             }
-            else {
-                obs.subscribe(handleData, handleError);
+            finally {
+                delete this.activeRequestMap[msg.msgHandlerUniqueId];
             }
         }
         catch (e) {

@@ -72,6 +72,7 @@ declare interface IMessage {
   stream?: boolean,
   streamState?: string;
   streamIndex?: number;
+  msgHandlerUniqueId?: string; // this will included by request handler automatically
 }
 
 const STREAM_STATE = {

@@ -49,6 +49,7 @@ declare interface IMessage {
     stream?: boolean;
     streamState?: string;
     streamIndex?: number;
+    msgHandlerUniqueId?: string;
 }
 declare const STREAM_STATE: {
     NORMAL: string;
