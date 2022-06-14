@@ -11,53 +11,36 @@ class MessageHandler {
         this.sendRequest = sendRequest;
         this.activeRequestMap = {};
         this.requestId = new Date().getTime();
-        this.getErrorMessage = (error) => {
-            return getErrorMessage(error);
+        this.getActiveMessage = (msgId) => {
+            return this.activeRequestMap[msgId];
         };
-        if (this.sendRequest == null) {
-            this.sendRequest = SendRequest_1.getInstance();
-        }
-        this.timeoutinMs = timeoutinMs;
-        if (this.timeoutinMs == null && process.env.TRADEX_ENV_DEFAULT_REQUEST_TIMEOUT != null && process.env.TRADEX_ENV_DEFAULT_REQUEST_TIMEOUT !== '') {
-            try {
-                this.timeoutinMs = parseInt(process.env.TRADEX_ENV_DEFAULT_REQUEST_TIMEOUT, 10);
-            }
-            catch (e) {
-                __1.Logger.error("wrong timeout setting", process.env.TRADEX_ENV_DEFAULT_REQUEST_TIMEOUT);
-            }
-        }
-    }
-    getActiveMessage(msgId) {
-        return this.activeRequestMap[msgId];
-    }
-    handle(message, func) {
-        if (message.value == null) {
-            return;
-        }
-        const msgString = message.value.toString();
-        try {
-            const startTime = process.hrtime();
-            let diff = null;
-            __1.Logger.info(`receive msg: ${msgString}`);
-            const msg = JSON.parse(msgString);
-            if (msg.t != null && this.timeoutinMs != null && new Date().getTime() - msg.t > this.timeoutinMs) {
-                __1.Logger.warn(`ignore ${msg.uri} ${msg.transactionId} - ${msg.messageId} since it's time out`);
+        this.handle = (message, func) => {
+            if (message.value == null) {
                 return;
             }
-            if (msg.et != null && new Date().getTime() > msg.et) {
-                __1.Logger.warn(`ignore ${msg.uri} ${msg.transactionId} - ${msg.messageId} since it's time out`);
-                return;
-            }
-            const shouldResponse = this.shouldResponse(msg);
-            if (shouldResponse && msg.uri === "/healthcheck") {
-                this.sendRequest.sendResponse(msg.transactionId, msg.messageId, msg.responseDestination.topic, msg.responseDestination.uri, {
-                    status: "ON",
-                });
-            }
-            this.requestId += 1;
-            msg.msgHandlerUniqueId = `${msg.transactionId}_${msg.messageId}_${this.requestId}`;
-            this.activeRequestMap[msg.msgHandlerUniqueId] = msg;
+            const msgString = message.value.toString();
             try {
+                const startTime = process.hrtime();
+                let diff = null;
+                __1.Logger.info(`receive msg: ${msgString}`);
+                const msg = JSON.parse(msgString);
+                if (msg.t != null && this.timeoutinMs != null && new Date().getTime() - msg.t > this.timeoutinMs) {
+                    __1.Logger.warn(`ignore ${msg.uri} ${msg.transactionId} - ${msg.messageId} since it's time out`);
+                    return;
+                }
+                if (msg.et != null && new Date().getTime() > msg.et) {
+                    __1.Logger.warn(`ignore ${msg.uri} ${msg.transactionId} - ${msg.messageId} since it's time out`);
+                    return;
+                }
+                const shouldResponse = this.shouldResponse(msg);
+                if (shouldResponse && msg.uri === "/healthcheck") {
+                    this.sendRequest.sendResponse(msg.transactionId, msg.messageId, msg.responseDestination.topic, msg.responseDestination.uri, {
+                        status: "ON",
+                    });
+                }
+                this.requestId += 1;
+                msg.msgHandlerUniqueId = `${msg.transactionId}_${msg.messageId}_${this.requestId}`;
+                this.activeRequestMap[msg.msgHandlerUniqueId] = msg;
                 const obs = func(msg, message);
                 if (obs === false) {
                     if (shouldResponse) {
@@ -74,41 +57,55 @@ class MessageHandler {
                     delete this.activeRequestMap[msg.msgHandlerUniqueId];
                     return;
                 }
-                const handleError = (err) => {
-                    log_1.logger.logError(`error while processing request ${msg.transactionId} ${msg.messageId} ${msg.uri}`, err);
-                    delete this.activeRequestMap[msg.msgHandlerUniqueId];
-                    if (shouldResponse) {
-                        this.sendRequest.sendResponse(msg.transactionId, msg.messageId, msg.responseDestination.topic, msg.responseDestination.uri, this.getErrorMessage(err));
-                    }
-                    diff = process.hrtime(startTime);
-                    __1.Logger.info(`handle request ${msg.transactionId} ${msg.messageId} ${msg.uri} took ${diff[0]}.${diff[1]} seconds`);
-                };
-                const handleData = (data) => {
-                    delete this.activeRequestMap[msg.msgHandlerUniqueId];
-                    try {
+                else {
+                    const handleError = (err) => {
+                        log_1.logger.logError(`error while processing request ${msg.transactionId} ${msg.messageId} ${msg.uri}`, err);
+                        delete this.activeRequestMap[msg.msgHandlerUniqueId];
                         if (shouldResponse) {
-                            this.sendRequest.sendResponse(msg.transactionId, msg.messageId, msg.responseDestination.topic, msg.responseDestination.uri, { data: data });
+                            this.sendRequest.sendResponse(msg.transactionId, msg.messageId, msg.responseDestination.topic, msg.responseDestination.uri, this.getErrorMessage(err));
                         }
                         diff = process.hrtime(startTime);
-                        __1.Logger.info(`handle request ${msg.uri} took ${diff[0]}.${diff[1]} seconds`);
+                        __1.Logger.info(`handle request ${msg.transactionId} ${msg.messageId} ${msg.uri} took ${diff[0]}.${diff[1]} seconds`);
+                    };
+                    const handleData = (data) => {
+                        delete this.activeRequestMap[msg.msgHandlerUniqueId];
+                        try {
+                            if (shouldResponse) {
+                                this.sendRequest.sendResponse(msg.transactionId, msg.messageId, msg.responseDestination.topic, msg.responseDestination.uri, { data: data });
+                            }
+                            diff = process.hrtime(startTime);
+                            __1.Logger.info(`handle request ${msg.uri} took ${diff[0]}.${diff[1]} seconds`);
+                        }
+                        catch (err) {
+                            handleError(err);
+                        }
+                    };
+                    if (obs instanceof Promise) {
+                        obs.then(handleData).catch(handleError);
                     }
-                    catch (err) {
-                        handleError(err);
+                    else {
+                        obs.subscribe(handleData, handleError);
                     }
-                };
-                if (obs instanceof Promise) {
-                    obs.then(handleData).catch(handleError);
-                }
-                else {
-                    obs.subscribe(handleData, handleError);
                 }
             }
-            finally {
-                delete this.activeRequestMap[msg.msgHandlerUniqueId];
+            catch (e) {
+                log_1.logger.logError(`error while processing message ${message.topic} ${message.value} ${msgString}`, e);
             }
+        };
+        this.getErrorMessage = (error) => {
+            return getErrorMessage(error);
+        };
+        if (this.sendRequest == null) {
+            this.sendRequest = SendRequest_1.getInstance();
         }
-        catch (e) {
-            log_1.logger.logError(`error while processing message ${message.topic} ${message.value} ${msgString}`, e);
+        this.timeoutinMs = timeoutinMs;
+        if (this.timeoutinMs == null && process.env.TRADEX_ENV_DEFAULT_REQUEST_TIMEOUT != null && process.env.TRADEX_ENV_DEFAULT_REQUEST_TIMEOUT !== '') {
+            try {
+                this.timeoutinMs = parseInt(process.env.TRADEX_ENV_DEFAULT_REQUEST_TIMEOUT, 10);
+            }
+            catch (e) {
+                __1.Logger.error("wrong timeout setting", process.env.TRADEX_ENV_DEFAULT_REQUEST_TIMEOUT);
+            }
         }
     }
     shouldResponse(msg) {

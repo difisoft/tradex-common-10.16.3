@@ -22,8 +22,8 @@ declare class MessageHandler {
     private timeoutinMs?;
     private requestId;
     constructor(sendRequest?: SendRequest, timeoutinMs?: number);
-    getActiveMessage(msgId: string): IMessage | undefined;
-    handle(message: IKafkaMessage, func: Handle): void;
+    getActiveMessage: (msgId: string) => IMessage | undefined;
+    handle: (message: IKafkaMessage, func: Handle) => void;
     getErrorMessage: (error: Error) => IResponse;
     private shouldResponse;
 }

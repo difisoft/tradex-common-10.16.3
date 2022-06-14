@@ -30,11 +30,11 @@ class MessageHandler {
     }
   }
 
-  public getActiveMessage(msgId: string): IMessage | undefined {
+  public getActiveMessage: (msgId: string) => IMessage | undefined = (msgId: string) => {
     return this.activeRequestMap[msgId];
-  }
+  };
 
-  public handle(message: IKafkaMessage, func: Handle): void {
+  public handle: (message: IKafkaMessage, func: Handle) => void = (message: IKafkaMessage, func: Handle) => {
     if (message.value == null) {
       return;
     }
@@ -67,28 +67,27 @@ class MessageHandler {
       this.requestId += 1;
       msg.msgHandlerUniqueId = `${msg.transactionId}_${msg.messageId}_${this.requestId}`;
       this.activeRequestMap[msg.msgHandlerUniqueId] = msg;
-      try {
-        const obs: HandleResult = func(msg, message);
-        if (obs === false) {
-          if (shouldResponse) {
-            diff = process.hrtime(startTime);
-            Logger.info(`process request ${msg.uri} took ${diff[0]}.${diff[1]} seconds`);
-            this.sendRequest.sendResponse(
-              msg.transactionId,
-              msg.messageId,
-              msg.responseDestination.topic,
-              msg.responseDestination.uri,
-              this.getErrorMessage(new UriNotFound())
-            );
-          }
-          delete this.activeRequestMap[msg.msgHandlerUniqueId];
-          return;
-        } else if (obs === true) {
+      const obs: HandleResult = func(msg, message);
+      if (obs === false) {
+        if (shouldResponse) {
           diff = process.hrtime(startTime);
-          Logger.info(`forward request ${msg.transactionId} ${msg.messageId} ${msg.uri} took ${diff[0]}.${diff[1]} seconds`);
-          delete this.activeRequestMap[msg.msgHandlerUniqueId];
-          return; // forwarding. do nothing
+          Logger.info(`process request ${msg.uri} took ${diff[0]}.${diff[1]} seconds`);
+          this.sendRequest.sendResponse(
+            msg.transactionId,
+            msg.messageId,
+            msg.responseDestination.topic,
+            msg.responseDestination.uri,
+            this.getErrorMessage(new UriNotFound())
+          );
         }
+        delete this.activeRequestMap[msg.msgHandlerUniqueId];
+        return;
+      } else if (obs === true) {
+        diff = process.hrtime(startTime);
+        Logger.info(`forward request ${msg.transactionId} ${msg.messageId} ${msg.uri} took ${diff[0]}.${diff[1]} seconds`);
+        delete this.activeRequestMap[msg.msgHandlerUniqueId];
+        return; // forwarding. do nothing
+      } else {
         const handleError = (err: Error) => {
           logger.logError(`error while processing request ${msg.transactionId} ${msg.messageId} ${msg.uri}`, err);
           delete this.activeRequestMap[msg.msgHandlerUniqueId];
@@ -121,19 +120,17 @@ class MessageHandler {
           } catch (err) {
             handleError(err);
           }
-        };
+        }
         if (obs instanceof Promise) {
           obs.then(handleData).catch(handleError);
         } else {
           obs.subscribe(handleData, handleError);
         }
-      } finally {
-        delete this.activeRequestMap[msg.msgHandlerUniqueId];
       }
     } catch (e) {
       logger.logError(`error while processing message ${message.topic} ${message.value} ${msgString}`, e);
     }
-  }
+  };
 
   public getErrorMessage = (error: Error) => {
     return getErrorMessage(error);
