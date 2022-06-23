@@ -1,4 +1,4 @@
-import { ConsumerStream, createReadStream } from 'node-rdkafka';
+import { ConsumerStream, ConsumerTopicConfig, createReadStream } from 'node-rdkafka';
 import { logger } from '../log';
 import { IConf } from "./types";
 
@@ -16,7 +16,7 @@ class StreamHandler {
   private hasError: boolean;
   private stream: ConsumerStream;
 
-  constructor(conf: IConf, options: any, topics: string[]
+  constructor(conf: IConf, options: ConsumerTopicConfig, topics: string[]
               , dataHandler: (data: IKafkaMessage, handler: StreamHandler) => void
               , topicConf: any = {}
               , readyCallback?: () => void
@@ -25,6 +25,7 @@ class StreamHandler {
       ...{
         'group.id': conf.clusterId,
         'metadata.broker.list': conf.kafkaUrls.join(),
+        'allow.auto.create.topics': true,
       }, ...options
     };
 
