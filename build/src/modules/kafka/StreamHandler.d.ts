@@ -1,4 +1,5 @@
 /// <reference types="node" />
+import { ConsumerTopicConfig } from 'node-rdkafka';
 import { IConf } from "./types";
 interface IKafkaMessage {
     value: Buffer;
@@ -12,7 +13,7 @@ interface IKafkaMessage {
 declare class StreamHandler {
     private hasError;
     private stream;
-    constructor(conf: IConf, options: any, topics: string[], dataHandler: (data: IKafkaMessage, handler: StreamHandler) => void, topicConf?: any, readyCallback?: () => void);
+    constructor(conf: IConf, options: ConsumerTopicConfig, topics: string[], dataHandler: (data: IKafkaMessage, handler: StreamHandler) => void, topicConf?: any, readyCallback?: () => void);
     close(): void;
 }
 declare function createBroadcastListener(conf: IConf, options: any, topics: string[], dataHandler: (data: IKafkaMessage, handler: StreamHandler) => void, topicConf?: any): StreamHandler;

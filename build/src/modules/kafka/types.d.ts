@@ -1,6 +1,7 @@
 /// <reference types="rx-core-binding" />
+import { ConsumerGlobalConfig } from "node-rdkafka";
 import Rx from "rx";
-interface IConf {
+interface IConf extends ConsumerGlobalConfig {
     clientId: string;
     clusterId: string;
     kafkaUrls: string[];
