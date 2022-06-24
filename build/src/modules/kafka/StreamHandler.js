@@ -8,7 +8,6 @@ class StreamHandler {
         const ops = Object.assign({
             'group.id': conf.clusterId,
             'metadata.broker.list': conf.kafkaUrls.join(),
-            'allow.auto.create.topics': true,
         }, options);
         this.hasError = false;
         this.stream = node_rdkafka_1.createReadStream(ops, topicConf, {

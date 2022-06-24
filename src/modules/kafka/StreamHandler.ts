@@ -25,7 +25,7 @@ class StreamHandler {
       ...{
         'group.id': conf.clusterId,
         'metadata.broker.list': conf.kafkaUrls.join(),
-        'allow.auto.create.topics': true,
+        // 'allow.auto.create.topics': true,
       }, ...options
     };
 
