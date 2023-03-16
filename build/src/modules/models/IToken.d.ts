@@ -13,7 +13,7 @@ export declare interface IUserData {
     masDrTokenId?: string;
     userLevel?: string;
     mfaData?: string;
-    userId?: number;
+    id?: number;
 }
 export default interface IToken {
     domain?: string;
