@@ -14,6 +14,7 @@ export declare interface IUserData {
   masDrTokenId?: string;
   userLevel?: string;
   mfaData?: string;
+  userId?: string;
 }
 
 export default interface IToken {
