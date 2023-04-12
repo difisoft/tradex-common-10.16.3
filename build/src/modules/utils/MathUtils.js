@@ -4,7 +4,6 @@ exports.roundInt = exports.round = void 0;
 const log_1 = require("../../modules/log");
 exports.round = (input, scale = 2) => {
     if (input == null) {
-        log_1.logger.warn('Warning rounding undefined/null number');
         return input;
     }
     else {
@@ -19,7 +18,6 @@ exports.round = (input, scale = 2) => {
 };
 exports.roundInt = (input, scale = 1) => {
     if (input == null) {
-        log_1.logger.warn('Warning rounding undefined/null number');
         return input;
     }
     else {
