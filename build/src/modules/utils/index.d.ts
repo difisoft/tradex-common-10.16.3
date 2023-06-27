@@ -9,7 +9,7 @@ import { processJwtKey, processJwtKeyByDomain, processJwtKeyObject } from "./key
 import State from "./State";
 import { allPromiseDone, asyncWithRetry, handlePromise, IPromiseJoin, promise, PromiseFunction, Reject, Resolve, RetryError } from "./promise";
 import * as Mongo from "./mongo";
-import { createJwtConfig, getEnvArr, getEnvJson, getEnvNum, getEnvStr, getEnvBool } from "./config";
+import { createJwtConfig, getEnvArr, getEnvJson, getEnvNum, getEnvStr, getEnvBool, override } from "./config";
 import { diffMsTime, getMsTime } from "./mstime";
 declare const _default: {
     validate: typeof validate;
@@ -89,6 +89,7 @@ declare const _default: {
     getEnvStr: typeof getEnvStr;
     getEnvJson: typeof getEnvJson;
     getEnvBool: typeof getEnvBool;
+    override: typeof override;
     diffMsTime: typeof diffMsTime;
     getMsTime: typeof getMsTime;
     convertISO8601StringToDate: (data: string) => Date;

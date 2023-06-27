@@ -98,6 +98,7 @@ exports.default = {
     getEnvStr: config_1.getEnvStr,
     getEnvJson: config_1.getEnvJson,
     getEnvBool: config_1.getEnvBool,
+    override: config_1.override,
     diffMsTime: mstime_1.diffMsTime,
     getMsTime: mstime_1.getMsTime,
     convertISO8601StringToDate: date_1.convertISO8601StringToDate,

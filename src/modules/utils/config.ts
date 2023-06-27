@@ -53,3 +53,30 @@ export function createJwtConfig(conf: any, domain: string, domains: string[], ke
   });
   conf.jwt.domains = domainConfig;
 }
+
+export function override(external: object, source: object) {
+  const keys = Object.keys(external);
+  keys.forEach((key: string) => {
+    const dst: any = external[key];
+    const src: any = source[key];
+    if (dst == null) {
+      source[key] = undefined;
+      return;
+    }
+    if (src == null) {
+      source[key] = dst;
+      return;
+    }
+    const typeSrc = typeof src;
+    const typeDst = typeof dst;
+    if (typeSrc === 'object') {
+      if (typeDst !== 'object') {
+        source[key] = dst;
+        return;
+      }
+      override(dst, src);
+      return;
+    }
+    source[key] = dst;
+  });
+}

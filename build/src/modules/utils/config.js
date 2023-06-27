@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createJwtConfig = exports.getEnvBool = exports.getEnvJson = exports.getEnvNum = exports.getEnvArr = exports.getEnvStr = void 0;
+exports.override = exports.createJwtConfig = exports.getEnvBool = exports.getEnvJson = exports.getEnvNum = exports.getEnvArr = exports.getEnvStr = void 0;
 function getEnvStr(name, defaultValue = "") {
     const result = process.env[name];
     return (result == null || result === "") ? defaultValue : result;
@@ -54,4 +54,31 @@ function createJwtConfig(conf, domain, domains, keyDir, serviceName, publicKeyFi
     conf.jwt.domains = domainConfig;
 }
 exports.createJwtConfig = createJwtConfig;
+function override(external, source) {
+    const keys = Object.keys(external);
+    keys.forEach((key) => {
+        const dst = external[key];
+        const src = source[key];
+        if (dst == null) {
+            source[key] = undefined;
+            return;
+        }
+        if (src == null) {
+            source[key] = dst;
+            return;
+        }
+        const typeSrc = typeof src;
+        const typeDst = typeof dst;
+        if (typeSrc === 'object') {
+            if (typeDst !== 'object') {
+                source[key] = dst;
+                return;
+            }
+            override(dst, src);
+            return;
+        }
+        source[key] = dst;
+    });
+}
+exports.override = override;
 //# sourceMappingURL=config.js.map
